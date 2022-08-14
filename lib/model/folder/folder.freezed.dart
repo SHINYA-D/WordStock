@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'folder_model.dart';
+part of 'folder.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,43 +14,35 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-folder_model _$folder_modelFromJson(Map<String, dynamic> json) {
-  return _folder_model.fromJson(json);
+Folder _$FolderFromJson(Map<String, dynamic> json) {
+  return _Folder.fromJson(json);
 }
 
 /// @nodoc
-mixin _$folder_model {
-  @JsonKey(name: 'id')
+mixin _$Folder {
   String? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'name')
   String? get name => throw _privateConstructorUsedError;
-  @JsonKey(name: 'tableName')
   String? get tableName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $folder_modelCopyWith<folder_model> get copyWith =>
-      throw _privateConstructorUsedError;
+  $FolderCopyWith<Folder> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $folder_modelCopyWith<$Res> {
-  factory $folder_modelCopyWith(
-          folder_model value, $Res Function(folder_model) then) =
-      _$folder_modelCopyWithImpl<$Res>;
-  $Res call(
-      {@JsonKey(name: 'id') String? id,
-      @JsonKey(name: 'name') String? name,
-      @JsonKey(name: 'tableName') String? tableName});
+abstract class $FolderCopyWith<$Res> {
+  factory $FolderCopyWith(Folder value, $Res Function(Folder) then) =
+      _$FolderCopyWithImpl<$Res>;
+  $Res call({String? id, String? name, String? tableName});
 }
 
 /// @nodoc
-class _$folder_modelCopyWithImpl<$Res> implements $folder_modelCopyWith<$Res> {
-  _$folder_modelCopyWithImpl(this._value, this._then);
+class _$FolderCopyWithImpl<$Res> implements $FolderCopyWith<$Res> {
+  _$FolderCopyWithImpl(this._value, this._then);
 
-  final folder_model _value;
+  final Folder _value;
   // ignore: unused_field
-  final $Res Function(folder_model) _then;
+  final $Res Function(Folder) _then;
 
   @override
   $Res call({
@@ -76,28 +68,21 @@ class _$folder_modelCopyWithImpl<$Res> implements $folder_modelCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_folder_modelCopyWith<$Res>
-    implements $folder_modelCopyWith<$Res> {
-  factory _$$_folder_modelCopyWith(
-          _$_folder_model value, $Res Function(_$_folder_model) then) =
-      __$$_folder_modelCopyWithImpl<$Res>;
+abstract class _$$_FolderCopyWith<$Res> implements $FolderCopyWith<$Res> {
+  factory _$$_FolderCopyWith(_$_Folder value, $Res Function(_$_Folder) then) =
+      __$$_FolderCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {@JsonKey(name: 'id') String? id,
-      @JsonKey(name: 'name') String? name,
-      @JsonKey(name: 'tableName') String? tableName});
+  $Res call({String? id, String? name, String? tableName});
 }
 
 /// @nodoc
-class __$$_folder_modelCopyWithImpl<$Res>
-    extends _$folder_modelCopyWithImpl<$Res>
-    implements _$$_folder_modelCopyWith<$Res> {
-  __$$_folder_modelCopyWithImpl(
-      _$_folder_model _value, $Res Function(_$_folder_model) _then)
-      : super(_value, (v) => _then(v as _$_folder_model));
+class __$$_FolderCopyWithImpl<$Res> extends _$FolderCopyWithImpl<$Res>
+    implements _$$_FolderCopyWith<$Res> {
+  __$$_FolderCopyWithImpl(_$_Folder _value, $Res Function(_$_Folder) _then)
+      : super(_value, (v) => _then(v as _$_Folder));
 
   @override
-  _$_folder_model get _value => super._value as _$_folder_model;
+  _$_Folder get _value => super._value as _$_Folder;
 
   @override
   $Res call({
@@ -105,7 +90,7 @@ class __$$_folder_modelCopyWithImpl<$Res>
     Object? name = freezed,
     Object? tableName = freezed,
   }) {
-    return _then(_$_folder_model(
+    return _then(_$_Folder(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -124,35 +109,29 @@ class __$$_folder_modelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_folder_model with DiagnosticableTreeMixin implements _folder_model {
-  _$_folder_model(
-      {@JsonKey(name: 'id') this.id,
-      @JsonKey(name: 'name') this.name,
-      @JsonKey(name: 'tableName') this.tableName});
+class _$_Folder with DiagnosticableTreeMixin implements _Folder {
+  _$_Folder({this.id, this.name, this.tableName});
 
-  factory _$_folder_model.fromJson(Map<String, dynamic> json) =>
-      _$$_folder_modelFromJson(json);
+  factory _$_Folder.fromJson(Map<String, dynamic> json) =>
+      _$$_FolderFromJson(json);
 
   @override
-  @JsonKey(name: 'id')
   final String? id;
   @override
-  @JsonKey(name: 'name')
   final String? name;
   @override
-  @JsonKey(name: 'tableName')
   final String? tableName;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'folder_model(id: $id, name: $name, tableName: $tableName)';
+    return 'Folder(id: $id, name: $name, tableName: $tableName)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'folder_model'))
+      ..add(DiagnosticsProperty('type', 'Folder'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('tableName', tableName));
@@ -162,7 +141,7 @@ class _$_folder_model with DiagnosticableTreeMixin implements _folder_model {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_folder_model &&
+            other is _$_Folder &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.tableName, tableName));
@@ -178,37 +157,33 @@ class _$_folder_model with DiagnosticableTreeMixin implements _folder_model {
 
   @JsonKey(ignore: true)
   @override
-  _$$_folder_modelCopyWith<_$_folder_model> get copyWith =>
-      __$$_folder_modelCopyWithImpl<_$_folder_model>(this, _$identity);
+  _$$_FolderCopyWith<_$_Folder> get copyWith =>
+      __$$_FolderCopyWithImpl<_$_Folder>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_folder_modelToJson(
+    return _$$_FolderToJson(
       this,
     );
   }
 }
 
-abstract class _folder_model implements folder_model {
-  factory _folder_model(
-      {@JsonKey(name: 'id') final String? id,
-      @JsonKey(name: 'name') final String? name,
-      @JsonKey(name: 'tableName') final String? tableName}) = _$_folder_model;
+abstract class _Folder implements Folder {
+  factory _Folder(
+      {final String? id,
+      final String? name,
+      final String? tableName}) = _$_Folder;
 
-  factory _folder_model.fromJson(Map<String, dynamic> json) =
-      _$_folder_model.fromJson;
+  factory _Folder.fromJson(Map<String, dynamic> json) = _$_Folder.fromJson;
 
   @override
-  @JsonKey(name: 'id')
   String? get id;
   @override
-  @JsonKey(name: 'name')
   String? get name;
   @override
-  @JsonKey(name: 'tableName')
   String? get tableName;
   @override
   @JsonKey(ignore: true)
-  _$$_folder_modelCopyWith<_$_folder_model> get copyWith =>
+  _$$_FolderCopyWith<_$_Folder> get copyWith =>
       throw _privateConstructorUsedError;
 }

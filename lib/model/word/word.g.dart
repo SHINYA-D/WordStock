@@ -1,15 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: non_constant_identifier_names
-
-part of 'word_model.dart';
+part of 'word.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_word_model _$$_word_modelFromJson(Map<String, dynamic> json) =>
-    _$_word_model(
+_$_Word _$$_WordFromJson(Map<String, dynamic> json) => _$_Word(
       wId: json['wId'] as String?,
       wFrontName: json['wFrontName'] as String?,
       wBackName: json['wBackName'] as String?,
@@ -24,8 +21,7 @@ _$_word_model _$$_word_modelFromJson(Map<String, dynamic> json) =>
       wOk: json['wOk'] as String?,
     );
 
-Map<String, dynamic> _$$_word_modelToJson(_$_word_model instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$_WordToJson(_$_Word instance) => <String, dynamic>{
       'wId': instance.wId,
       'wFrontName': instance.wFrontName,
       'wBackName': instance.wBackName,

@@ -1,22 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: non_constant_identifier_names
-
-part of 'folder_model.dart';
+part of 'folder.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_folder_model _$$_folder_modelFromJson(Map<String, dynamic> json) =>
-    _$_folder_model(
+_$_Folder _$$_FolderFromJson(Map<String, dynamic> json) => _$_Folder(
       id: json['id'] as String?,
       name: json['name'] as String?,
       tableName: json['tableName'] as String?,
     );
 
-Map<String, dynamic> _$$_folder_modelToJson(_$_folder_model instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$_FolderToJson(_$_Folder instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'tableName': instance.tableName,

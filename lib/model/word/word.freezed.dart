@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'word_model.dart';
+part of 'word.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,70 +14,56 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-word_model _$word_modelFromJson(Map<String, dynamic> json) {
-  return _word_model.fromJson(json);
+Word _$WordFromJson(Map<String, dynamic> json) {
+  return _Word.fromJson(json);
 }
 
 /// @nodoc
-mixin _$word_model {
-  @JsonKey(name: 'wId')
+mixin _$Word {
   String? get wId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wFrontName')
   String? get wFrontName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wBackName')
   String? get wBackName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wTableName')
   String? get wTableName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wFolderNameId')
   String? get wFolderNameId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wYes')
   int? get wYes => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wNo')
   int? get wNo => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wPlay')
   int? get wPlay => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wTime')
   int? get wTime => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wPercent')
   int? get wPercent => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wAverage')
   int? get wAverage => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wOk')
   String? get wOk => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $word_modelCopyWith<word_model> get copyWith =>
-      throw _privateConstructorUsedError;
+  $WordCopyWith<Word> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $word_modelCopyWith<$Res> {
-  factory $word_modelCopyWith(
-          word_model value, $Res Function(word_model) then) =
-      _$word_modelCopyWithImpl<$Res>;
+abstract class $WordCopyWith<$Res> {
+  factory $WordCopyWith(Word value, $Res Function(Word) then) =
+      _$WordCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'wId') String? wId,
-      @JsonKey(name: 'wFrontName') String? wFrontName,
-      @JsonKey(name: 'wBackName') String? wBackName,
-      @JsonKey(name: 'wTableName') String? wTableName,
-      @JsonKey(name: 'wFolderNameId') String? wFolderNameId,
-      @JsonKey(name: 'wYes') int? wYes,
-      @JsonKey(name: 'wNo') int? wNo,
-      @JsonKey(name: 'wPlay') int? wPlay,
-      @JsonKey(name: 'wTime') int? wTime,
-      @JsonKey(name: 'wPercent') int? wPercent,
-      @JsonKey(name: 'wAverage') int? wAverage,
-      @JsonKey(name: 'wOk') String? wOk});
+      {String? wId,
+      String? wFrontName,
+      String? wBackName,
+      String? wTableName,
+      String? wFolderNameId,
+      int? wYes,
+      int? wNo,
+      int? wPlay,
+      int? wTime,
+      int? wPercent,
+      int? wAverage,
+      String? wOk});
 }
 
 /// @nodoc
-class _$word_modelCopyWithImpl<$Res> implements $word_modelCopyWith<$Res> {
-  _$word_modelCopyWithImpl(this._value, this._then);
+class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
+  _$WordCopyWithImpl(this._value, this._then);
 
-  final word_model _value;
+  final Word _value;
   // ignore: unused_field
-  final $Res Function(word_model) _then;
+  final $Res Function(Word) _then;
 
   @override
   $Res call({
@@ -148,36 +134,33 @@ class _$word_modelCopyWithImpl<$Res> implements $word_modelCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_word_modelCopyWith<$Res>
-    implements $word_modelCopyWith<$Res> {
-  factory _$$_word_modelCopyWith(
-          _$_word_model value, $Res Function(_$_word_model) then) =
-      __$$_word_modelCopyWithImpl<$Res>;
+abstract class _$$_WordCopyWith<$Res> implements $WordCopyWith<$Res> {
+  factory _$$_WordCopyWith(_$_Word value, $Res Function(_$_Word) then) =
+      __$$_WordCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'wId') String? wId,
-      @JsonKey(name: 'wFrontName') String? wFrontName,
-      @JsonKey(name: 'wBackName') String? wBackName,
-      @JsonKey(name: 'wTableName') String? wTableName,
-      @JsonKey(name: 'wFolderNameId') String? wFolderNameId,
-      @JsonKey(name: 'wYes') int? wYes,
-      @JsonKey(name: 'wNo') int? wNo,
-      @JsonKey(name: 'wPlay') int? wPlay,
-      @JsonKey(name: 'wTime') int? wTime,
-      @JsonKey(name: 'wPercent') int? wPercent,
-      @JsonKey(name: 'wAverage') int? wAverage,
-      @JsonKey(name: 'wOk') String? wOk});
+      {String? wId,
+      String? wFrontName,
+      String? wBackName,
+      String? wTableName,
+      String? wFolderNameId,
+      int? wYes,
+      int? wNo,
+      int? wPlay,
+      int? wTime,
+      int? wPercent,
+      int? wAverage,
+      String? wOk});
 }
 
 /// @nodoc
-class __$$_word_modelCopyWithImpl<$Res> extends _$word_modelCopyWithImpl<$Res>
-    implements _$$_word_modelCopyWith<$Res> {
-  __$$_word_modelCopyWithImpl(
-      _$_word_model _value, $Res Function(_$_word_model) _then)
-      : super(_value, (v) => _then(v as _$_word_model));
+class __$$_WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
+    implements _$$_WordCopyWith<$Res> {
+  __$$_WordCopyWithImpl(_$_Word _value, $Res Function(_$_Word) _then)
+      : super(_value, (v) => _then(v as _$_Word));
 
   @override
-  _$_word_model get _value => super._value as _$_word_model;
+  _$_Word get _value => super._value as _$_Word;
 
   @override
   $Res call({
@@ -194,7 +177,7 @@ class __$$_word_modelCopyWithImpl<$Res> extends _$word_modelCopyWithImpl<$Res>
     Object? wAverage = freezed,
     Object? wOk = freezed,
   }) {
-    return _then(_$_word_model(
+    return _then(_$_Word(
       wId: wId == freezed
           ? _value.wId
           : wId // ignore: cast_nullable_to_non_nullable
@@ -249,71 +232,58 @@ class __$$_word_modelCopyWithImpl<$Res> extends _$word_modelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_word_model with DiagnosticableTreeMixin implements _word_model {
-  _$_word_model(
-      {@JsonKey(name: 'wId') this.wId,
-      @JsonKey(name: 'wFrontName') this.wFrontName,
-      @JsonKey(name: 'wBackName') this.wBackName,
-      @JsonKey(name: 'wTableName') this.wTableName,
-      @JsonKey(name: 'wFolderNameId') this.wFolderNameId,
-      @JsonKey(name: 'wYes') this.wYes,
-      @JsonKey(name: 'wNo') this.wNo,
-      @JsonKey(name: 'wPlay') this.wPlay,
-      @JsonKey(name: 'wTime') this.wTime,
-      @JsonKey(name: 'wPercent') this.wPercent,
-      @JsonKey(name: 'wAverage') this.wAverage,
-      @JsonKey(name: 'wOk') this.wOk});
+class _$_Word with DiagnosticableTreeMixin implements _Word {
+  _$_Word(
+      {this.wId,
+      this.wFrontName,
+      this.wBackName,
+      this.wTableName,
+      this.wFolderNameId,
+      this.wYes,
+      this.wNo,
+      this.wPlay,
+      this.wTime,
+      this.wPercent,
+      this.wAverage,
+      this.wOk});
 
-  factory _$_word_model.fromJson(Map<String, dynamic> json) =>
-      _$$_word_modelFromJson(json);
+  factory _$_Word.fromJson(Map<String, dynamic> json) => _$$_WordFromJson(json);
 
   @override
-  @JsonKey(name: 'wId')
   final String? wId;
   @override
-  @JsonKey(name: 'wFrontName')
   final String? wFrontName;
   @override
-  @JsonKey(name: 'wBackName')
   final String? wBackName;
   @override
-  @JsonKey(name: 'wTableName')
   final String? wTableName;
   @override
-  @JsonKey(name: 'wFolderNameId')
   final String? wFolderNameId;
   @override
-  @JsonKey(name: 'wYes')
   final int? wYes;
   @override
-  @JsonKey(name: 'wNo')
   final int? wNo;
   @override
-  @JsonKey(name: 'wPlay')
   final int? wPlay;
   @override
-  @JsonKey(name: 'wTime')
   final int? wTime;
   @override
-  @JsonKey(name: 'wPercent')
   final int? wPercent;
   @override
-  @JsonKey(name: 'wAverage')
   final int? wAverage;
   @override
-  @JsonKey(name: 'wOk')
   final String? wOk;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'word_model(wId: $wId, wFrontName: $wFrontName, wBackName: $wBackName, wTableName: $wTableName, wFolderNameId: $wFolderNameId, wYes: $wYes, wNo: $wNo, wPlay: $wPlay, wTime: $wTime, wPercent: $wPercent, wAverage: $wAverage, wOk: $wOk)';
+    return 'Word(wId: $wId, wFrontName: $wFrontName, wBackName: $wBackName, wTableName: $wTableName, wFolderNameId: $wFolderNameId, wYes: $wYes, wNo: $wNo, wPlay: $wPlay, wTime: $wTime, wPercent: $wPercent, wAverage: $wAverage, wOk: $wOk)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'word_model'))
+      ..add(DiagnosticsProperty('type', 'Word'))
       ..add(DiagnosticsProperty('wId', wId))
       ..add(DiagnosticsProperty('wFrontName', wFrontName))
       ..add(DiagnosticsProperty('wBackName', wBackName))
@@ -332,7 +302,7 @@ class _$_word_model with DiagnosticableTreeMixin implements _word_model {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_word_model &&
+            other is _$_Word &&
             const DeepCollectionEquality().equals(other.wId, wId) &&
             const DeepCollectionEquality()
                 .equals(other.wFrontName, wFrontName) &&
@@ -369,73 +339,59 @@ class _$_word_model with DiagnosticableTreeMixin implements _word_model {
 
   @JsonKey(ignore: true)
   @override
-  _$$_word_modelCopyWith<_$_word_model> get copyWith =>
-      __$$_word_modelCopyWithImpl<_$_word_model>(this, _$identity);
+  _$$_WordCopyWith<_$_Word> get copyWith =>
+      __$$_WordCopyWithImpl<_$_Word>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_word_modelToJson(
+    return _$$_WordToJson(
       this,
     );
   }
 }
 
-abstract class _word_model implements word_model {
-  factory _word_model(
-      {@JsonKey(name: 'wId') final String? wId,
-      @JsonKey(name: 'wFrontName') final String? wFrontName,
-      @JsonKey(name: 'wBackName') final String? wBackName,
-      @JsonKey(name: 'wTableName') final String? wTableName,
-      @JsonKey(name: 'wFolderNameId') final String? wFolderNameId,
-      @JsonKey(name: 'wYes') final int? wYes,
-      @JsonKey(name: 'wNo') final int? wNo,
-      @JsonKey(name: 'wPlay') final int? wPlay,
-      @JsonKey(name: 'wTime') final int? wTime,
-      @JsonKey(name: 'wPercent') final int? wPercent,
-      @JsonKey(name: 'wAverage') final int? wAverage,
-      @JsonKey(name: 'wOk') final String? wOk}) = _$_word_model;
+abstract class _Word implements Word {
+  factory _Word(
+      {final String? wId,
+      final String? wFrontName,
+      final String? wBackName,
+      final String? wTableName,
+      final String? wFolderNameId,
+      final int? wYes,
+      final int? wNo,
+      final int? wPlay,
+      final int? wTime,
+      final int? wPercent,
+      final int? wAverage,
+      final String? wOk}) = _$_Word;
 
-  factory _word_model.fromJson(Map<String, dynamic> json) =
-      _$_word_model.fromJson;
+  factory _Word.fromJson(Map<String, dynamic> json) = _$_Word.fromJson;
 
   @override
-  @JsonKey(name: 'wId')
   String? get wId;
   @override
-  @JsonKey(name: 'wFrontName')
   String? get wFrontName;
   @override
-  @JsonKey(name: 'wBackName')
   String? get wBackName;
   @override
-  @JsonKey(name: 'wTableName')
   String? get wTableName;
   @override
-  @JsonKey(name: 'wFolderNameId')
   String? get wFolderNameId;
   @override
-  @JsonKey(name: 'wYes')
   int? get wYes;
   @override
-  @JsonKey(name: 'wNo')
   int? get wNo;
   @override
-  @JsonKey(name: 'wPlay')
   int? get wPlay;
   @override
-  @JsonKey(name: 'wTime')
   int? get wTime;
   @override
-  @JsonKey(name: 'wPercent')
   int? get wPercent;
   @override
-  @JsonKey(name: 'wAverage')
   int? get wAverage;
   @override
-  @JsonKey(name: 'wOk')
   String? get wOk;
   @override
   @JsonKey(ignore: true)
-  _$$_word_modelCopyWith<_$_word_model> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_WordCopyWith<_$_Word> get copyWith => throw _privateConstructorUsedError;
 }
