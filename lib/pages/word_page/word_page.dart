@@ -10,8 +10,8 @@ class WordPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final folderId = ModalRoute.of(context)!.settings.arguments;
-    final String? folderIdNum = folderId as String?;
+    final folderId = ModalRoute.of(context)?.settings.arguments;
+    final String folderIdNum = folderId as String;
 
     //共通プロバイダ
     final wordsProvider = ref.watch(wordProvider);
@@ -20,7 +20,7 @@ class WordPage extends ConsumerWidget {
     final controlWordsProvider = ref.read(wordProvider.notifier);
 
     // //FolderID抽出処理
-    controlWordsProvider.getPointData(folderIdNum!);
+    controlWordsProvider.getPointData(folderIdNum);
 
 /*==============================================================================
 【ワード画面】
@@ -89,11 +89,11 @@ class WordPage extends ConsumerWidget {
           Container(
             margin: EdgeInsets.only(left: 5.w, bottom: 530.h),
             child: wordsProvider.when(
-              data: (articles) => FloatingActionButton(
+              data: (wordsProvider) => FloatingActionButton(
                 heroTag: "btn2",
                 backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                 onPressed: () {
-                  final List<Word> wordExtract = wordsProvider.value!;
+                  final List<Word> wordExtract = wordsProvider;
 
                   Navigator.pushReplacementNamed(context, "/playpage",
                       arguments: wordExtract);
@@ -115,9 +115,9 @@ class WordPage extends ConsumerWidget {
 /*==============================================================================
 【ListWidget処理】
 ==============================================================================*/
-Widget _folderList(int index,
+Widget _folderList( int index,
     List<Word> wordsProvider,
-    BuildContext context ) =>
+    BuildContext context) =>
 
     Padding(
       padding: EdgeInsets.only(top: 10.h),
@@ -149,7 +149,7 @@ Widget _folderList(int index,
                     color: const Color.fromARGB(255, 0, 0, 0),
                   ),
                   Text(
-                    wordsProvider[index].wFrontName!,
+                    wordsProvider[index].wFrontName ?? 'NULL',
                     style: const TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),

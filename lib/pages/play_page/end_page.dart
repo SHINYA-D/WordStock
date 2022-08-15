@@ -9,8 +9,11 @@ class EndPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Object? countList = ModalRoute.of(context)!.settings.arguments;
-    final List<dynamic> counts = countList! as List<dynamic>;
+    Object? countList = ModalRoute.of(context)?.settings.arguments;
+    if (countList == null) {
+      throw Exception();
+    }
+    final List<dynamic> counts = countList as List<dynamic>;
     final good = counts[0];
     final bad = counts[1];
     final folderID = counts[2];
@@ -78,7 +81,7 @@ class EndPage extends ConsumerWidget {
                             style: ElevatedButton.styleFrom(
                               primary: Colors.white,
                               side: const BorderSide(
-                                color: Colors.black, //枠線!
+                                color: Colors.black,
                                 width: 1, //枠線！
                               ),
                             ),
@@ -116,8 +119,8 @@ class EndPage extends ConsumerWidget {
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.white,
                                 side: const BorderSide(
-                                  color: Colors.black, //枠線!
-                                  width: 1, //枠線！
+                                  color: Colors.black,
+                                  width: 1,
                                 ),
                               ),
                               child: const Text(
@@ -128,7 +131,7 @@ class EndPage extends ConsumerWidget {
                               ),
                             ),
                             error: (error, stackTrace) =>
-                              Text('エラーが発生しました。\n ${error.toString()}'),
+                                Text('エラーが発生しました。\n ${error.toString()}'),
                             loading: () => const CircularProgressIndicator(),
                           ),
                         ),

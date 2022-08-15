@@ -103,9 +103,8 @@ class WordRegistration extends ConsumerWidget {
 /*==============================================================================
 【フォーム画面】
 ==============================================================================*/
-Widget _inputForm( List<TextEditingController> frontTextController,
-    List<TextEditingController> backTextController,
-    int index) {
+Widget _inputForm(List<TextEditingController> frontTextController,
+    List<TextEditingController> backTextController, int index) {
   return Column(children: [
     TextField(
       maxLength: 20,
@@ -207,6 +206,7 @@ _wordRegister(
     List<TextEditingController> backTextController,
     String? folderIdNum,
     controlWordsProvider) {
+
   for (var i = 0; i < cardItemCount; i++) {
     if ((frontTextController[i].text != "") &&
         (backTextController[i].text != "")) {

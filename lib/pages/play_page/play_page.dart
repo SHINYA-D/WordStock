@@ -9,9 +9,9 @@ int good = 0;
 int bad = 0;
 
 //Goodボタンストック変数
-List<String>? okList = [];
+List<String> okList = [];
 //Badボタンストック変数
-List<String>? ngList = [];
+List<String> ngList = [];
 
 class PlayPage extends StatelessWidget {
   const PlayPage({Key? key}) : super(key: key);
@@ -143,7 +143,7 @@ Widget _button(MatchEngine matchEngine) {
               //現在の選択されているデータのID
               final String upId = matchEngine.currentItem?.content;
               //OK wordデータをストック
-              okList!.add(upId);
+              okList.add(upId);
               //Good処理：左にCardが遷移する
               matchEngine.currentItem?.nope();
               good = good + 1;
@@ -167,7 +167,7 @@ Widget _button(MatchEngine matchEngine) {
               //現在の選択されているデータのID
               final String upId = matchEngine.currentItem?.content;
               //NG wordデータをストック
-              ngList!.add(upId);
+              ngList.add(upId);
               //Bad処理：右にCardが遷移する
               matchEngine.currentItem?.like();
               bad = bad + 1;

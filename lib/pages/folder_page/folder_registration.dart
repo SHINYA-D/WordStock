@@ -43,10 +43,13 @@ class FolderRegistration extends ConsumerWidget {
             onPressed: () {
               final String uid = const Uuid().v4();
               final Folder register = Folder(
-                  id: uid, name: dateTextController.text, tableName: 'folders');
+                id: uid, name: dateTextController.text, tableName: 'folders'
+              );
+
               //【登録処理】
               controlFolderProvider.registerData(register);
               Navigator.pop(context);
+
             },
             child: const Text("OK"),
           ),

@@ -30,9 +30,9 @@ class FolderPageControl extends StateNotifier<AsyncValue<List<Folder>>> {
   //削除処理
   Future<void> deleteData(Folder selectFolder, int index) async {
     if (selectFolder.id != null) {
-      await readProvider.deleteFolder(selectFolder.id!);
-      await readProvider.deleteIdSearch(selectFolder.id!);
-      state = AsyncValue.data(state.value!..remove(selectFolder));
+      await readProvider.deleteFolder(selectFolder.id);
+      await readProvider.deleteIdSearch(selectFolder.id);
+      if (state.value == null) return;
       state = AsyncValue.data(state.value!..remove(selectFolder));
     }
   }
@@ -40,9 +40,10 @@ class FolderPageControl extends StateNotifier<AsyncValue<List<Folder>>> {
   //編集処理
   Future<void> upData(Folder upData) async {
     await readProvider.upFolder(upData);
+    if (state.value == null) return;
     for (var i = 0; i < state.value!.length; i++) {
       if (state.value?[i].id == upData.id) {
-        state.value?[i] = upData; //as AsyncValue<List<folder_model>>;
+        state.value?[i] = upData;
         state = AsyncValue.data([...state.value!]);
       }
     }

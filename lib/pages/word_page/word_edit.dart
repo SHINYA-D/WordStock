@@ -11,8 +11,9 @@ class WordEdit extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    EditBox? args = ModalRoute.of(context)!.settings.arguments as EditBox?;
-    int selectNum = args!.selectNum;
+    EditBox args = ModalRoute.of(context)?.settings.arguments as EditBox;
+    int selectNum = args.selectNum;
+
     List<Word> words = args.words;
 
     //共通プロバイダ
@@ -23,6 +24,11 @@ class WordEdit extends ConsumerWidget {
 
     //FolderID抽出処理
     controlWordsProvider.getPointData(words[selectNum].wFolderNameId);
+
+    //NULLチェックはいらない [wordsProvider.value!]
+    // if(wordsProvider.value![selectNum] == null) {
+    //   throw Exception();
+    // }
 
     //入力コントローラ　表
     final frontTextController =

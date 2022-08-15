@@ -29,12 +29,15 @@ class WordPageControl extends StateNotifier<AsyncValue<List<Word>>> {
   //削除処理
   Future<void> deleteData(Word selectWord) async {
     await readProvider.deleteWord(selectWord.wId!);
-    state = AsyncValue.data(state.value!..remove(selectWord));
+    state = state.value != null
+        ? AsyncValue.data(state.value!..remove(selectWord))
+        : const AsyncValue.data([]);
   }
 
   // //編集処理
   Future<void> upData(Word upData) async {
     await readProvider.upWord(upData);
+    //if(state.value! == null) return;
     for (var i = 0; i < state.value!.length; i++) {
       if (state.value![i].wId == upData.wId) {
         state.value![i] = upData;

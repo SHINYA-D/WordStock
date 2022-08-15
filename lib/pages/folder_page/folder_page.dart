@@ -98,10 +98,7 @@ class FolderPage extends ConsumerWidget {
 /*==============================================================================
 【ListWidget処理】
 ==============================================================================*/
-Widget _folderList(int i,
-    List<Folder> foldersProvider,
-    BuildContext context) =>
-
+Widget _folderList(int i, List<Folder> foldersProvider, BuildContext context) =>
     Padding(
       padding: EdgeInsets.only(top: 10.h),
       child: Container(
@@ -135,7 +132,7 @@ Widget _folderList(int i,
                     color: const Color.fromARGB(255, 0, 0, 0),
                   ),
                   Text(
-                    foldersProvider[i].name!,
+                    foldersProvider[i].name ?? '値が入っていません！',
                     style: const TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),

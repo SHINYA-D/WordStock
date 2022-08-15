@@ -21,6 +21,7 @@ class EndPageControl extends StateNotifier<AsyncValue<List<Word>>> {
 
   //Bad：編集処理
   Future<void> endBadUp(String upId) async {
+    //if(state.value! == null) return ;
     for (int i = 0; i < state.value!.length; i++) {
       if (state.value![i].wId == upId) {
         state.value![i] =
@@ -36,6 +37,7 @@ class EndPageControl extends StateNotifier<AsyncValue<List<Word>>> {
 
   //wOkに入っている値すべてFLATに変更
   Future<void> endFlat(String folderId) async {
+    //if(state.value! == null) return ;
     for (int i = 0; i < state.value!.length; i++) {
       if (state.value![i].wFolderNameId == folderId) {
         state.value![i] = state.value![i].copyWith(wOk: 'FLAT');
