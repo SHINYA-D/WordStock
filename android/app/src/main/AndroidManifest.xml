@@ -2,7 +2,7 @@
     package="com.okinawa3274s.name.wordstock">
    <application
         android:label="WordStock"
-        android:name="android.app.Application"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
