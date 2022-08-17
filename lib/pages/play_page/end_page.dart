@@ -43,14 +43,14 @@ class EndPage extends ConsumerWidget {
 【成績表画面】
 ==============================================================================*/
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
           '単語一覧',
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          style: TextStyle(color: Colors.white,),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        backgroundColor: Colors.black,
       ),
       body: SizedBox(
         height: 500.h,

@@ -26,14 +26,14 @@ class WordPage extends ConsumerWidget {
 【ワード画面】
 ==============================================================================*/
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
           '単語一覧',
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          style: TextStyle(color: Colors.white,),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        backgroundColor: Colors.black,
       ),
       body: SlidableAutoCloseBehavior(
         child: Padding(
@@ -52,7 +52,7 @@ class WordPage extends ConsumerWidget {
                           final selectWord = wordsProvider[index];
                           controlWordsProvider.deleteData(selectWord);
                         },
-                        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                        backgroundColor: Colors.black,
                         icon: Icons.delete,
                         label: '削除',
                       ),
@@ -77,13 +77,13 @@ class WordPage extends ConsumerWidget {
             margin: EdgeInsets.only(left: 280.w, bottom: 530.h),
             child: FloatingActionButton(
               heroTag: "btn1",
-              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+              backgroundColor: Colors.white,
               onPressed: () {
                 //【登録画面】
                 Navigator.pushNamed(context, "/wordregistration",
                     arguments: folderIdNum);
               },
-              child: const Icon(Icons.add, color: Color.fromARGB(255, 0, 0, 0)),
+              child: const Icon(Icons.add, color: Colors.black,),
             ),
           ),
           Container(
@@ -91,7 +91,7 @@ class WordPage extends ConsumerWidget {
             child: wordsProvider.when(
               data: (wordsProvider) => FloatingActionButton(
                 heroTag: "btn2",
-                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                backgroundColor: Colors.white,
                 onPressed: () {
                   final List<Word> wordExtract = wordsProvider;
 
@@ -99,7 +99,7 @@ class WordPage extends ConsumerWidget {
                       arguments: wordExtract);
                 },
                 child: const Icon(Icons.play_circle_filled,
-                    color: Color.fromARGB(255, 0, 0, 0)),
+                    color: Colors.black,),
               ),
               error: (error, stackTrace) =>
                   Text('エラーが発生しました。\n ${error.toString()}'),
@@ -123,7 +123,7 @@ Widget _folderList( int index,List<Word> wordsProvider,BuildContext context) =>
         height: 60.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.w)),
-          color: const Color.fromARGB(255, 255, 255, 255),
+          color: Colors.white,
         ),
         child: Center(
           child: SizedBox(
@@ -134,7 +134,7 @@ Widget _folderList( int index,List<Word> wordsProvider,BuildContext context) =>
                     arguments: EditBox(index, wordsProvider));
               },
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromARGB(255, 255, 255, 255),
+                primary: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -144,12 +144,12 @@ Widget _folderList( int index,List<Word> wordsProvider,BuildContext context) =>
                   Icon(
                     Icons.description,
                     size: 60.sp,
-                    color: const Color.fromARGB(255, 0, 0, 0),
+                    color: Colors.black,
                   ),
                   Text(
                     wordsProvider[index].wFrontName ?? 'NULL',
                     style: const TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
+                      color: Colors.black,
                     ),
                   ),
                 ],

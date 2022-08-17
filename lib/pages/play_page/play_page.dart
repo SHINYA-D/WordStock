@@ -42,9 +42,9 @@ class PlayPage extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           'PLAY',
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          style: TextStyle(color: Colors.white,),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        backgroundColor: Colors.black,
       ),
       body: Column(
         children: <Widget>[
@@ -149,7 +149,7 @@ Widget _button(MatchEngine matchEngine) {
               good = good + 1;
             },
             child: const Icon(Icons.thumb_up_alt,
-                color: Color.fromARGB(255, 0, 0, 0)),
+                color: Colors.black,),
           ),
         ),
         SizedBox(
@@ -173,7 +173,7 @@ Widget _button(MatchEngine matchEngine) {
               bad = bad + 1;
             },
             child: const Icon(Icons.thumb_down_alt,
-                color: Color.fromARGB(255, 0, 0, 0)),
+                color: Colors.black,),
           ),
         ),
       ],

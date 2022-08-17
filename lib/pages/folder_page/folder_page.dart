@@ -20,14 +20,14 @@ class FolderPage extends ConsumerWidget {
 【フォルダ画面】
 ==============================================================================*/
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
           'WordStock',
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          style: TextStyle(color: Colors.white,),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        backgroundColor: Colors.black,
       ),
       body: SlidableAutoCloseBehavior(
         child: Padding(
@@ -46,7 +46,7 @@ class FolderPage extends ConsumerWidget {
                           Navigator.pushNamed(context, "/folderedit",
                               arguments: index);
                         },
-                        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                        backgroundColor: Colors.black,
                         icon: Icons.settings,
                         label: '編集',
                       ),
@@ -56,7 +56,7 @@ class FolderPage extends ConsumerWidget {
                           final selectFolder = foldersProvider[index];
                           controlFolderProvider.deleteData(selectFolder, index);
                         },
-                        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                        backgroundColor: Colors.black,
                         icon: Icons.delete,
                         label: '削除',
                       ),
@@ -78,7 +78,7 @@ class FolderPage extends ConsumerWidget {
       floatingActionButton: Container(
         margin: EdgeInsets.only(bottom: 530.h),
         child: FloatingActionButton(
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: Colors.white,
           onPressed: () {
             showDialog(
                 context: context,
@@ -88,7 +88,7 @@ class FolderPage extends ConsumerWidget {
                 });
           },
           child: const Icon(Icons.create_new_folder,
-              color: Color.fromARGB(255, 0, 0, 0)),
+              color: Colors.black,),
         ),
       ),
     );
@@ -105,7 +105,7 @@ Widget _folderList(int i, List<Folder> foldersProvider, BuildContext context) =>
         height: 60.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.w)),
-          color: const Color.fromARGB(255, 255, 255, 255),
+          color: Colors.white,
         ),
         child: Center(
           child: SizedBox(
@@ -118,23 +118,22 @@ Widget _folderList(int i, List<Folder> foldersProvider, BuildContext context) =>
                     arguments: folderIdNum);
               },
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromARGB(255, 255, 255, 255),
+                primary: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                //const Color.fromARGB(255, 255, 255, 255),
               ),
               child: Row(
                 children: [
                   Icon(
                     Icons.folder,
                     size: 60.sp,
-                    color: const Color.fromARGB(255, 0, 0, 0),
+                    color: Colors.black,
                   ),
                   Text(
                     foldersProvider[i].name ?? '値が入っていません！',
                     style: const TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
+                      color: Colors.black,
                     ),
                   ),
                 ],

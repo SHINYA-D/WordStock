@@ -37,7 +37,7 @@ class WordRegistration extends ConsumerWidget {
         centerTitle: true,
         title: const Text(
           'カード作成',
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          style: TextStyle(color: Colors.white,),
         ),
       ),
       body: GestureDetector(
@@ -94,7 +94,7 @@ class WordRegistration extends ConsumerWidget {
               folderIdNum, controlWordsProvider);
           Navigator.of(context).pop();
         },
-        child: const Icon(Icons.add_box, color: Color.fromARGB(255, 0, 0, 0)),
+        child: const Icon(Icons.add_box, color: Colors.black,),
       ),
     );
   }

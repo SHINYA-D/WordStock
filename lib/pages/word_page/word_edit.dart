@@ -45,14 +45,14 @@ class WordEdit extends ConsumerWidget {
 【編集画面】
 ==============================================================================*/
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
           'WordStock',
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          style: TextStyle(color: Colors.white,),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        backgroundColor: Colors.black,
       ),
       body: ListView(
         children: [
@@ -63,7 +63,7 @@ class WordEdit extends ConsumerWidget {
             child: Card(
               margin: EdgeInsets.only(
                   top: 10.h, right: 0.w, bottom: 0.h, left: 5.w),
-              color: const Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
               child: SizedBox(
                 width: 380.w,
                 child: Center(
@@ -79,7 +79,7 @@ class WordEdit extends ConsumerWidget {
             child: Card(
               margin: EdgeInsets.only(
                   top: 10.h, right: 0.w, bottom: 0.h, left: 5.w),
-              color: const Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
               child: SizedBox(
                 width: 380.w,
                 child: Center(
