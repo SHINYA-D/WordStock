@@ -115,9 +115,7 @@ class WordPage extends ConsumerWidget {
 /*==============================================================================
 【ListWidget処理】
 ==============================================================================*/
-Widget _folderList( int index,
-    List<Word> wordsProvider,
-    BuildContext context) =>
+Widget _folderList( int index,List<Word> wordsProvider,BuildContext context) =>
 
     Padding(
       padding: EdgeInsets.only(top: 10.h),
