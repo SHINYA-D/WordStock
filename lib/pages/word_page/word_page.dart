@@ -47,7 +47,7 @@ class WordPage extends ConsumerWidget {
                     motion: const StretchMotion(),
                     children: [
                       SlidableAction(
-                        onPressed: (value) async {
+                        onPressed: (value)  {
                           //【削除処理】
                           final selectWord = wordsProvider[index];
                           controlWordsProvider.deleteData(selectWord);

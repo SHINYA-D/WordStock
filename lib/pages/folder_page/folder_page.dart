@@ -51,7 +51,7 @@ class FolderPage extends ConsumerWidget {
                         label: '編集',
                       ),
                       SlidableAction(
-                        onPressed: (value) async {
+                        onPressed: (value)  {
                           //【削除処理】
                           final selectFolder = foldersProvider[index];
                           controlFolderProvider.deleteData(selectFolder, index);
