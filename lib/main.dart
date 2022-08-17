@@ -16,7 +16,7 @@ main() {
           designSize: const Size(431, 732),
           minTextAdapt: true,
           splitScreenMode: true,
-          builder: (context, child) {
+          builder: (context, _) {
             return MaterialApp(
               initialRoute: '/',
               routes: <String, WidgetBuilder>{

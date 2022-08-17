@@ -144,7 +144,7 @@ class WordEdit extends ConsumerWidget {
                         },
                         child: const Text("OK"),
                       ),
-                      error: (error, stackTrace) =>
+                      error: (error, _) =>
                           Text('エラーが発生しました。\n ${error.toString()}'),
                       loading: () => const CircularProgressIndicator(),
                     ),

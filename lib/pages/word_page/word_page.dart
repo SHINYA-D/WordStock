@@ -47,7 +47,7 @@ class WordPage extends ConsumerWidget {
                     motion: const StretchMotion(),
                     children: [
                       SlidableAction(
-                        onPressed: (value)  {
+                        onPressed: (_)  {
                           //【削除処理】
                           final selectWord = wordsProvider[index];
                           controlWordsProvider.deleteData(selectWord);
@@ -65,7 +65,7 @@ class WordPage extends ConsumerWidget {
                 );
               },
             ),
-            error: (error, stackTrace) =>
+            error: (error, _) =>
                 Text('エラーが発生しました。\n ${error.toString()}'),
             loading: () => const CircularProgressIndicator(),
           ),
@@ -101,7 +101,7 @@ class WordPage extends ConsumerWidget {
                 child: const Icon(Icons.play_circle_filled,
                     color: Colors.black,),
               ),
-              error: (error, stackTrace) =>
+              error: (error, _) =>
                   Text('エラーが発生しました。\n ${error.toString()}'),
               loading: () => const CircularProgressIndicator(),
             ),

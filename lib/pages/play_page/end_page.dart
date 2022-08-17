@@ -130,7 +130,7 @@ class EndPage extends ConsumerWidget {
                                 ),
                               ),
                             ),
-                            error: (error, stackTrace) =>
+                            error: (error, _) =>
                                 Text('エラーが発生しました。\n ${error.toString()}'),
                             loading: () => const CircularProgressIndicator(),
                           ),

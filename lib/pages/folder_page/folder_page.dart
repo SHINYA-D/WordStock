@@ -51,7 +51,7 @@ class FolderPage extends ConsumerWidget {
                         label: '編集',
                       ),
                       SlidableAction(
-                        onPressed: (value)  {
+                        onPressed: (_)  {
                           //【削除処理】
                           final selectFolder = foldersProvider[index];
                           controlFolderProvider.deleteData(selectFolder, index);
@@ -69,7 +69,7 @@ class FolderPage extends ConsumerWidget {
                 );
               },
             ),
-            error: (error, stackTrace) =>
+            error: (error,_) =>
                 Text('エラーが発生しました。\n ${error.toString()}'),
             loading: () => const CircularProgressIndicator(),
           ),
