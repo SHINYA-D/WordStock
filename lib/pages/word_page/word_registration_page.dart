@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordstock/model/word/word.dart';
-import 'word_page_control.dart';
+import 'word_controller.dart';
 
-class WordRegistration extends ConsumerWidget {
-  const WordRegistration({Key? key}) : super(key: key);
+class WordRegistrationPage extends ConsumerWidget {
+  const WordRegistrationPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,11 +19,11 @@ class WordRegistration extends ConsumerWidget {
 
     //Word登録　表
     final List<TextEditingController> frontTextController =
-        List.generate(5, (i) => TextEditingController(text: ''));
+    List.generate(5, (i) => TextEditingController(text: ''));
 
     //Word登録　裏
     final List<TextEditingController> backTextController =
-        List.generate(5, (i) => TextEditingController(text: ''));
+    List.generate(5, (i) => TextEditingController(text: ''));
 
     //更新プロバイダ
     final controlWordsProvider = ref.read(wordProvider.notifier);
@@ -67,11 +67,11 @@ class WordRegistration extends ConsumerWidget {
                               Text('$x枚目のカード'),
 
                               //表カード入力フォーム
-                              _inputForm(frontTextController,
+                              _buildInputForm(frontTextController,
                                   backTextController, index),
 
                               //完了・取り消しボタン
-                              _completionButton(frontTextController,
+                              _buildCompletionButton(frontTextController,
                                   backTextController, index, context),
                             ],
                           ),
@@ -103,7 +103,7 @@ class WordRegistration extends ConsumerWidget {
 /*==============================================================================
 【フォーム画面】
 ==============================================================================*/
-Widget _inputForm(List<TextEditingController> frontTextController,
+Widget _buildInputForm(List<TextEditingController> frontTextController,
     List<TextEditingController> backTextController, int index) {
   return Column(children: [
     TextField(
@@ -135,7 +135,7 @@ Widget _inputForm(List<TextEditingController> frontTextController,
 /*==============================================================================
 【実行ボタン】
 ==============================================================================*/
-Widget _completionButton(
+Widget _buildCompletionButton(
     List<TextEditingController> frontTextController,
     List<TextEditingController> backTextController,
     int index,

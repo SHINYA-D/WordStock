@@ -58,7 +58,7 @@ class PlayPage extends StatelessWidget {
                       right: 15.w,
                       top: 10.h,
                     ),
-                    child: _flipCard(context, wordExtract, index),
+                    child: _buildFlipCard(context, wordExtract, index),
                   );
                 },
                 //全カードスワイプ後の処理
@@ -82,7 +82,7 @@ class PlayPage extends StatelessWidget {
                 }),
           ),
           //【GOOD/BAD ボタン処理処理】
-          _button(matchEngine),
+          _buildButton(matchEngine),
         ],
       ),
     );
@@ -92,7 +92,7 @@ class PlayPage extends StatelessWidget {
 /*==============================================================================
 【FlipCard処理】
 ==============================================================================*/
-Widget _flipCard(BuildContext context, List<Word> wordExtract, int index) {
+Widget _buildFlipCard(BuildContext context, List<Word> wordExtract, int index) {
   return FlipCard(
     direction: FlipDirection.VERTICAL,
     speed: 500,
@@ -122,7 +122,7 @@ Widget _flipCard(BuildContext context, List<Word> wordExtract, int index) {
 /*==============================================================================
 【GOOD/BAD ボタン処理】
 ==============================================================================*/
-Widget _button(MatchEngine matchEngine) {
+Widget _buildButton(MatchEngine matchEngine) {
   return Padding(
     padding: EdgeInsets.only(top: 40.h),
     child: Row(
@@ -149,7 +149,7 @@ Widget _button(MatchEngine matchEngine) {
               good = good + 1;
             },
             child: const Icon(Icons.thumb_up_alt,
-                color: Colors.black,),
+              color: Colors.black,),
           ),
         ),
         SizedBox(
@@ -173,7 +173,7 @@ Widget _button(MatchEngine matchEngine) {
               bad = bad + 1;
             },
             child: const Icon(Icons.thumb_down_alt,
-                color: Colors.black,),
+              color: Colors.black,),
           ),
         ),
       ],

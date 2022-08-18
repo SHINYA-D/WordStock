@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:wordstock/model/folder/folder.dart';
-import 'package:wordstock/pages/folder_page/folder_page_control.dart';
-import 'package:wordstock/pages/folder_page/folder_registration.dart';
+import 'package:wordstock/pages/folder_page/folder_controller.dart';
+import 'package:wordstock/pages/folder_page/folder_registration_page.dart';
 
 class FolderPage extends ConsumerWidget {
   const FolderPage({Key? key}) : super(key: key);
@@ -64,7 +64,7 @@ class FolderPage extends ConsumerWidget {
                   ),
                   child: ListTile(
                     //【ListWidget処理】
-                    title: _folderList(index, foldersProvider, context),
+                    title: _buildFolderList(index, foldersProvider, context),
                   ),
                 );
               },
@@ -84,11 +84,11 @@ class FolderPage extends ConsumerWidget {
                 context: context,
                 builder: (context) {
                   //【登録画面】
-                  return const FolderRegistration();
+                  return const FolderRegistrationPage();
                 });
           },
           child: const Icon(Icons.create_new_folder,
-              color: Colors.black,),
+            color: Colors.black,),
         ),
       ),
     );
@@ -98,7 +98,7 @@ class FolderPage extends ConsumerWidget {
 /*==============================================================================
 【ListWidget処理】
 ==============================================================================*/
-Widget _folderList(int i, List<Folder> foldersProvider, BuildContext context) =>
+Widget _buildFolderList(int i, List<Folder> foldersProvider, BuildContext context) =>
     Padding(
       padding: EdgeInsets.only(top: 10.h),
       child: Container(

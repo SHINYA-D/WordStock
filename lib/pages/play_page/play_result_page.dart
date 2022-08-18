@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wordstock/model/word/word.dart';
-import 'package:wordstock/pages/play_page/end_page_control.dart';
+import 'package:wordstock/pages/play_page/play_result_controller.dart';
 
-class EndPage extends ConsumerWidget {
-  const EndPage({Key? key}) : super(key: key);
+class PlayResultPage extends ConsumerWidget {
+  const PlayResultPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,7 +64,7 @@ class EndPage extends ConsumerWidget {
                 child: Column(
                   children: [
                     //【成績表表示処理】
-                    _score(good, bad, total),
+                    _buildScore(good, bad, total),
                     //【ボタン処理】
                     Column(
                       children: [
@@ -76,7 +76,7 @@ class EndPage extends ConsumerWidget {
                               endControlProvider.endFlat(folderID);
                               await Navigator.of(context)
                                   .pushNamedAndRemoveUntil(
-                                      "/", ModalRoute.withName("/"));
+                                  "/", ModalRoute.withName("/"));
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.white,
@@ -151,7 +151,7 @@ class EndPage extends ConsumerWidget {
 /*==============================================================================
 【成績表表示】
 ==============================================================================*/
-Widget _score(int good, int bad, int total) {
+Widget _buildScore(int good, int bad, int total) {
   return Column(
     children: [
       SizedBox(

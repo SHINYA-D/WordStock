@@ -3,17 +3,17 @@ import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final startDb =
-    FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getWords());
+FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getWords());
 
 final wordProvider =
-    StateNotifierProvider<WordPageControl, AsyncValue<List<Word>>>((ref) {
+StateNotifierProvider<WordController, AsyncValue<List<Word>>>((ref) {
   final readProvider = ref.read(sqliteRepositoryProvider);
   final startDbs = ref.watch(startDb);
-  return WordPageControl(readProvider, startDbs);
+  return WordController(readProvider, startDbs);
 });
 
-class WordPageControl extends StateNotifier<AsyncValue<List<Word>>> {
-  WordPageControl(this.readProvider, this.startDbs) : super(startDbs);
+class WordController extends StateNotifier<AsyncValue<List<Word>>> {
+  WordController(this.readProvider, this.startDbs) : super(startDbs);
 
   final SqliteRepository readProvider;
   final AsyncValue<List<Word>> startDbs;

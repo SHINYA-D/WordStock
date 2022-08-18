@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordstock/model/folder/folder.dart';
-import 'package:wordstock/pages/folder_page/folder_page_control.dart';
+import 'package:wordstock/pages/folder_page/folder_controller.dart';
 
-class FolderEdit extends ConsumerWidget {
-  const FolderEdit({Key? key}) : super(key: key);
+class FolderEditPage extends ConsumerWidget {
+  const FolderEditPage({Key? key}) : super(key: key);
 
   @override
   Widget build(
-    BuildContext context,
-    WidgetRef ref,
-  ) {
+      BuildContext context,
+      WidgetRef ref,
+      ) {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
     final int index = args as int;
 

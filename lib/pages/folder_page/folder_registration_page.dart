@@ -3,16 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordstock/model/folder/folder.dart';
-import 'package:wordstock/pages/folder_page/folder_page_control.dart';
+import 'package:wordstock/pages/folder_page/folder_controller.dart';
 
-class FolderRegistration extends ConsumerWidget {
-  const FolderRegistration({Key? key}) : super(key: key);
+class FolderRegistrationPage extends ConsumerWidget {
+  const FolderRegistrationPage({Key? key}) : super(key: key);
 
   @override
   Widget build(
-    BuildContext context,
-    WidgetRef ref,
-  ) {
+      BuildContext context,
+      WidgetRef ref,
+      ) {
     //入力値
     final dateTextController = TextEditingController(text: '');
 
@@ -43,7 +43,7 @@ class FolderRegistration extends ConsumerWidget {
             onPressed: () {
               final String uid = const Uuid().v4();
               final Folder register = Folder(
-                id: uid, name: dateTextController.text, tableName: 'folders'
+                  id: uid, name: dateTextController.text, tableName: 'folders'
               );
 
               //【登録処理】

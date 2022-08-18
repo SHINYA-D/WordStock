@@ -3,18 +3,18 @@ import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final startDb = FutureProvider.autoDispose(
-    (ref) => ref.read(sqliteRepositoryProvider).getWords());
+        (ref) => ref.read(sqliteRepositoryProvider).getWords());
 
 final endProvider =
-    StateNotifierProvider.autoDispose<EndPageControl, AsyncValue<List<Word>>>(
+StateNotifierProvider.autoDispose<PlayResultController, AsyncValue<List<Word>>>(
         (ref) {
-  final readProvider = ref.read(sqliteRepositoryProvider);
-  final startDbs = ref.watch(startDb);
-  return EndPageControl(readProvider, startDbs);
-});
+      final readProvider = ref.read(sqliteRepositoryProvider);
+      final startDbs = ref.watch(startDb);
+      return PlayResultController(readProvider, startDbs);
+    });
 
-class EndPageControl extends StateNotifier<AsyncValue<List<Word>>> {
-  EndPageControl(this.readProvider, this.startDbs) : super(startDbs);
+class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
+  PlayResultController(this.readProvider, this.startDbs) : super(startDbs);
 
   final SqliteRepository readProvider;
   final AsyncValue<List<Word>> startDbs;

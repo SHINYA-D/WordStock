@@ -3,18 +3,18 @@ import 'package:wordstock/model/folder/folder.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final startDb =
-    FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getFolders());
+FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getFolders());
 
 final folderProvider =
-    StateNotifierProvider<FolderPageControl, AsyncValue<List<Folder>>>((ref) {
+StateNotifierProvider<FolderController, AsyncValue<List<Folder>>>((ref) {
   final readProvider = ref.read(sqliteRepositoryProvider);
   final startDbs = ref.watch(startDb);
 
-  return FolderPageControl(readProvider, startDbs);
+  return FolderController(readProvider, startDbs);
 });
 
-class FolderPageControl extends StateNotifier<AsyncValue<List<Folder>>> {
-  FolderPageControl(this.readProvider, this.startDbs) : super(startDbs);
+class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
+  FolderController(this.readProvider, this.startDbs) : super(startDbs);
 
   final SqliteRepository readProvider;
   final AsyncValue<List<Folder>> startDbs;

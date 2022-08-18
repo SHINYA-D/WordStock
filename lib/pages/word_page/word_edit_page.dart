@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/pages/word_page/word_page.dart';
-import 'word_page_control.dart';
+import 'word_controller.dart';
 
-class WordEdit extends ConsumerWidget {
-  const WordEdit({Key? key}) : super(key: key);
+class WordEditPage extends ConsumerWidget {
+  const WordEditPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,11 +32,11 @@ class WordEdit extends ConsumerWidget {
 
     //入力コントローラ　表
     final frontTextController =
-        TextEditingController(text: wordsProvider.value![selectNum].wFrontName);
+    TextEditingController(text: wordsProvider.value![selectNum].wFrontName);
 
     //入力コントローラ　裏
     final backTextController =
-        TextEditingController(text: wordsProvider.value![selectNum].wBackName);
+    TextEditingController(text: wordsProvider.value![selectNum].wBackName);
 
     final String? flont = wordsProvider.value![selectNum].wFrontName;
     final String? back = wordsProvider.value![selectNum].wBackName;

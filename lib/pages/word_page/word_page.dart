@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:wordstock/model/word/word.dart';
-import 'word_page_control.dart';
+import 'word_controller.dart';
 
 class WordPage extends ConsumerWidget {
   const WordPage({Key? key}) : super(key: key);
@@ -60,7 +60,7 @@ class WordPage extends ConsumerWidget {
                   ),
                   child: ListTile(
                     //【ListWidget処理】
-                    title: _folderList(index, wordsProvider, context),
+                    title: _buildFolderList(index, wordsProvider, context),
                   ),
                 );
               },
@@ -99,7 +99,7 @@ class WordPage extends ConsumerWidget {
                       arguments: wordExtract);
                 },
                 child: const Icon(Icons.play_circle_filled,
-                    color: Colors.black,),
+                  color: Colors.black,),
               ),
               error: (error, _) =>
                   Text('エラーが発生しました。\n ${error.toString()}'),
@@ -115,7 +115,7 @@ class WordPage extends ConsumerWidget {
 /*==============================================================================
 【ListWidget処理】
 ==============================================================================*/
-Widget _folderList( int index,List<Word> wordsProvider,BuildContext context) =>
+Widget _buildFolderList( int index,List<Word> wordsProvider,BuildContext context) =>
 
     Padding(
       padding: EdgeInsets.only(top: 10.h),
