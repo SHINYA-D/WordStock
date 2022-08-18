@@ -10,13 +10,11 @@ class FolderRegistrationPage extends ConsumerWidget {
 
   @override
   Widget build(
-      BuildContext context,
-      WidgetRef ref,
-      ) {
-    //入力値
+    BuildContext context,
+    WidgetRef ref,
+  ) {
     final dateTextController = TextEditingController(text: '');
 
-    //更新プロバイダ
     final controlFolderProvider = ref.read(folderProvider.notifier);
 
 /*==============================================================================
@@ -43,13 +41,9 @@ class FolderRegistrationPage extends ConsumerWidget {
             onPressed: () {
               final String uid = const Uuid().v4();
               final Folder register = Folder(
-                  id: uid, name: dateTextController.text, tableName: 'folders'
-              );
-
-              //【登録処理】
+                  id: uid, name: dateTextController.text, tableName: 'folders');
               controlFolderProvider.registerData(register);
               Navigator.pop(context);
-
             },
             child: const Text("OK"),
           ),

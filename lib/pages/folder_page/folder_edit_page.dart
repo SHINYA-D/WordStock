@@ -9,19 +9,16 @@ class FolderEditPage extends ConsumerWidget {
 
   @override
   Widget build(
-      BuildContext context,
-      WidgetRef ref,
-      ) {
+    BuildContext context,
+    WidgetRef ref,
+  ) {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
     final int index = args as int;
 
-    //入力値
     final dateTextController = TextEditingController(text: '');
 
-    //共通プロバイダ
     final foldersProvider = ref.watch(folderProvider);
 
-    //更新プロバイダ
     final controlFolderProvider = ref.read(folderProvider.notifier);
 /*==============================================================================
 【編集画面】
@@ -46,7 +43,6 @@ class FolderEditPage extends ConsumerWidget {
           foldersProvider.when(
             data: (foldersProvider) => ElevatedButton(
               onPressed: () {
-                //【編集処理】
                 Folder up = foldersProvider[index];
                 up = up.copyWith(name: dateTextController.text);
                 controlFolderProvider.upData(up);
@@ -54,8 +50,7 @@ class FolderEditPage extends ConsumerWidget {
               },
               child: const Text("OK"),
             ),
-            error: (error,_) =>
-                Text('エラーが発生しました。\n ${error.toString()}'),
+            error: (error, _) => Text('エラーが発生しました。\n ${error.toString()}'),
             loading: () => const CircularProgressIndicator(),
           ),
         ],

@@ -13,13 +13,10 @@ class WordPage extends ConsumerWidget {
     final folderId = ModalRoute.of(context)?.settings.arguments;
     final String folderIdNum = folderId as String;
 
-    //共通プロバイダ
     final wordsProvider = ref.watch(wordProvider);
 
-    //更新プロバイダ
     final controlWordsProvider = ref.read(wordProvider.notifier);
 
-    // //FolderID抽出処理
     controlWordsProvider.getPointData(folderIdNum);
 
 /*==============================================================================
@@ -31,7 +28,9 @@ class WordPage extends ConsumerWidget {
         centerTitle: true,
         title: const Text(
           '単語一覧',
-          style: TextStyle(color: Colors.white,),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colors.black,
       ),
@@ -47,8 +46,7 @@ class WordPage extends ConsumerWidget {
                     motion: const StretchMotion(),
                     children: [
                       SlidableAction(
-                        onPressed: (_)  {
-                          //【削除処理】
+                        onPressed: (_) {
                           final selectWord = wordsProvider[index];
                           controlWordsProvider.deleteData(selectWord);
                         },
@@ -59,14 +57,12 @@ class WordPage extends ConsumerWidget {
                     ],
                   ),
                   child: ListTile(
-                    //【ListWidget処理】
                     title: _buildFolderList(index, wordsProvider, context),
                   ),
                 );
               },
             ),
-            error: (error, _) =>
-                Text('エラーが発生しました。\n ${error.toString()}'),
+            error: (error, _) => Text('エラーが発生しました。\n ${error.toString()}'),
             loading: () => const CircularProgressIndicator(),
           ),
         ),
@@ -79,11 +75,13 @@ class WordPage extends ConsumerWidget {
               heroTag: "btn1",
               backgroundColor: Colors.white,
               onPressed: () {
-                //【登録画面】
                 Navigator.pushNamed(context, "/wordregistration",
                     arguments: folderIdNum);
               },
-              child: const Icon(Icons.add, color: Colors.black,),
+              child: const Icon(
+                Icons.add,
+                color: Colors.black,
+              ),
             ),
           ),
           Container(
@@ -98,11 +96,12 @@ class WordPage extends ConsumerWidget {
                   Navigator.pushReplacementNamed(context, "/playpage",
                       arguments: wordExtract);
                 },
-                child: const Icon(Icons.play_circle_filled,
-                  color: Colors.black,),
+                child: const Icon(
+                  Icons.play_circle_filled,
+                  color: Colors.black,
+                ),
               ),
-              error: (error, _) =>
-                  Text('エラーが発生しました。\n ${error.toString()}'),
+              error: (error, _) => Text('エラーが発生しました。\n ${error.toString()}'),
               loading: () => const CircularProgressIndicator(),
             ),
           ),
@@ -113,10 +112,10 @@ class WordPage extends ConsumerWidget {
 }
 
 /*==============================================================================
-【ListWidget処理】
+【フォルダリストの生成】
 ==============================================================================*/
-Widget _buildFolderList( int index,List<Word> wordsProvider,BuildContext context) =>
-
+Widget _buildFolderList(
+        int index, List<Word> wordsProvider, BuildContext context) =>
     Padding(
       padding: EdgeInsets.only(top: 10.h),
       child: Container(

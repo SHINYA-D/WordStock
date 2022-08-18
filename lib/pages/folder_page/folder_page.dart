@@ -11,9 +11,8 @@ class FolderPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //共通プロバイダ
     final foldersProvider = ref.watch(folderProvider);
-    //更新プロバイダ
+
     final controlFolderProvider = ref.read(folderProvider.notifier);
 
 /*==============================================================================
@@ -25,7 +24,9 @@ class FolderPage extends ConsumerWidget {
         centerTitle: true,
         title: const Text(
           'WordStock',
-          style: TextStyle(color: Colors.white,),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colors.black,
       ),
@@ -42,7 +43,6 @@ class FolderPage extends ConsumerWidget {
                     children: [
                       SlidableAction(
                         onPressed: (context) {
-                          //【編集画面】
                           Navigator.pushNamed(context, "/folderedit",
                               arguments: index);
                         },
@@ -51,8 +51,7 @@ class FolderPage extends ConsumerWidget {
                         label: '編集',
                       ),
                       SlidableAction(
-                        onPressed: (_)  {
-                          //【削除処理】
+                        onPressed: (_) {
                           final selectFolder = foldersProvider[index];
                           controlFolderProvider.deleteData(selectFolder, index);
                         },
@@ -63,14 +62,12 @@ class FolderPage extends ConsumerWidget {
                     ],
                   ),
                   child: ListTile(
-                    //【ListWidget処理】
                     title: _buildFolderList(index, foldersProvider, context),
                   ),
                 );
               },
             ),
-            error: (error,_) =>
-                Text('エラーが発生しました。\n ${error.toString()}'),
+            error: (error, _) => Text('エラーが発生しました。\n ${error.toString()}'),
             loading: () => const CircularProgressIndicator(),
           ),
         ),
@@ -83,12 +80,13 @@ class FolderPage extends ConsumerWidget {
             showDialog(
                 context: context,
                 builder: (context) {
-                  //【登録画面】
                   return const FolderRegistrationPage();
                 });
           },
-          child: const Icon(Icons.create_new_folder,
-            color: Colors.black,),
+          child: const Icon(
+            Icons.create_new_folder,
+            color: Colors.black,
+          ),
         ),
       ),
     );
@@ -96,9 +94,10 @@ class FolderPage extends ConsumerWidget {
 }
 
 /*==============================================================================
-【ListWidget処理】
+【フォルダリストの生成】
 ==============================================================================*/
-Widget _buildFolderList(int i, List<Folder> foldersProvider, BuildContext context) =>
+Widget _buildFolderList(
+        int i, List<Folder> foldersProvider, BuildContext context) =>
     Padding(
       padding: EdgeInsets.only(top: 10.h),
       child: Container(
@@ -112,7 +111,6 @@ Widget _buildFolderList(int i, List<Folder> foldersProvider, BuildContext contex
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                //【ワード画面】
                 final String? folderIdNum = foldersProvider[i].id;
                 Navigator.pushNamed(context, "/wordpage",
                     arguments: folderIdNum);

@@ -3,10 +3,10 @@ import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final startDb =
-FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getWords());
+    FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getWords());
 
 final wordProvider =
-StateNotifierProvider<WordController, AsyncValue<List<Word>>>((ref) {
+    StateNotifierProvider<WordController, AsyncValue<List<Word>>>((ref) {
   final readProvider = ref.read(sqliteRepositoryProvider);
   final startDbs = ref.watch(startDb);
   return WordController(readProvider, startDbs);
@@ -18,7 +18,6 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
   final SqliteRepository readProvider;
   final AsyncValue<List<Word>> startDbs;
 
-  //登録処理
   Future<void> registerData(Word register) async {
     await readProvider.registerWord(register);
     state = state.value != null
@@ -26,7 +25,6 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
         : const AsyncValue.data([]);
   }
 
-  //削除処理
   Future<void> deleteData(Word selectWord) async {
     await readProvider.deleteWord(selectWord.wId!);
     state = state.value != null
@@ -34,10 +32,8 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
         : const AsyncValue.data([]);
   }
 
-  // //編集処理
   Future<void> upData(Word upData) async {
     await readProvider.upWord(upData);
-    //if(state.value! == null) return;
     for (var i = 0; i < state.value!.length; i++) {
       if (state.value![i].wId == upData.wId) {
         state.value![i] = upData;
@@ -46,7 +42,6 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
     }
   }
 
-  //抽出処理
   Future<void> getPointData(String? folderIdNum) async {
     List<Word> wordget;
     if (folderIdNum != null) {

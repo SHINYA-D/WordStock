@@ -17,6 +17,7 @@ class PlayResultPage extends ConsumerWidget {
     final good = counts[0];
     final bad = counts[1];
     final folderID = counts[2];
+    //TODO:成績グラフを作成時に使用
     //List<String> okList = counts[3];
     final List<String> ngList = counts[4];
 
@@ -33,10 +34,8 @@ class PlayResultPage extends ConsumerWidget {
     //再実行時受け渡し変数
     List<Word>? valueNg = [];
 
-    //共通プロバイダ
     final endsProvider = ref.watch(endProvider);
 
-    //更新プロバイダ
     final endControlProvider = ref.read(endProvider.notifier);
 
 /*==============================================================================
@@ -48,7 +47,9 @@ class PlayResultPage extends ConsumerWidget {
         centerTitle: true,
         title: const Text(
           '単語一覧',
-          style: TextStyle(color: Colors.white,),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colors.black,
       ),
@@ -63,12 +64,9 @@ class PlayResultPage extends ConsumerWidget {
                 padding: EdgeInsets.only(right: 50.w, left: 50.w, top: 100.h),
                 child: Column(
                   children: [
-                    //【成績表表示処理】
                     _buildScore(good, bad, total),
-                    //【ボタン処理】
                     Column(
                       children: [
-                        //キャンセルボタン
                         SizedBox(
                           width: 200.w,
                           child: ElevatedButton(
@@ -76,7 +74,7 @@ class PlayResultPage extends ConsumerWidget {
                               endControlProvider.endFlat(folderID);
                               await Navigator.of(context)
                                   .pushNamedAndRemoveUntil(
-                                  "/", ModalRoute.withName("/"));
+                                      "/", ModalRoute.withName("/"));
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.white,
@@ -93,7 +91,6 @@ class PlayResultPage extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        //再実行ボタン
                         Visibility(
                           visible: visible,
                           //maintainSize: true,
@@ -111,7 +108,6 @@ class PlayResultPage extends ConsumerWidget {
                                 for (int i = 0; i < ngList.length; i++) {
                                   endControlProvider.endBadUp(ngList[i]);
                                 }
-                                //【FLAT更新】
                                 endControlProvider.endFlat(folderID);
                                 await Navigator.pushNamed(context, "/playpage",
                                     arguments: valueNg);

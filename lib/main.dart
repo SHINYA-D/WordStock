@@ -24,7 +24,7 @@ main() {
                 '/folderedit': (BuildContext context) => const FolderEditPage(),
                 '/wordpage': (BuildContext context) => const WordPage(),
                 '/wordregistration': (BuildContext context) =>
-                const WordRegistrationPage(),
+                    const WordRegistrationPage(),
                 '/wordedit': (BuildContext context) => const WordEditPage(),
                 '/playpage': (BuildContext context) => const PlayPage(),
                 '/endpage': (BuildContext context) => const PlayResultPage(),

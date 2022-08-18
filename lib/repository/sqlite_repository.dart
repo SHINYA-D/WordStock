@@ -113,6 +113,7 @@ class SqliteRepository {
     });
   }
 
+  //TODO:成績表をグラフで表示する時に使用
   // //'対象フォルダ'かつ'NG'の場合を取得
   // Future<List<Word>> getPointNg(String folderIdNum, String ng) async {
   //   final Database? db = await database;

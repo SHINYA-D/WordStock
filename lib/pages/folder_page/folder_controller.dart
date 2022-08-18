@@ -3,10 +3,10 @@ import 'package:wordstock/model/folder/folder.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final startDb =
-FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getFolders());
+    FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getFolders());
 
 final folderProvider =
-StateNotifierProvider<FolderController, AsyncValue<List<Folder>>>((ref) {
+    StateNotifierProvider<FolderController, AsyncValue<List<Folder>>>((ref) {
   final readProvider = ref.read(sqliteRepositoryProvider);
   final startDbs = ref.watch(startDb);
 
@@ -19,7 +19,6 @@ class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
   final SqliteRepository readProvider;
   final AsyncValue<List<Folder>> startDbs;
 
-  //登録処理
   Future<void> registerData(Folder register) async {
     await readProvider.registerFolder(register);
     state = state.value != null
@@ -27,7 +26,6 @@ class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
         : const AsyncValue.data([]);
   }
 
-  //削除処理
   Future<void> deleteData(Folder selectFolder, int index) async {
     if (selectFolder.id != null) {
       await readProvider.deleteFolder(selectFolder.id);
@@ -37,7 +35,6 @@ class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
     }
   }
 
-  //編集処理
   Future<void> upData(Folder upData) async {
     await readProvider.upFolder(upData);
     if (state.value == null) return;

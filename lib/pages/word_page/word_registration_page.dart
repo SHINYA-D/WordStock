@@ -10,22 +10,17 @@ class WordRegistrationPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //画面遷移時値受け取り
     final Object? args = ModalRoute.of(context)?.settings.arguments;
     final String folderIdNum = args as String;
 
-    //登録カウント管理
     const int cardItemCount = 5;
 
-    //Word登録　表
     final List<TextEditingController> frontTextController =
-    List.generate(5, (i) => TextEditingController(text: ''));
+        List.generate(5, (i) => TextEditingController(text: ''));
 
-    //Word登録　裏
     final List<TextEditingController> backTextController =
-    List.generate(5, (i) => TextEditingController(text: ''));
+        List.generate(5, (i) => TextEditingController(text: ''));
 
-    //更新プロバイダ
     final controlWordsProvider = ref.read(wordProvider.notifier);
 /*==============================================================================
 【登録画面】
@@ -37,7 +32,9 @@ class WordRegistrationPage extends ConsumerWidget {
         centerTitle: true,
         title: const Text(
           'カード作成',
-          style: TextStyle(color: Colors.white,),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
       body: GestureDetector(
@@ -65,12 +62,8 @@ class WordRegistrationPage extends ConsumerWidget {
                           child: Column(
                             children: [
                               Text('$x枚目のカード'),
-
-                              //表カード入力フォーム
                               _buildInputForm(frontTextController,
                                   backTextController, index),
-
-                              //完了・取り消しボタン
                               _buildCompletionButton(frontTextController,
                                   backTextController, index, context),
                             ],
@@ -85,8 +78,6 @@ class WordRegistrationPage extends ConsumerWidget {
           },
         ),
       ),
-
-      //登録実行処理
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 238, 91, 117),
         onPressed: () {
@@ -94,7 +85,10 @@ class WordRegistrationPage extends ConsumerWidget {
               folderIdNum, controlWordsProvider);
           Navigator.of(context).pop();
         },
-        child: const Icon(Icons.add_box, color: Colors.black,),
+        child: const Icon(
+          Icons.add_box,
+          color: Colors.black,
+        ),
       ),
     );
   }
@@ -117,7 +111,6 @@ Widget _buildInputForm(List<TextEditingController> frontTextController,
       ),
       autofocus: true,
     ),
-    //裏カード入力フォーム
     TextField(
       maxLength: 20,
       controller: backTextController[index],
@@ -206,7 +199,6 @@ _wordRegister(
     List<TextEditingController> backTextController,
     String? folderIdNum,
     controlWordsProvider) {
-
   for (var i = 0; i < cardItemCount; i++) {
     if ((frontTextController[i].text != "") &&
         (backTextController[i].text != "")) {
@@ -225,7 +217,6 @@ _wordRegister(
           wAverage: 0,
           wOk: 'FLAT');
 
-      //登録処理
       controlWordsProvider.registerData(register);
     } //IF文
   } //for文

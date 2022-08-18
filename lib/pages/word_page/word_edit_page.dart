@@ -16,27 +16,19 @@ class WordEditPage extends ConsumerWidget {
 
     List<Word> words = args.words;
 
-    //共通プロバイダ
     final wordsProvider = ref.watch(wordProvider);
 
-    //更新プロバイダ
     final controlWordsProvider = ref.read(wordProvider.notifier);
 
-    //FolderID抽出処理
     controlWordsProvider.getPointData(words[selectNum].wFolderNameId);
-
-    //NULLチェックはいらない [wordsProvider.value!]
-    // if(wordsProvider.value![selectNum] == null) {
-    //   throw Exception();
-    // }
 
     //入力コントローラ　表
     final frontTextController =
-    TextEditingController(text: wordsProvider.value![selectNum].wFrontName);
+        TextEditingController(text: wordsProvider.value![selectNum].wFrontName);
 
     //入力コントローラ　裏
     final backTextController =
-    TextEditingController(text: wordsProvider.value![selectNum].wBackName);
+        TextEditingController(text: wordsProvider.value![selectNum].wBackName);
 
     final String? flont = wordsProvider.value![selectNum].wFrontName;
     final String? back = wordsProvider.value![selectNum].wBackName;
@@ -50,13 +42,14 @@ class WordEditPage extends ConsumerWidget {
         centerTitle: true,
         title: const Text(
           'WordStock',
-          style: TextStyle(color: Colors.white,),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colors.black,
       ),
       body: ListView(
         children: [
-          //単語 表　表示
           SizedBox(
             height: 250.h,
             width: 400.w,
@@ -72,7 +65,6 @@ class WordEditPage extends ConsumerWidget {
               ),
             ),
           ),
-          //単語 裏　表示
           SizedBox(
             height: 250.h,
             width: 400.w,
@@ -104,7 +96,6 @@ class WordEditPage extends ConsumerWidget {
                       width: 100.w,
                       child: Column(
                         children: [
-                          //表カード入力フォーム
                           TextField(
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(20)
@@ -113,7 +104,6 @@ class WordEditPage extends ConsumerWidget {
                             decoration: const InputDecoration(),
                             autofocus: true,
                           ),
-                          //裏カード入力フォーム
                           TextField(
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(20)
@@ -138,7 +128,6 @@ class WordEditPage extends ConsumerWidget {
                           up = up.copyWith(
                               wFrontName: frontTextController.text,
                               wBackName: backTextController.text);
-                          //【編集処理】
                           controlWordsProvider.upData(up);
                           Navigator.pop(context);
                         },

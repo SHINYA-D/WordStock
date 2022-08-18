@@ -4,7 +4,6 @@ import 'package:flip_card/flip_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:wordstock/model/word/word.dart';
 
-//good,badボタンカウント
 int good = 0;
 int bad = 0;
 
@@ -42,7 +41,9 @@ class PlayPage extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           'PLAY',
-          style: TextStyle(color: Colors.white,),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colors.black,
       ),
@@ -61,6 +62,7 @@ class PlayPage extends StatelessWidget {
                     child: _buildFlipCard(context, wordExtract, index),
                   );
                 },
+
                 //全カードスワイプ後の処理
                 onStackFinished: () {
                   List<dynamic> boxList = [
@@ -77,11 +79,9 @@ class PlayPage extends StatelessWidget {
                   okList = [];
                   ngList = [];
 
-                  //【EndPage遷移】
                   Navigator.pushNamed(context, "/endpage", arguments: boxList);
                 }),
           ),
-          //【GOOD/BAD ボタン処理処理】
           _buildButton(matchEngine),
         ],
       ),
@@ -90,7 +90,7 @@ class PlayPage extends StatelessWidget {
 }
 
 /*==============================================================================
-【FlipCard処理】
+【フリップカード処理】
 ==============================================================================*/
 Widget _buildFlipCard(BuildContext context, List<Word> wordExtract, int index) {
   return FlipCard(
@@ -140,16 +140,15 @@ Widget _buildButton(MatchEngine matchEngine) {
               side: const BorderSide(),
             ),
             onPressed: () {
-              //現在の選択されているデータのID
               final String upId = matchEngine.currentItem?.content;
-              //OK wordデータをストック
               okList.add(upId);
-              //Good処理：左にCardが遷移する
               matchEngine.currentItem?.nope();
               good = good + 1;
             },
-            child: const Icon(Icons.thumb_up_alt,
-              color: Colors.black,),
+            child: const Icon(
+              Icons.thumb_up_alt,
+              color: Colors.black,
+            ),
           ),
         ),
         SizedBox(
@@ -164,16 +163,15 @@ Widget _buildButton(MatchEngine matchEngine) {
               side: const BorderSide(),
             ),
             onPressed: () {
-              //現在の選択されているデータのID
               final String upId = matchEngine.currentItem?.content;
-              //NG wordデータをストック
               ngList.add(upId);
-              //Bad処理：右にCardが遷移する
               matchEngine.currentItem?.like();
               bad = bad + 1;
             },
-            child: const Icon(Icons.thumb_down_alt,
-              color: Colors.black,),
+            child: const Icon(
+              Icons.thumb_down_alt,
+              color: Colors.black,
+            ),
           ),
         ),
       ],

@@ -3,15 +3,14 @@ import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final startDb = FutureProvider.autoDispose(
-        (ref) => ref.read(sqliteRepositoryProvider).getWords());
+    (ref) => ref.read(sqliteRepositoryProvider).getWords());
 
-final endProvider =
-StateNotifierProvider.autoDispose<PlayResultController, AsyncValue<List<Word>>>(
-        (ref) {
-      final readProvider = ref.read(sqliteRepositoryProvider);
-      final startDbs = ref.watch(startDb);
-      return PlayResultController(readProvider, startDbs);
-    });
+final endProvider = StateNotifierProvider.autoDispose<PlayResultController,
+    AsyncValue<List<Word>>>((ref) {
+  final readProvider = ref.read(sqliteRepositoryProvider);
+  final startDbs = ref.watch(startDb);
+  return PlayResultController(readProvider, startDbs);
+});
 
 class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
   PlayResultController(this.readProvider, this.startDbs) : super(startDbs);
@@ -19,9 +18,7 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
   final SqliteRepository readProvider;
   final AsyncValue<List<Word>> startDbs;
 
-  //Bad：編集処理
   Future<void> endBadUp(String upId) async {
-    //if(state.value! == null) return ;
     for (int i = 0; i < state.value!.length; i++) {
       if (state.value![i].wId == upId) {
         state.value![i] =
@@ -35,9 +32,7 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
     }
   }
 
-  //wOkに入っている値すべてFLATに変更
   Future<void> endFlat(String folderId) async {
-    //if(state.value! == null) return ;
     for (int i = 0; i < state.value!.length; i++) {
       if (state.value![i].wFolderNameId == folderId) {
         state.value![i] = state.value![i].copyWith(wOk: 'FLAT');
@@ -48,7 +43,7 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
   }
 }
 
-// 今回は使用しない為コメントアウト　・・全体グラフを作成する際に使用する
+//TODO:成績表をグラフで表示する時に使用
 // //Good：編集処理
 // Future<void> endGoodUp(String upId) async {
 //   for (int i = 0; i < state.value!.length; i++) {
