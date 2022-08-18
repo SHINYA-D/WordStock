@@ -17,9 +17,9 @@ class FolderEditPage extends ConsumerWidget {
 
     final dateTextController = TextEditingController(text: '');
 
-    final foldersProvider = ref.watch(folderProvider);
+    final foldersState = ref.watch(folderProvider);
 
-    final controlFolderProvider = ref.read(folderProvider.notifier);
+    final foldersCtl = ref.read(folderProvider.notifier);
 /*==============================================================================
 【編集画面】
 ==============================================================================*/
@@ -40,12 +40,12 @@ class FolderEditPage extends ConsumerWidget {
             onPressed: () => Navigator.pop(context),
             child: const Text("CANCEL"),
           ),
-          foldersProvider.when(
+          foldersState.when(
             data: (foldersProvider) => ElevatedButton(
               onPressed: () {
                 Folder up = foldersProvider[index];
                 up = up.copyWith(name: dateTextController.text);
-                controlFolderProvider.upData(up);
+                foldersCtl.upData(up);
                 Navigator.pop(context);
               },
               child: const Text("OK"),

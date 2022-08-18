@@ -2,25 +2,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordstock/model/folder/folder.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-final startDb =
+final allFoldersProvider =
     FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getFolders());
 
 final folderProvider =
     StateNotifierProvider<FolderController, AsyncValue<List<Folder>>>((ref) {
-  final readProvider = ref.read(sqliteRepositoryProvider);
-  final startDbs = ref.watch(startDb);
+  final sqliteRepo = ref.read(sqliteRepositoryProvider);
+  final allForders = ref.watch(allFoldersProvider);
 
-  return FolderController(readProvider, startDbs);
+  return FolderController(sqliteRepo, allForders);
 });
 
 class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
-  FolderController(this.readProvider, this.startDbs) : super(startDbs);
+  FolderController(this.sqliteRepo, this.allForders) : super(allForders);
 
-  final SqliteRepository readProvider;
-  final AsyncValue<List<Folder>> startDbs;
+  final SqliteRepository sqliteRepo;
+  final AsyncValue<List<Folder>> allForders;
 
   Future<void> registerData(Folder register) async {
-    await readProvider.registerFolder(register);
+    await sqliteRepo.registerFolder(register);
     state = state.value != null
         ? AsyncValue.data([...?state.value, register])
         : const AsyncValue.data([]);
@@ -28,15 +28,15 @@ class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
 
   Future<void> deleteData(Folder selectFolder, int index) async {
     if (selectFolder.id != null) {
-      await readProvider.deleteFolder(selectFolder.id);
-      await readProvider.deleteIdSearch(selectFolder.id);
+      await sqliteRepo.deleteFolder(selectFolder.id);
+      await sqliteRepo.deleteIdSearch(selectFolder.id);
       if (state.value == null) return;
       state = AsyncValue.data(state.value!..remove(selectFolder));
     }
   }
 
   Future<void> upData(Folder upData) async {
-    await readProvider.upFolder(upData);
+    await sqliteRepo.upFolder(upData);
     if (state.value == null) return;
     for (var i = 0; i < state.value!.length; i++) {
       if (state.value?[i].id == upData.id) {

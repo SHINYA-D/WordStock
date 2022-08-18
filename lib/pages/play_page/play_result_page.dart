@@ -34,9 +34,9 @@ class PlayResultPage extends ConsumerWidget {
     //再実行時受け渡し変数
     List<Word>? valueNg = [];
 
-    final endsProvider = ref.watch(endProvider);
+    final playsState = ref.watch(endProvider);
 
-    final endControlProvider = ref.read(endProvider.notifier);
+    final playsCtr = ref.read(endProvider.notifier);
 
 /*==============================================================================
 【成績表画面】
@@ -71,7 +71,7 @@ class PlayResultPage extends ConsumerWidget {
                           width: 200.w,
                           child: ElevatedButton(
                             onPressed: () async {
-                              endControlProvider.endFlat(folderID);
+                              playsCtr.endFlat(folderID);
                               await Navigator.of(context)
                                   .pushNamedAndRemoveUntil(
                                       "/", ModalRoute.withName("/"));
@@ -94,7 +94,7 @@ class PlayResultPage extends ConsumerWidget {
                         Visibility(
                           visible: visible,
                           //maintainSize: true,
-                          child: endsProvider.when(
+                          child: playsState.when(
                             data: (endsProvider) => ElevatedButton(
                               onPressed: () async {
                                 final int count = endsProvider.length;
@@ -106,10 +106,10 @@ class PlayResultPage extends ConsumerWidget {
                                   }
                                 }
                                 for (int i = 0; i < ngList.length; i++) {
-                                  endControlProvider.endBadUp(ngList[i]);
+                                  playsCtr.endBadUp(ngList[i]);
                                 }
-                                endControlProvider.endFlat(folderID);
-                                await Navigator.pushNamed(context, "/playpage",
+                                playsCtr.endFlat(folderID);
+                                await Navigator.pushNamed(context, "/play_page",
                                     arguments: valueNg);
                               },
                               style: ElevatedButton.styleFrom(

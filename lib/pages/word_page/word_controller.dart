@@ -2,38 +2,38 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-final startDb =
+final allWordsProvider =
     FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getWords());
 
 final wordProvider =
     StateNotifierProvider<WordController, AsyncValue<List<Word>>>((ref) {
-  final readProvider = ref.read(sqliteRepositoryProvider);
-  final startDbs = ref.watch(startDb);
-  return WordController(readProvider, startDbs);
+  final sqliteRepo = ref.read(sqliteRepositoryProvider);
+  final allWords = ref.watch(allWordsProvider);
+  return WordController(sqliteRepo, allWords);
 });
 
 class WordController extends StateNotifier<AsyncValue<List<Word>>> {
-  WordController(this.readProvider, this.startDbs) : super(startDbs);
+  WordController(this.sqliteRepo, this.allWords) : super(allWords);
 
-  final SqliteRepository readProvider;
-  final AsyncValue<List<Word>> startDbs;
+  final SqliteRepository sqliteRepo;
+  final AsyncValue<List<Word>> allWords;
 
   Future<void> registerData(Word register) async {
-    await readProvider.registerWord(register);
+    await sqliteRepo.registerWord(register);
     state = state.value != null
         ? AsyncValue.data([...state.value!, register])
         : const AsyncValue.data([]);
   }
 
   Future<void> deleteData(Word selectWord) async {
-    await readProvider.deleteWord(selectWord.wId!);
+    await sqliteRepo.deleteWord(selectWord.wId!);
     state = state.value != null
         ? AsyncValue.data(state.value!..remove(selectWord))
         : const AsyncValue.data([]);
   }
 
   Future<void> upData(Word upData) async {
-    await readProvider.upWord(upData);
+    await sqliteRepo.upWord(upData);
     for (var i = 0; i < state.value!.length; i++) {
       if (state.value![i].wId == upData.wId) {
         state.value![i] = upData;
@@ -45,7 +45,7 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
   Future<void> getPointData(String? folderIdNum) async {
     List<Word> wordget;
     if (folderIdNum != null) {
-      wordget = await readProvider.getPointWords(folderIdNum);
+      wordget = await sqliteRepo.getPointWords(folderIdNum);
       if (!mounted) return;
       state = AsyncValue.data([...wordget]);
     }

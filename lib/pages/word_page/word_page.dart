@@ -13,11 +13,11 @@ class WordPage extends ConsumerWidget {
     final folderId = ModalRoute.of(context)?.settings.arguments;
     final String folderIdNum = folderId as String;
 
-    final wordsProvider = ref.watch(wordProvider);
+    final wordsState = ref.watch(wordProvider);
 
-    final controlWordsProvider = ref.read(wordProvider.notifier);
+    final wordsCtr = ref.read(wordProvider.notifier);
 
-    controlWordsProvider.getPointData(folderIdNum);
+    wordsCtr.getPointData(folderIdNum);
 
 /*==============================================================================
 【ワード画面】
@@ -37,7 +37,7 @@ class WordPage extends ConsumerWidget {
       body: SlidableAutoCloseBehavior(
         child: Padding(
           padding: EdgeInsets.only(top: 100.h),
-          child: wordsProvider.when(
+          child: wordsState.when(
             data: (wordsProvider) => ListView.builder(
               itemCount: wordsProvider.length,
               itemBuilder: (context, index) {
@@ -48,7 +48,7 @@ class WordPage extends ConsumerWidget {
                       SlidableAction(
                         onPressed: (_) {
                           final selectWord = wordsProvider[index];
-                          controlWordsProvider.deleteData(selectWord);
+                          wordsCtr.deleteData(selectWord);
                         },
                         backgroundColor: Colors.black,
                         icon: Icons.delete,
@@ -75,7 +75,7 @@ class WordPage extends ConsumerWidget {
               heroTag: "btn1",
               backgroundColor: Colors.white,
               onPressed: () {
-                Navigator.pushNamed(context, "/wordregistration",
+                Navigator.pushNamed(context, "/word_registration",
                     arguments: folderIdNum);
               },
               child: const Icon(
@@ -86,14 +86,14 @@ class WordPage extends ConsumerWidget {
           ),
           Container(
             margin: EdgeInsets.only(left: 5.w, bottom: 530.h),
-            child: wordsProvider.when(
+            child: wordsState.when(
               data: (wordsProvider) => FloatingActionButton(
                 heroTag: "btn2",
                 backgroundColor: Colors.white,
                 onPressed: () {
                   final List<Word> wordExtract = wordsProvider;
 
-                  Navigator.pushReplacementNamed(context, "/playpage",
+                  Navigator.pushReplacementNamed(context, "/play_page",
                       arguments: wordExtract);
                 },
                 child: const Icon(
@@ -129,7 +129,7 @@ Widget _buildFolderList(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, "/wordedit",
+                Navigator.pushNamed(context, "/word_edit",
                     arguments: EditBox(index, wordsProvider));
               },
               style: ElevatedButton.styleFrom(

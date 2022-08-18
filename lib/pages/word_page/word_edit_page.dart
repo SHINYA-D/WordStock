@@ -16,22 +16,22 @@ class WordEditPage extends ConsumerWidget {
 
     List<Word> words = args.words;
 
-    final wordsProvider = ref.watch(wordProvider);
+    final wordsState = ref.watch(wordProvider);
 
-    final controlWordsProvider = ref.read(wordProvider.notifier);
+    final wordsCtr = ref.read(wordProvider.notifier);
 
-    controlWordsProvider.getPointData(words[selectNum].wFolderNameId);
+    wordsCtr.getPointData(words[selectNum].wFolderNameId);
 
     //入力コントローラ　表
     final frontTextController =
-        TextEditingController(text: wordsProvider.value![selectNum].wFrontName);
+        TextEditingController(text: wordsState.value![selectNum].wFrontName);
 
     //入力コントローラ　裏
     final backTextController =
-        TextEditingController(text: wordsProvider.value![selectNum].wBackName);
+        TextEditingController(text: wordsState.value![selectNum].wBackName);
 
-    final String? flont = wordsProvider.value![selectNum].wFrontName;
-    final String? back = wordsProvider.value![selectNum].wBackName;
+    final String? flont = wordsState.value![selectNum].wFrontName;
+    final String? back = wordsState.value![selectNum].wBackName;
 
 /*==============================================================================
 【編集画面】
@@ -121,14 +121,14 @@ class WordEditPage extends ConsumerWidget {
                       onPressed: () => Navigator.pop(context),
                       child: const Text("CANCEL"),
                     ),
-                    wordsProvider.when(
+                    wordsState.when(
                       data: (wordsProvider) => ElevatedButton(
                         onPressed: () {
                           Word up = wordsProvider[selectNum];
                           up = up.copyWith(
                               wFrontName: frontTextController.text,
                               wBackName: backTextController.text);
-                          controlWordsProvider.upData(up);
+                          wordsCtr.upData(up);
                           Navigator.pop(context);
                         },
                         child: const Text("OK"),

@@ -21,7 +21,7 @@ class WordRegistrationPage extends ConsumerWidget {
     final List<TextEditingController> backTextController =
         List.generate(5, (i) => TextEditingController(text: ''));
 
-    final controlWordsProvider = ref.read(wordProvider.notifier);
+    final wordsCtr = ref.read(wordProvider.notifier);
 /*==============================================================================
 【登録画面】
 ==============================================================================*/
@@ -82,7 +82,7 @@ class WordRegistrationPage extends ConsumerWidget {
         backgroundColor: const Color.fromARGB(255, 238, 91, 117),
         onPressed: () {
           _wordRegister(cardItemCount, frontTextController, backTextController,
-              folderIdNum, controlWordsProvider);
+              folderIdNum, wordsCtr);
           Navigator.of(context).pop();
         },
         child: const Icon(

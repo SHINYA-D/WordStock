@@ -2,21 +2,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-final startDb = FutureProvider.autoDispose(
+final allWordsProvider = FutureProvider.autoDispose(
     (ref) => ref.read(sqliteRepositoryProvider).getWords());
 
 final endProvider = StateNotifierProvider.autoDispose<PlayResultController,
     AsyncValue<List<Word>>>((ref) {
-  final readProvider = ref.read(sqliteRepositoryProvider);
-  final startDbs = ref.watch(startDb);
-  return PlayResultController(readProvider, startDbs);
+  final sqliteRepo = ref.read(sqliteRepositoryProvider);
+  final allWords = ref.watch(allWordsProvider);
+  return PlayResultController(sqliteRepo, allWords);
 });
 
 class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
-  PlayResultController(this.readProvider, this.startDbs) : super(startDbs);
+  PlayResultController(this.sqliteRepo, this.allWords) : super(allWords);
 
-  final SqliteRepository readProvider;
-  final AsyncValue<List<Word>> startDbs;
+  final SqliteRepository sqliteRepo;
+  final AsyncValue<List<Word>> allWords;
 
   Future<void> endBadUp(String upId) async {
     for (int i = 0; i < state.value!.length; i++) {
@@ -26,7 +26,7 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
         state.value![i] =
             state.value![i].copyWith(wPlay: state.value![i].wPlay! + 1);
         state.value![i] = state.value![i].copyWith(wOk: 'NG');
-        await readProvider.upWord(state.value![i]);
+        await sqliteRepo.upWord(state.value![i]);
         state = AsyncValue.data([...state.value!]);
       }
     }
@@ -36,7 +36,7 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
     for (int i = 0; i < state.value!.length; i++) {
       if (state.value![i].wFolderNameId == folderId) {
         state.value![i] = state.value![i].copyWith(wOk: 'FLAT');
-        await readProvider.upWord(state.value![i]);
+        await sqliteRepo.upWord(state.value![i]);
         state = AsyncValue.data([...state.value!]);
       }
     }

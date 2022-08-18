@@ -15,7 +15,7 @@ class FolderRegistrationPage extends ConsumerWidget {
   ) {
     final dateTextController = TextEditingController(text: '');
 
-    final controlFolderProvider = ref.read(folderProvider.notifier);
+    final foldersCtl = ref.read(folderProvider.notifier);
 
 /*==============================================================================
 【登録画面】
@@ -42,7 +42,7 @@ class FolderRegistrationPage extends ConsumerWidget {
               final String uid = const Uuid().v4();
               final Folder register = Folder(
                   id: uid, name: dateTextController.text, tableName: 'folders');
-              controlFolderProvider.registerData(register);
+              foldersCtl.registerData(register);
               Navigator.pop(context);
             },
             child: const Text("OK"),

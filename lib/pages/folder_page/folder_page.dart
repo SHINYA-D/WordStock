@@ -11,9 +11,9 @@ class FolderPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final foldersProvider = ref.watch(folderProvider);
+    final foldersState = ref.watch(folderProvider);
 
-    final controlFolderProvider = ref.read(folderProvider.notifier);
+    final foldersCtl = ref.read(folderProvider.notifier);
 
 /*==============================================================================
 【フォルダ画面】
@@ -33,7 +33,7 @@ class FolderPage extends ConsumerWidget {
       body: SlidableAutoCloseBehavior(
         child: Padding(
           padding: EdgeInsets.only(top: 100.h),
-          child: foldersProvider.when(
+          child: foldersState.when(
             data: (foldersProvider) => ListView.builder(
               itemCount: foldersProvider.length,
               itemBuilder: (context, index) {
@@ -43,7 +43,7 @@ class FolderPage extends ConsumerWidget {
                     children: [
                       SlidableAction(
                         onPressed: (context) {
-                          Navigator.pushNamed(context, "/folderedit",
+                          Navigator.pushNamed(context, "/folder_edit",
                               arguments: index);
                         },
                         backgroundColor: Colors.black,
@@ -53,7 +53,7 @@ class FolderPage extends ConsumerWidget {
                       SlidableAction(
                         onPressed: (_) {
                           final selectFolder = foldersProvider[index];
-                          controlFolderProvider.deleteData(selectFolder, index);
+                          foldersCtl.deleteData(selectFolder, index);
                         },
                         backgroundColor: Colors.black,
                         icon: Icons.delete,
@@ -112,7 +112,7 @@ Widget _buildFolderList(
             child: ElevatedButton(
               onPressed: () {
                 final String? folderIdNum = foldersProvider[i].id;
-                Navigator.pushNamed(context, "/wordpage",
+                Navigator.pushNamed(context, "/word_page",
                     arguments: folderIdNum);
               },
               style: ElevatedButton.styleFrom(

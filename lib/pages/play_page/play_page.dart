@@ -79,7 +79,7 @@ class PlayPage extends StatelessWidget {
                   okList = [];
                   ngList = [];
 
-                  Navigator.pushNamed(context, "/endpage", arguments: boxList);
+                  Navigator.pushNamed(context, "/end_page", arguments: boxList);
                 }),
           ),
           _buildButton(matchEngine),
