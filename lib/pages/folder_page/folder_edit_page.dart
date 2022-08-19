@@ -43,14 +43,38 @@ class FolderEditPage extends ConsumerWidget {
           foldersState.when(
             data: (foldersProvider) => ElevatedButton(
               onPressed: () {
-                Folder up = foldersProvider[index];
-                up = up.copyWith(name: dateTextController.text);
-                foldersCtl.upData(up);
-                Navigator.pop(context);
+                try {
+                  Folder up = foldersProvider[index];
+                  up = up.copyWith(name: dateTextController.text);
+                  foldersCtl.upData(up);
+                  Navigator.pop(context);
+                } catch (e) {
+                  AlertDialog(
+                    title: const Text('フォルダ編集でエラーが発生しました。'),
+                    actions: <Widget>[
+                      GestureDetector(
+                        child: const Text('閉じる'),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  );
+                }
               },
               child: const Text("OK"),
             ),
-            error: (error, _) => Text('エラーが発生しました。\n ${error.toString()}'),
+            error: (error, _) => AlertDialog(
+              title: const Text('フォルダ名入力でエラーが発生しました。'),
+              actions: <Widget>[
+                GestureDetector(
+                  child: const Text('閉じる'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
             loading: () => const CircularProgressIndicator(),
           ),
         ],

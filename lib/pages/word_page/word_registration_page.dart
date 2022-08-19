@@ -81,9 +81,23 @@ class WordRegistrationPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 238, 91, 117),
         onPressed: () {
-          _wordRegister(cardItemCount, frontTextController, backTextController,
-              folderIdNum, wordsCtr);
-          Navigator.of(context).pop();
+          try {
+            _wordRegister(cardItemCount, frontTextController,
+                backTextController, folderIdNum, wordsCtr);
+            Navigator.of(context).pop();
+          } catch (e) {
+            AlertDialog(
+              title: const Text('単語登録中にエラーが発生しました'),
+              actions: <Widget>[
+                GestureDetector(
+                  child: const Text('閉じる'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
+          }
         },
         child: const Icon(
           Icons.add_box,
@@ -220,7 +234,6 @@ _wordRegister(
       controlWordsProvider.registerData(register);
     }
   }
-
   //TODO:Mapにできない
   // cardItemCount.map((cardCount){
   //   if ((frontTextController[cardCount].text != "") &&

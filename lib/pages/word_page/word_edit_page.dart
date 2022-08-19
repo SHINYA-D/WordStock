@@ -124,17 +124,42 @@ class WordEditPage extends ConsumerWidget {
                     wordsState.when(
                       data: (wordsProvider) => ElevatedButton(
                         onPressed: () {
-                          Word up = wordsProvider[selectNum];
-                          up = up.copyWith(
-                              wFrontName: frontTextController.text,
-                              wBackName: backTextController.text);
-                          wordsCtr.upData(up);
-                          Navigator.pop(context);
+                          try {
+                            Word up = wordsProvider[selectNum];
+                            up = up.copyWith(
+                                wFrontName: frontTextController.text,
+                                wBackName: backTextController.text);
+                            wordsCtr.upData(up);
+                            Navigator.pop(context);
+                          } catch (e) {
+                            AlertDialog(
+                              title: const Text(
+                                  'カード編集中にエラーが発生しました。'),
+                              actions: <Widget>[
+                                GestureDetector(
+                                  child: const Text('閉じる'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          }
                         },
                         child: const Text("OK"),
                       ),
-                      error: (error, _) =>
-                          Text('エラーが発生しました。\n ${error.toString()}'),
+                      error: (error, _) => AlertDialog(
+                        title: const Text(
+                            'カード編集画面でエラーが発生しました。'),
+                        actions: <Widget>[
+                          GestureDetector(
+                            child: const Text('閉じる'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
                       loading: () => const CircularProgressIndicator(),
                     ),
                   ],

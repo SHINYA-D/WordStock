@@ -52,8 +52,22 @@ class FolderPage extends ConsumerWidget {
                       ),
                       SlidableAction(
                         onPressed: (_) {
-                          final selectFolder = foldersProvider[index];
-                          foldersCtl.deleteData(selectFolder, index);
+                          try {
+                            final selectFolder = foldersProvider[index];
+                            foldersCtl.deleteData(selectFolder, index);
+                          } catch (e) {
+                            AlertDialog(
+                              title: const Text('フォルダ削除でエラーが発生しました'),
+                              actions: <Widget>[
+                                GestureDetector(
+                                  child: const Text('閉じる'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          }
                         },
                         backgroundColor: Colors.black,
                         icon: Icons.delete,
@@ -67,7 +81,17 @@ class FolderPage extends ConsumerWidget {
                 );
               },
             ),
-            error: (error, _) => Text('エラーが発生しました。\n ${error.toString()}'),
+            error: (error, _) => AlertDialog(
+              title: const Text('フォルダ名表示中に発生しました。'),
+              actions: <Widget>[
+                GestureDetector(
+                  child: const Text('閉じる'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
             loading: () => const CircularProgressIndicator(),
           ),
         ),

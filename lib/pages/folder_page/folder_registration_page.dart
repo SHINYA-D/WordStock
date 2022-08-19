@@ -39,11 +39,27 @@ class FolderRegistrationPage extends ConsumerWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              final String uid = const Uuid().v4();
-              final Folder register = Folder(
-                  id: uid, name: dateTextController.text, tableName: 'folders');
-              foldersCtl.registerData(register);
-              Navigator.pop(context);
+              try {
+                final String uid = const Uuid().v4();
+                final Folder register = Folder(
+                    id: uid,
+                    name: dateTextController.text,
+                    tableName: 'folders');
+                foldersCtl.registerData(register);
+                Navigator.pop(context);
+              } catch (e) {
+                AlertDialog(
+                  title: const Text('登録でエラーが発生しました。'),
+                  actions: <Widget>[
+                    GestureDetector(
+                      child: const Text('閉じる'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                );
+              }
             },
             child: const Text("OK"),
           ),

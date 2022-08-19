@@ -47,8 +47,22 @@ class WordPage extends ConsumerWidget {
                     children: [
                       SlidableAction(
                         onPressed: (_) {
-                          final selectWord = wordsProvider[index];
-                          wordsCtr.deleteData(selectWord);
+                          try {
+                            final selectWord = wordsProvider[index];
+                            wordsCtr.deleteData(selectWord);
+                          } catch (e) {
+                            AlertDialog(
+                              title: const Text('単語削除中にエラーが発生しました'),
+                              actions: <Widget>[
+                                GestureDetector(
+                                  child: const Text('閉じる'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          }
                         },
                         backgroundColor: Colors.black,
                         icon: Icons.delete,
@@ -62,7 +76,17 @@ class WordPage extends ConsumerWidget {
                 );
               },
             ),
-            error: (error, _) => Text('エラーが発生しました。\n ${error.toString()}'),
+            error: (error, _) => AlertDialog(
+              title: const Text('単語画面でエラーが発生しました'),
+              actions: <Widget>[
+                GestureDetector(
+                  child: const Text('閉じる'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
             loading: () => const CircularProgressIndicator(),
           ),
         ),
@@ -92,7 +116,6 @@ class WordPage extends ConsumerWidget {
                 backgroundColor: Colors.white,
                 onPressed: () {
                   final List<Word> wordExtract = wordsProvider;
-
                   Navigator.pushReplacementNamed(context, "/play_page",
                       arguments: wordExtract);
                 },
@@ -101,7 +124,17 @@ class WordPage extends ConsumerWidget {
                   color: Colors.black,
                 ),
               ),
-              error: (error, _) => Text('エラーが発生しました。\n ${error.toString()}'),
+              error: (error, _) => AlertDialog(
+                title: const Text('単語画面でエラーが発生しました'),
+                actions: <Widget>[
+                  GestureDetector(
+                    child: const Text('閉じる'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
               loading: () => const CircularProgressIndicator(),
             ),
           ),

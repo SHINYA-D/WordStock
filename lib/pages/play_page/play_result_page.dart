@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wordstock/model/word/word.dart';
+import 'package:wordstock/pages/error_page/error_page.dart';
 import 'package:wordstock/pages/play_page/play_result_controller.dart';
 
 class PlayResultPage extends ConsumerWidget {
@@ -11,7 +12,7 @@ class PlayResultPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     Object? countList = ModalRoute.of(context)?.settings.arguments;
     if (countList == null) {
-      throw Exception();
+      throw const ErrorPage('成績表画面遷移中にエラーが発生しました');
     }
     final List<dynamic> counts = countList as List<dynamic>;
     final good = counts[0];
@@ -44,7 +45,7 @@ class PlayResultPage extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          '単語一覧',
+          '成績表',
           style: TextStyle(
             color: Colors.white,
           ),
@@ -95,21 +96,37 @@ class PlayResultPage extends ConsumerWidget {
                           child: playsState.when(
                             data: (endsProvider) => ElevatedButton(
                               onPressed: () async {
-                                final int count = endsProvider.length;
-                                //TODO:Mapにできない
-                                for (int i = 0; i < count; i++) {
-                                  for (int k = 0; k < ngList.length; k++) {
-                                    if (endsProvider[i].wId == ngList[k]) {
-                                      valueNg.add(endsProvider[i]);
+                                try {
+                                  final int count = endsProvider.length;
+                                  //TODO:Mapにできない
+                                  for (int i = 0; i < count; i++) {
+                                    for (int k = 0; k < ngList.length; k++) {
+                                      if (endsProvider[i].wId == ngList[k]) {
+                                        valueNg.add(endsProvider[i]);
+                                      }
                                     }
                                   }
+                                  ngList.map((ngList) {
+                                    playsCtr.endBadUp(ngList);
+                                  }).toList();
+                                  playsCtr.endFlat(folderID);
+                                  await Navigator.pushNamed(
+                                      context, "/play_page",
+                                      arguments: valueNg);
+                                } catch (e) {
+                                  AlertDialog(
+                                    title: const Text(
+                                        '再プレイでエラーが発生しました'),
+                                    actions: <Widget>[
+                                      GestureDetector(
+                                        child: const Text('閉じる'),
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
                                 }
-                                ngList.map((ngList) {
-                                  playsCtr.endBadUp(ngList);
-                                }).toList();
-                                playsCtr.endFlat(folderID);
-                                await Navigator.pushNamed(context, "/play_page",
-                                    arguments: valueNg);
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.white,
@@ -125,8 +142,18 @@ class PlayResultPage extends ConsumerWidget {
                                 ),
                               ),
                             ),
-                            error: (error, _) =>
-                                Text('エラーが発生しました。\n ${error.toString()}'),
+                            error: (error, _) => AlertDialog(
+                              title: const Text(''
+                                  'フォルダ名入力でエラーが発生しました。'),
+                              actions: <Widget>[
+                                GestureDetector(
+                                  child: const Text('閉じる'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
                             loading: () => const CircularProgressIndicator(),
                           ),
                         ),

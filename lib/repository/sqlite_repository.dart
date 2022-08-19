@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wordstock/model/folder/folder.dart';
 import 'package:wordstock/model/word/word.dart';
+import 'package:wordstock/pages/error_page/error_page.dart';
 
 final sqliteRepositoryProvider = Provider((ref) => SqliteRepository());
 
@@ -50,7 +51,7 @@ class SqliteRepository {
   Future<List<Folder>> getFolders() async {
     final Database? db = await database;
     if (db == null) {
-      throw Exception();
+      throw const ErrorPage('DB:Folder取得中にエラーが発生しました');
     }
     final List<Map<String, dynamic>> maps = await db.query('folders');
     return List.generate(maps.length, (i) {
@@ -66,7 +67,7 @@ class SqliteRepository {
   Future<List<Word>> getWords() async {
     final Database? db = await database;
     if (db == null) {
-      throw Exception();
+      throw const ErrorPage('DB:Word取得中にエラーが発生しました');
     }
     final List<Map<String, dynamic>> maps = await db.query('words');
     return List.generate(maps.length, (i) {
@@ -91,7 +92,7 @@ class SqliteRepository {
   Future<List<Word>> getPointWords(String folderIdNum) async {
     final Database? db = await database;
     if (db == null) {
-      throw Exception();
+      throw const ErrorPage('DB:ID検索取得中にエラーが発生しました');
     }
     final List<Map<String, dynamic>> maps = await db
         .query('words', where: 'wFolderNameId = ?', whereArgs: [folderIdNum]);
@@ -144,7 +145,7 @@ class SqliteRepository {
   Future<void> registerFolder(Folder indata) async {
     final Database? db = await database;
     if (db == null) {
-      throw Exception();
+      throw const ErrorPage('DB:Folder登録にエラーが発生しました');
     }
     await db.insert(
       'folders',
@@ -157,7 +158,7 @@ class SqliteRepository {
   Future<void> registerWord(Word indata) async {
     final Database? db = await database;
     if (db == null) {
-      throw Exception();
+      throw const ErrorPage('DB:Word登録にエラーが発生しました');
     }
     await db.insert(
       'words',
@@ -173,7 +174,7 @@ class SqliteRepository {
   Future<void> deleteFolder(String? id) async {
     final Database? db = await database;
     if (db == null) {
-      throw Exception();
+      throw const ErrorPage('DB:Folder削除中エラーが発生しました');
     }
     await db.delete('folders', where: 'id = ?', whereArgs: [id]);
   }
@@ -182,7 +183,7 @@ class SqliteRepository {
   Future<void> deleteIdSearch(String? wFolderNameId) async {
     final Database? db = await database;
     if (db == null) {
-      throw Exception();
+      throw const ErrorPage('DB:対象ID削除中にエラーが発生しました');
     }
     await db.delete('words',
         where: 'wFolderNameId = ?', whereArgs: [wFolderNameId]);
@@ -192,7 +193,7 @@ class SqliteRepository {
   Future<void> deleteWord(String wId) async {
     final Database? db = await database;
     if (db == null) {
-      throw Exception();
+      throw const ErrorPage('DB:Word削除中にエラーが発生しました');
     }
     await db.delete('words', where: 'wId = ?', whereArgs: [wId]);
   }
@@ -204,7 +205,7 @@ class SqliteRepository {
   Future<void> upFolder(Folder up) async {
     final Database? db = await database;
     if (db == null) {
-      throw Exception();
+      throw const ErrorPage('DB:Folder編集中にエラーが発生しました');
     }
     await db
         .update('folders', up.toJson(), where: 'id = ?', whereArgs: [up.id]);
@@ -214,7 +215,7 @@ class SqliteRepository {
   Future<void> upWord(Word up) async {
     final Database? db = await database;
     if (db == null) {
-      throw Exception();
+      throw const ErrorPage('DB:Word編集中にエラーが発生しました');
     }
     await db
         .update('words', up.toJson(), where: 'wId = ?', whereArgs: [up.wId]);
