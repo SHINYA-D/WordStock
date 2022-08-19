@@ -27,9 +27,7 @@ class PlayResultPage extends ConsumerWidget {
 
     //再実行ボタン表示・非表示
     bool visible = true;
-    if (bad == 0) {
-      visible = false;
-    }
+    if (bad == 0) visible = false;
 
     //再実行時受け渡し変数
     List<Word>? valueNg = [];
@@ -98,6 +96,7 @@ class PlayResultPage extends ConsumerWidget {
                             data: (endsProvider) => ElevatedButton(
                               onPressed: () async {
                                 final int count = endsProvider.length;
+                                //TODO:Mapにできない
                                 for (int i = 0; i < count; i++) {
                                   for (int k = 0; k < ngList.length; k++) {
                                     if (endsProvider[i].wId == ngList[k]) {
@@ -105,9 +104,9 @@ class PlayResultPage extends ConsumerWidget {
                                     }
                                   }
                                 }
-                                for (int i = 0; i < ngList.length; i++) {
-                                  playsCtr.endBadUp(ngList[i]);
-                                }
+                                ngList.map((ngList) {
+                                  playsCtr.endBadUp(ngList);
+                                }).toList();
                                 playsCtr.endFlat(folderID);
                                 await Navigator.pushNamed(context, "/play_page",
                                     arguments: valueNg);

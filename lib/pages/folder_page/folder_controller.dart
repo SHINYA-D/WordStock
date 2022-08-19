@@ -27,22 +27,21 @@ class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
   }
 
   Future<void> deleteData(Folder selectFolder, int index) async {
-    if (selectFolder.id != null) {
-      await sqliteRepo.deleteFolder(selectFolder.id);
-      await sqliteRepo.deleteIdSearch(selectFolder.id);
-      if (state.value == null) return;
-      state = AsyncValue.data(state.value!..remove(selectFolder));
-    }
+    if (selectFolder.id == null) return;
+    await sqliteRepo.deleteFolder(selectFolder.id);
+    await sqliteRepo.deleteIdSearch(selectFolder.id);
+    if (state.value == null) return;
+    state = AsyncValue.data(state.value!..remove(selectFolder));
   }
 
   Future<void> upData(Folder upData) async {
     await sqliteRepo.upFolder(upData);
     if (state.value == null) return;
-    for (var i = 0; i < state.value!.length; i++) {
-      if (state.value?[i].id == upData.id) {
-        state.value?[i] = upData;
-        state = AsyncValue.data([...state.value!]);
-      }
-    }
+    final newFolders = state.value!.map((folder) {
+      if (folder.id == upData.id) return upData;
+      return folder;
+    }).toList();
+
+    state = AsyncValue.data([...newFolders]);
   }
 }

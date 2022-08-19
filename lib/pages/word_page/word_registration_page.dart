@@ -218,6 +218,31 @@ _wordRegister(
           wOk: 'FLAT');
 
       controlWordsProvider.registerData(register);
-    } //IF文
-  } //for文
+    }
+  }
+
+  //TODO:Mapにできない
+  // cardItemCount.map((cardCount){
+  //   if ((frontTextController[cardCount].text != "") &&
+  //       (backTextController[cardCount].text != "")) {
+  //     final String uid = const Uuid().v4();
+  //     final Word register = Word(
+  //         wId: uid,
+  //         wFrontName: frontTextController[cardCount].text,
+  //         wBackName: backTextController[cardCount].text,
+  //         wTableName: 'words',
+  //         wFolderNameId: folderIdNum,
+  //         wYes: 0,
+  //         wNo: 0,
+  //         wPlay: 0,
+  //         wTime: 0,
+  //         wPercent: 0,
+  //         wAverage: 0,
+  //         wOk: 'FLAT');
+  //
+  //     controlWordsProvider.registerData(register);
+  //   }
+  // }).toList();
+  //
+  //
 }

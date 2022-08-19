@@ -21,7 +21,8 @@ main() {
               initialRoute: '/',
               routes: <String, WidgetBuilder>{
                 '/': (BuildContext context) => const FolderPage(),
-                '/folder_edit': (BuildContext context) => const FolderEditPage(),
+                '/folder_edit': (BuildContext context) =>
+                    const FolderEditPage(),
                 '/word_page': (BuildContext context) => const WordPage(),
                 '/word_registration': (BuildContext context) =>
                     const WordRegistrationPage(),

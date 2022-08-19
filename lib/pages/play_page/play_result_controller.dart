@@ -33,13 +33,16 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
   }
 
   Future<void> endFlat(String folderId) async {
-    for (int i = 0; i < state.value!.length; i++) {
-      if (state.value![i].wFolderNameId == folderId) {
-        state.value![i] = state.value![i].copyWith(wOk: 'FLAT');
-        await sqliteRepo.upWord(state.value![i]);
-        state = AsyncValue.data([...state.value!]);
+    final flatValue = state.value!.map((flatValue) {
+      if (flatValue.wFolderNameId == folderId) {
+        flatValue = flatValue.copyWith(wOk: 'FLAT');
+        sqliteRepo.upWord(flatValue);
+        return flatValue;
+      } else {
+        return flatValue;
       }
-    }
+    }).toList();
+    state = AsyncValue.data([...flatValue]);
   }
 }
 
