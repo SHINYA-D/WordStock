@@ -94,15 +94,15 @@ class PlayResultPage extends ConsumerWidget {
                           visible: visible,
                           //maintainSize: true,
                           child: playsState.when(
-                            data: (endsProvider) => ElevatedButton(
+                            data: (playsState) => ElevatedButton(
                               onPressed: () async {
                                 try {
-                                  final int count = endsProvider.length;
+                                  final int count = playsState.length;
                                   //TODO:Mapにできない
                                   for (int i = 0; i < count; i++) {
                                     for (int k = 0; k < ngList.length; k++) {
-                                      if (endsProvider[i].wId == ngList[k]) {
-                                        valueNg.add(endsProvider[i]);
+                                      if (playsState[i].wId == ngList[k]) {
+                                        valueNg.add(playsState[i]);
                                       }
                                     }
                                   }

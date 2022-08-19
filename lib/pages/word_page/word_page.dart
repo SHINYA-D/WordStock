@@ -38,8 +38,8 @@ class WordPage extends ConsumerWidget {
         child: Padding(
           padding: EdgeInsets.only(top: 100.h),
           child: wordsState.when(
-            data: (wordsProvider) => ListView.builder(
-              itemCount: wordsProvider.length,
+            data: (wordsState) => ListView.builder(
+              itemCount: wordsState.length,
               itemBuilder: (context, index) {
                 return Slidable(
                   endActionPane: ActionPane(
@@ -48,7 +48,7 @@ class WordPage extends ConsumerWidget {
                       SlidableAction(
                         onPressed: (_) {
                           try {
-                            final selectWord = wordsProvider[index];
+                            final selectWord = wordsState[index];
                             wordsCtr.deleteData(selectWord);
                           } catch (e) {
                             AlertDialog(
@@ -71,7 +71,7 @@ class WordPage extends ConsumerWidget {
                     ],
                   ),
                   child: ListTile(
-                    title: _buildFolderList(index, wordsProvider, context),
+                    title: _buildFolderList(index, wordsState, context),
                   ),
                 );
               },
@@ -111,11 +111,11 @@ class WordPage extends ConsumerWidget {
           Container(
             margin: EdgeInsets.only(left: 5.w, bottom: 530.h),
             child: wordsState.when(
-              data: (wordsProvider) => FloatingActionButton(
+              data: (wordsState) => FloatingActionButton(
                 heroTag: "btn2",
                 backgroundColor: Colors.white,
                 onPressed: () {
-                  final List<Word> wordExtract = wordsProvider;
+                  final List<Word> wordExtract = wordsState;
                   Navigator.pushReplacementNamed(context, "/play_page",
                       arguments: wordExtract);
                 },

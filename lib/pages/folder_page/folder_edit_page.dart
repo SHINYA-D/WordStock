@@ -41,10 +41,10 @@ class FolderEditPage extends ConsumerWidget {
             child: const Text("CANCEL"),
           ),
           foldersState.when(
-            data: (foldersProvider) => ElevatedButton(
+            data: (foldersState) => ElevatedButton(
               onPressed: () {
                 try {
-                  Folder up = foldersProvider[index];
+                  Folder up = foldersState[index];
                   up = up.copyWith(name: dateTextController.text);
                   foldersCtl.upData(up);
                   Navigator.pop(context);

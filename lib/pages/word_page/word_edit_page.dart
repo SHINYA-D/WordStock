@@ -122,10 +122,10 @@ class WordEditPage extends ConsumerWidget {
                       child: const Text("CANCEL"),
                     ),
                     wordsState.when(
-                      data: (wordsProvider) => ElevatedButton(
+                      data: (wordsState) => ElevatedButton(
                         onPressed: () {
                           try {
-                            Word up = wordsProvider[selectNum];
+                            Word up = wordsState[selectNum];
                             up = up.copyWith(
                                 wFrontName: frontTextController.text,
                                 wBackName: backTextController.text);

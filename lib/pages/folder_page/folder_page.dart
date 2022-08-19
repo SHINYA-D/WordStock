@@ -34,8 +34,8 @@ class FolderPage extends ConsumerWidget {
         child: Padding(
           padding: EdgeInsets.only(top: 100.h),
           child: foldersState.when(
-            data: (foldersProvider) => ListView.builder(
-              itemCount: foldersProvider.length,
+            data: (foldersState) => ListView.builder(
+              itemCount: foldersState.length,
               itemBuilder: (context, index) {
                 return Slidable(
                   endActionPane: ActionPane(
@@ -53,7 +53,7 @@ class FolderPage extends ConsumerWidget {
                       SlidableAction(
                         onPressed: (_) {
                           try {
-                            final selectFolder = foldersProvider[index];
+                            final selectFolder = foldersState[index];
                             foldersCtl.deleteData(selectFolder, index);
                           } catch (e) {
                             AlertDialog(
@@ -76,7 +76,7 @@ class FolderPage extends ConsumerWidget {
                     ],
                   ),
                   child: ListTile(
-                    title: _buildFolderList(index, foldersProvider, context),
+                    title: _buildFolderList(index, foldersState, context),
                   ),
                 );
               },
