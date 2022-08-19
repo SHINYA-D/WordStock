@@ -43,7 +43,7 @@ class FolderPage extends ConsumerWidget {
                     children: [
                       SlidableAction(
                         onPressed: (context) {
-                          Navigator.pushNamed(context, "/folder_edit",
+                          Navigator.pushNamed(context, "/folder_edit_page",
                               arguments: index);
                         },
                         backgroundColor: Colors.black,

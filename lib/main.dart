@@ -21,14 +21,14 @@ main() {
               initialRoute: '/',
               routes: <String, WidgetBuilder>{
                 '/': (BuildContext context) => const FolderPage(),
-                '/folder_edit': (BuildContext context) =>
+                '/folder_edit_page': (BuildContext context) =>
                     const FolderEditPage(),
                 '/word_page': (BuildContext context) => const WordPage(),
-                '/word_registration': (BuildContext context) =>
+                '/word_registration_page': (BuildContext context) =>
                     const WordRegistrationPage(),
-                '/word_edit': (BuildContext context) => const WordEditPage(),
+                '/word_edit_page': (BuildContext context) => const WordEditPage(),
                 '/play_page': (BuildContext context) => const PlayPage(),
-                '/end_page': (BuildContext context) => const PlayResultPage(),
+                '/play_result_page': (BuildContext context) => const PlayResultPage(),
               },
             );
           }),

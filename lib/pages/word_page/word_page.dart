@@ -99,7 +99,7 @@ class WordPage extends ConsumerWidget {
               heroTag: "btn1",
               backgroundColor: Colors.white,
               onPressed: () {
-                Navigator.pushNamed(context, "/word_registration",
+                Navigator.pushNamed(context, "/word_registration_page",
                     arguments: folderIdNum);
               },
               child: const Icon(
@@ -162,7 +162,7 @@ Widget _buildFolderList(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, "/word_edit",
+                Navigator.pushNamed(context, "/word_edit_page",
                     arguments: EditBox(index, wordsProvider));
               },
               style: ElevatedButton.styleFrom(
