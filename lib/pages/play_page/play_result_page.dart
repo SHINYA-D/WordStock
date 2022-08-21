@@ -115,8 +115,7 @@ class PlayResultPage extends ConsumerWidget {
                                       arguments: valueNg);
                                 } catch (e) {
                                   AlertDialog(
-                                    title: const Text(
-                                        '再プレイでエラーが発生しました'),
+                                    title: const Text('再プレイでエラーが発生しました'),
                                     actions: <Widget>[
                                       GestureDetector(
                                         child: const Text('閉じる'),

@@ -26,9 +26,11 @@ main() {
                 '/word_page': (BuildContext context) => const WordPage(),
                 '/word_registration_page': (BuildContext context) =>
                     const WordRegistrationPage(),
-                '/word_edit_page': (BuildContext context) => const WordEditPage(),
+                '/word_edit_page': (BuildContext context) =>
+                    const WordEditPage(),
                 '/play_page': (BuildContext context) => const PlayPage(),
-                '/play_result_page': (BuildContext context) => const PlayResultPage(),
+                '/play_result_page': (BuildContext context) =>
+                    const PlayResultPage(),
               },
             );
           }),

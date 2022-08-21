@@ -133,8 +133,7 @@ class WordEditPage extends ConsumerWidget {
                             Navigator.pop(context);
                           } catch (e) {
                             AlertDialog(
-                              title: const Text(
-                                  'カード編集中にエラーが発生しました。'),
+                              title: const Text('カード編集中にエラーが発生しました。'),
                               actions: <Widget>[
                                 GestureDetector(
                                   child: const Text('閉じる'),
@@ -149,8 +148,7 @@ class WordEditPage extends ConsumerWidget {
                         child: const Text("OK"),
                       ),
                       error: (error, _) => AlertDialog(
-                        title: const Text(
-                            'カード編集画面でエラーが発生しました。'),
+                        title: const Text('カード編集画面でエラーが発生しました。'),
                         actions: <Widget>[
                           GestureDetector(
                             child: const Text('閉じる'),
