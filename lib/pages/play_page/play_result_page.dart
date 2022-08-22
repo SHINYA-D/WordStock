@@ -100,11 +100,11 @@ class PlayResultPage extends ConsumerWidget {
                                   final int count = playsState.length;
                                   //TODO:Mapにできない
                                   for (int i = 0; i < count; i++) {
-                                    for (int k = 0; k < ngList.length; k++) {
-                                      if (playsState[i].wId == ngList[k]) {
+                                    ngList.map((ng) {
+                                      if (playsState[i].wId == ng) {
                                         valueNg.add(playsState[i]);
                                       }
-                                    }
+                                    }).toList();
                                   }
                                   ngList.map((ngList) {
                                     playsCtr.endBadUp(ngList);
