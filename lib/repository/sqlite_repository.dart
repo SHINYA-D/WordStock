@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -21,7 +22,7 @@ class SqliteRepository {
   _initDatabase() async {
     final Directory documentsDirectory =
         await getApplicationDocumentsDirectory();
-    final String path = join(documentsDirectory.path, 'WordStock.db');
+    final String path = join(documentsDirectory.path, 'WordStock02.db');
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
@@ -30,18 +31,19 @@ class SqliteRepository {
       CREATE TABLE folders (id TEXT PRIMARY KEY, name TEXT, tableName TEXT)''');
     await db.execute('''
       CREATE TABLE words(
-                wId TEXT PRIMARY KEY,
-                wFrontName TEXT,
-                wBackName TEXT,
-                wTableName TEXT,
-                wFolderNameId TEXT,
-                wYes INTEGER,
-                wNo INTEGER,
-                wPlay INTEGER,
-                wTime INTEGER,
-                wPercent INTEGER,
-                wAverage INTEGER,
-                wOk TEXT)''');
+                id TEXT PRIMARY KEY,
+                frontName TEXT,
+                backName TEXT,
+                tableName TEXT,
+                folderNameId TEXT,
+                yesCount INTEGER,
+                noCount INTEGER,
+                play INTEGER,
+                time INTEGER,
+                percent INTEGER,
+                average INTEGER,
+                ok TEXT
+                )''');
   }
 
 /*==============================================================================
@@ -72,18 +74,18 @@ class SqliteRepository {
     final List<Map<String, dynamic>> maps = await db.query('words');
     return List.generate(maps.length, (i) {
       return Word(
-        wId: maps[i]['wId'],
-        wFrontName: maps[i]['wFrontName'],
-        wBackName: maps[i]['wBackName'],
-        wTableName: maps[i]['wTableName'],
-        wFolderNameId: maps[i]['wFolderNameId'],
-        wYes: maps[i]['wYes'],
-        wNo: maps[i]['wNo'],
-        wPlay: maps[i]['wPlay'],
-        wTime: maps[i]['wTime'],
-        wPercent: maps[i]['wPercent'],
-        wAverage: maps[i]['wAverage'],
-        wOk: maps[i]['wOk'],
+        id: maps[i]['id'],
+        frontName: maps[i]['frontName'],
+        backName: maps[i]['backName'],
+        tableName: maps[i]['tableName'],
+        folderNameId: maps[i]['folderNameId'],
+        yesCount: maps[i]['yesCount'],
+        noCount: maps[i]['noCount'],
+        play: maps[i]['play'],
+        time: maps[i]['time'],
+        percent: maps[i]['percent'],
+        average: maps[i]['average'],
+        ok: maps[i]['ok'],
       );
     });
   }
@@ -95,48 +97,69 @@ class SqliteRepository {
       throw const ErrorPage('DB:ID検索取得中にエラーが発生しました');
     }
     final List<Map<String, dynamic>> maps = await db
-        .query('words', where: 'wFolderNameId = ?', whereArgs: [folderIdNum]);
+        .query('words', where: 'folderNameId = ?', whereArgs: [folderIdNum]);
     return List.generate(maps.length, (i) {
       return Word(
-        wId: maps[i]['wId'],
-        wFrontName: maps[i]['wFrontName'],
-        wBackName: maps[i]['wBackName'],
-        wTableName: maps[i]['wTableName'],
-        wFolderNameId: maps[i]['wFolderNameId'],
-        wYes: maps[i]['wYes'],
-        wNo: maps[i]['wNo'],
-        wPlay: maps[i]['wPlay'],
-        wTime: maps[i]['wTime'],
-        wPercent: maps[i]['wPercent'],
-        wAverage: maps[i]['wAverage'],
-        wOk: maps[i]['wOk'],
+        id: maps[i]['id'],
+        frontName: maps[i]['frontName'],
+        backName: maps[i]['backName'],
+        tableName: maps[i]['tableName'],
+        folderNameId: maps[i]['folderNameId'],
+        yesCount: maps[i]['yesCount'],
+        noCount: maps[i]['noCount'],
+        play: maps[i]['play'],
+        time: maps[i]['time'],
+        percent: maps[i]['percent'],
+        average: maps[i]['average'],
+        ok: maps[i]['ok'],
       );
     });
   }
 
-  //TODO:成績表をグラフで表示する時に使用
-  // //'対象フォルダ'かつ'NG'の場合を取得
-  // Future<List<Word>> getPointNg(String folderIdNum, String ng) async {
-  //   final Database? db = await database;
-  //   final List<Map<String, dynamic>> maps = await db!.query('words',
-  //       where: 'wFolderNameId = ? AND wOk = ?', whereArgs: [folderIdNum, ng]);
-  //   return List.generate(maps.length, (i) {
-  //     return Word(
-  //       wId: maps[i]['wId'],
-  //       wFrontName: maps[i]['wFrontName'],
-  //       wBackName: maps[i]['wBackName'],
-  //       wTableName: maps[i]['wTableName'],
-  //       wFolderNameId: maps[i]['wFolderNameId'],
-  //       wYes: maps[i]['wYes'],
-  //       wNo: maps[i]['wNo'],
-  //       wPlay: maps[i]['wPlay'],
-  //       wTime: maps[i]['wTime'],
-  //       wPercent: maps[i]['wPercent'],
-  //       wAverage: maps[i]['wAverage'],
-  //       wOk: maps[i]['wOk'],
-  //     );
-  //   });
-  // }
+  //'対象フォルダ'かつ'NG'の場合を取得
+  Future<List<Word>> getPointNg(String folderId) async {
+    final Database? db = await database;
+    final List<Map<String, dynamic>> maps = await db!.query('words',
+        where: 'folderNameId = ? AND ok = ?', whereArgs: [folderId, 'NG']);
+    return List.generate(maps.length, (i) {
+      return Word(
+        id: maps[i]['id'],
+        frontName: maps[i]['frontName'],
+        backName: maps[i]['backName'],
+        tableName: maps[i]['tableName'],
+        folderNameId: maps[i]['folderNameId'],
+        yesCount: maps[i]['yesCount'],
+        noCount: maps[i]['noCount'],
+        play: maps[i]['play'],
+        time: maps[i]['time'],
+        percent: maps[i]['percent'],
+        average: maps[i]['average'],
+        ok: maps[i]['ok'],
+      );
+    });
+  }
+
+  Future<List<Word>> getPointGood(String folderId) async {
+    final Database? db = await database;
+    final List<Map<String, dynamic>> maps = await db!.query('words',
+        where: 'folderNameId = ? AND ok = ?', whereArgs: [folderId, 'OK']);
+    return List.generate(maps.length, (i) {
+      return Word(
+        id: maps[i]['id'],
+        frontName: maps[i]['frontName'],
+        backName: maps[i]['backName'],
+        tableName: maps[i]['tableName'],
+        folderNameId: maps[i]['folderNameId'],
+        yesCount: maps[i]['yesCount'],
+        noCount: maps[i]['noCount'],
+        play: maps[i]['play'],
+        time: maps[i]['time'],
+        percent: maps[i]['percent'],
+        average: maps[i]['average'],
+        ok: maps[i]['ok'],
+      );
+    });
+  }
 
 /*==============================================================================
 【登録】
@@ -180,22 +203,22 @@ class SqliteRepository {
   }
 
   //対象wFolderNameId削除
-  Future<void> deleteIdSearch(String? wFolderNameId) async {
+  Future<void> deleteIdSearch(String? folderNameId) async {
     final Database? db = await database;
     if (db == null) {
       throw const ErrorPage('DB:対象ID削除中にエラーが発生しました');
     }
-    await db.delete('words',
-        where: 'wFolderNameId = ?', whereArgs: [wFolderNameId]);
+    await db
+        .delete('words', where: 'folderNameId = ?', whereArgs: [folderNameId]);
   }
 
   //Word削除
-  Future<void> deleteWord(String wId) async {
+  Future<void> deleteWord(String id) async {
     final Database? db = await database;
     if (db == null) {
       throw const ErrorPage('DB:Word削除中にエラーが発生しました');
     }
-    await db.delete('words', where: 'wId = ?', whereArgs: [wId]);
+    await db.delete('words', where: 'id = ?', whereArgs: [id]);
   }
 
 /*==============================================================================
@@ -217,7 +240,6 @@ class SqliteRepository {
     if (db == null) {
       throw const ErrorPage('DB:Word編集中にエラーが発生しました');
     }
-    await db
-        .update('words', up.toJson(), where: 'wId = ?', whereArgs: [up.wId]);
+    await db.update('words', up.toJson(), where: 'id = ?', whereArgs: [up.id]);
   }
 }
