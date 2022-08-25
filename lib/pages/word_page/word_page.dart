@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:wordstock/model/word/word.dart';
+
 import 'word_controller.dart';
 
 class WordPage extends ConsumerWidget {
@@ -10,14 +11,14 @@ class WordPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final folderId = ModalRoute.of(context)?.settings.arguments;
-    final String folderIdNum = folderId as String;
+    final folderIdNum = ModalRoute.of(context)?.settings.arguments;
+    final String folderId = folderIdNum as String;
 
-    final wordsState = ref.watch(wordProvider);
+    final wordsState = ref.watch(wordProvider(folderId));
 
-    final wordsCtr = ref.read(wordProvider.notifier);
+    final wordsCtr = ref.read(wordProvider(folderId).notifier);
 
-    wordsCtr.getPointData(folderIdNum);
+    //wordsCtr.getPointData(folderIdNum);
 
 /*==============================================================================
 【ワード画面】
@@ -100,7 +101,7 @@ class WordPage extends ConsumerWidget {
               backgroundColor: Colors.white,
               onPressed: () {
                 Navigator.pushNamed(context, "/word_registration_page",
-                    arguments: folderIdNum);
+                    arguments: folderId);
               },
               child: const Icon(
                 Icons.add,
@@ -115,9 +116,8 @@ class WordPage extends ConsumerWidget {
                 heroTag: "btn2",
                 backgroundColor: Colors.white,
                 onPressed: () {
-                  final List<Word> wordExtract = wordsState;
                   Navigator.pushReplacementNamed(context, "/play_page",
-                      arguments: wordExtract);
+                      arguments: wordsState /*folderId*/);
                 },
                 child: const Icon(
                   Icons.play_circle_filled,
@@ -163,7 +163,7 @@ Widget _buildFolderList(
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, "/word_edit_page",
-                    arguments: EditBox(index, wordsProvider));
+                    arguments: EditBox(index, wordsProvider[0].folderNameId));
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
@@ -179,7 +179,7 @@ Widget _buildFolderList(
                     color: Colors.black,
                   ),
                   Text(
-                    wordsProvider[index].wFrontName ?? 'NULL',
+                    wordsProvider[index].frontName ?? 'NULL',
                     style: const TextStyle(
                       color: Colors.black,
                     ),
@@ -193,8 +193,8 @@ Widget _buildFolderList(
     );
 
 class EditBox {
-  final int selectNum;
-  final List<Word> words;
+  final int wordSelectNum;
+  final String? folderId;
 
-  EditBox(this.selectNum, this.words);
+  EditBox(this.wordSelectNum, this.folderId);
 }

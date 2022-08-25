@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/pages/word_page/word_page.dart';
+
 import 'word_controller.dart';
 
 class WordEditPage extends ConsumerWidget {
@@ -12,26 +13,23 @@ class WordEditPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     EditBox args = ModalRoute.of(context)?.settings.arguments as EditBox;
-    int selectNum = args.selectNum;
+    int wordSelectIndex = args.wordSelectNum;
+    String folderId = args.folderId!;
 
-    List<Word> words = args.words;
+    final wordsState = ref.watch(wordProvider(folderId));
 
-    final wordsState = ref.watch(wordProvider);
-
-    final wordsCtr = ref.read(wordProvider.notifier);
-
-    wordsCtr.getPointData(words[selectNum].wFolderNameId);
+    final wordsCtr = ref.read(wordProvider(folderId).notifier);
 
     //入力コントローラ　表
-    final frontTextController =
-        TextEditingController(text: wordsState.value![selectNum].wFrontName);
+    final frontTextController = TextEditingController(
+        text: wordsState.value![wordSelectIndex].frontName);
 
     //入力コントローラ　裏
-    final backTextController =
-        TextEditingController(text: wordsState.value![selectNum].wBackName);
+    final backTextController = TextEditingController(
+        text: wordsState.value![wordSelectIndex].backName);
 
-    final String? flont = wordsState.value![selectNum].wFrontName;
-    final String? back = wordsState.value![selectNum].wBackName;
+    final String? flont = wordsState.value![wordSelectIndex].frontName;
+    final String? back = wordsState.value![wordSelectIndex].backName;
 
 /*==============================================================================
 【編集画面】
@@ -125,10 +123,10 @@ class WordEditPage extends ConsumerWidget {
                       data: (wordsState) => ElevatedButton(
                         onPressed: () {
                           try {
-                            Word up = wordsState[selectNum];
+                            Word up = wordsState[wordSelectIndex];
                             up = up.copyWith(
-                                wFrontName: frontTextController.text,
-                                wBackName: backTextController.text);
+                                frontName: frontTextController.text,
+                                backName: backTextController.text);
                             wordsCtr.upData(up);
                             Navigator.pop(context);
                           } catch (e) {

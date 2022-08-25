@@ -5,10 +5,11 @@ import 'package:wordstock/repository/sqlite_repository.dart';
 final allWordsProvider =
     FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getWords());
 
-final wordProvider =
-    StateNotifierProvider<WordController, AsyncValue<List<Word>>>((ref) {
+final wordProvider = StateNotifierProvider.family<WordController,
+    AsyncValue<List<Word>>, String>((ref, folderId) {
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
   final allWords = ref.watch(allWordsProvider);
+
   return WordController(sqliteRepo, allWords);
 });
 
@@ -26,7 +27,7 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
   }
 
   Future<void> deleteData(Word selectWord) async {
-    await sqliteRepo.deleteWord(selectWord.wId!);
+    await sqliteRepo.deleteWord(selectWord.id!);
     state = state.value != null
         ? AsyncValue.data(state.value!..remove(selectWord))
         : const AsyncValue.data([]);
@@ -35,7 +36,7 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
   Future<void> upData(Word upData) async {
     await sqliteRepo.upWord(upData);
     for (var i = 0; i < state.value!.length; i++) {
-      if (state.value![i].wId == upData.wId) {
+      if (state.value![i].id == upData.id) {
         state.value![i] = upData;
         state = AsyncValue.data([...state.value!]);
       }

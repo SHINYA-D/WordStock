@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordstock/model/word/word.dart';
+
 import 'word_controller.dart';
 
 class WordRegistrationPage extends ConsumerWidget {
@@ -11,7 +12,7 @@ class WordRegistrationPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
-    final String folderIdNum = args as String;
+    final String folderId = args as String;
 
     const int cardItemCount = 5;
 
@@ -21,7 +22,7 @@ class WordRegistrationPage extends ConsumerWidget {
     final List<TextEditingController> backTextController =
         List.generate(5, (i) => TextEditingController(text: ''));
 
-    final wordsCtr = ref.read(wordProvider.notifier);
+    final wordsCtr = ref.read(wordProvider(folderId).notifier);
 /*==============================================================================
 【登録画面】
 ==============================================================================*/
@@ -83,7 +84,7 @@ class WordRegistrationPage extends ConsumerWidget {
         onPressed: () {
           try {
             _wordRegister(cardItemCount, frontTextController,
-                backTextController, folderIdNum, wordsCtr);
+                backTextController, folderId, wordsCtr);
             Navigator.of(context).pop();
           } catch (e) {
             AlertDialog(
@@ -211,7 +212,7 @@ _wordRegister(
     int cardItemCount,
     List<TextEditingController> frontTextController,
     List<TextEditingController> backTextController,
-    String? folderIdNum,
+    String? folderId,
     controlWordsProvider) {
   //TODO:Mapにできない
   for (var i = 0; i < cardItemCount; i++) {
@@ -219,19 +220,19 @@ _wordRegister(
         (backTextController[i].text != "")) {
       final String uid = const Uuid().v4();
       final Word register = Word(
-          wId: uid,
-          wFrontName: frontTextController[i].text,
-          wBackName: backTextController[i].text,
-          wTableName: 'words',
-          wFolderNameId: folderIdNum,
-          wYes: 0,
-          wNo: 0,
-          wPlay: 0,
-          wTime: 0,
-          wPercent: 0,
-          wAverage: 0,
-          wOk: 'FLAT');
-
+        id: uid,
+        frontName: frontTextController[i].text,
+        backName: backTextController[i].text,
+        tableName: 'words',
+        folderNameId: folderId,
+        yesCount: 0,
+        noCount: 0,
+        play: 0,
+        time: 0,
+        percent: 0,
+        average: 0,
+        ok: 'FLAT',
+      );
       controlWordsProvider.registerData(register);
     }
   }
