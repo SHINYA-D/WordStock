@@ -8,16 +8,16 @@ final allFoldersProvider =
 final folderProvider =
     StateNotifierProvider<FolderController, AsyncValue<List<Folder>>>((ref) {
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
-  final allForders = ref.watch(allFoldersProvider);
+  final allFolders = ref.watch(allFoldersProvider);
 
-  return FolderController(sqliteRepo, allForders);
+  return FolderController(sqliteRepo, allFolders);
 });
 
 class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
-  FolderController(this.sqliteRepo, this.allForders) : super(allForders);
+  FolderController(this.sqliteRepo, this.allFolders) : super(allFolders);
 
   final SqliteRepository sqliteRepo;
-  final AsyncValue<List<Folder>> allForders;
+  final AsyncValue<List<Folder>> allFolders;
 
   Future<void> registerData(Folder register) async {
     await sqliteRepo.registerFolder(register);
