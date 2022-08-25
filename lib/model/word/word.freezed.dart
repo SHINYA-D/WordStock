@@ -20,18 +20,18 @@ Word _$WordFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Word {
-  String? get wId => throw _privateConstructorUsedError;
-  String? get wFrontName => throw _privateConstructorUsedError;
-  String? get wBackName => throw _privateConstructorUsedError;
-  String? get wTableName => throw _privateConstructorUsedError;
-  String? get wFolderNameId => throw _privateConstructorUsedError;
-  int? get wYes => throw _privateConstructorUsedError;
-  int? get wNo => throw _privateConstructorUsedError;
-  int? get wPlay => throw _privateConstructorUsedError;
-  int? get wTime => throw _privateConstructorUsedError;
-  int? get wPercent => throw _privateConstructorUsedError;
-  int? get wAverage => throw _privateConstructorUsedError;
-  String? get wOk => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get frontName => throw _privateConstructorUsedError;
+  String? get backName => throw _privateConstructorUsedError;
+  String? get tableName => throw _privateConstructorUsedError;
+  String? get folderNameId => throw _privateConstructorUsedError;
+  int? get yesCount => throw _privateConstructorUsedError;
+  int? get noCount => throw _privateConstructorUsedError;
+  int? get play => throw _privateConstructorUsedError;
+  int? get time => throw _privateConstructorUsedError;
+  int? get percent => throw _privateConstructorUsedError;
+  int? get average => throw _privateConstructorUsedError;
+  String? get ok => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,18 +43,18 @@ abstract class $WordCopyWith<$Res> {
   factory $WordCopyWith(Word value, $Res Function(Word) then) =
       _$WordCopyWithImpl<$Res>;
   $Res call(
-      {String? wId,
-      String? wFrontName,
-      String? wBackName,
-      String? wTableName,
-      String? wFolderNameId,
-      int? wYes,
-      int? wNo,
-      int? wPlay,
-      int? wTime,
-      int? wPercent,
-      int? wAverage,
-      String? wOk});
+      {String? id,
+      String? frontName,
+      String? backName,
+      String? tableName,
+      String? folderNameId,
+      int? yesCount,
+      int? noCount,
+      int? play,
+      int? time,
+      int? percent,
+      int? average,
+      String? ok});
 }
 
 /// @nodoc
@@ -67,67 +67,67 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? wId = freezed,
-    Object? wFrontName = freezed,
-    Object? wBackName = freezed,
-    Object? wTableName = freezed,
-    Object? wFolderNameId = freezed,
-    Object? wYes = freezed,
-    Object? wNo = freezed,
-    Object? wPlay = freezed,
-    Object? wTime = freezed,
-    Object? wPercent = freezed,
-    Object? wAverage = freezed,
-    Object? wOk = freezed,
+    Object? id = freezed,
+    Object? frontName = freezed,
+    Object? backName = freezed,
+    Object? tableName = freezed,
+    Object? folderNameId = freezed,
+    Object? yesCount = freezed,
+    Object? noCount = freezed,
+    Object? play = freezed,
+    Object? time = freezed,
+    Object? percent = freezed,
+    Object? average = freezed,
+    Object? ok = freezed,
   }) {
     return _then(_value.copyWith(
-      wId: wId == freezed
-          ? _value.wId
-          : wId // ignore: cast_nullable_to_non_nullable
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      wFrontName: wFrontName == freezed
-          ? _value.wFrontName
-          : wFrontName // ignore: cast_nullable_to_non_nullable
+      frontName: frontName == freezed
+          ? _value.frontName
+          : frontName // ignore: cast_nullable_to_non_nullable
               as String?,
-      wBackName: wBackName == freezed
-          ? _value.wBackName
-          : wBackName // ignore: cast_nullable_to_non_nullable
+      backName: backName == freezed
+          ? _value.backName
+          : backName // ignore: cast_nullable_to_non_nullable
               as String?,
-      wTableName: wTableName == freezed
-          ? _value.wTableName
-          : wTableName // ignore: cast_nullable_to_non_nullable
+      tableName: tableName == freezed
+          ? _value.tableName
+          : tableName // ignore: cast_nullable_to_non_nullable
               as String?,
-      wFolderNameId: wFolderNameId == freezed
-          ? _value.wFolderNameId
-          : wFolderNameId // ignore: cast_nullable_to_non_nullable
+      folderNameId: folderNameId == freezed
+          ? _value.folderNameId
+          : folderNameId // ignore: cast_nullable_to_non_nullable
               as String?,
-      wYes: wYes == freezed
-          ? _value.wYes
-          : wYes // ignore: cast_nullable_to_non_nullable
+      yesCount: yesCount == freezed
+          ? _value.yesCount
+          : yesCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      wNo: wNo == freezed
-          ? _value.wNo
-          : wNo // ignore: cast_nullable_to_non_nullable
+      noCount: noCount == freezed
+          ? _value.noCount
+          : noCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      wPlay: wPlay == freezed
-          ? _value.wPlay
-          : wPlay // ignore: cast_nullable_to_non_nullable
+      play: play == freezed
+          ? _value.play
+          : play // ignore: cast_nullable_to_non_nullable
               as int?,
-      wTime: wTime == freezed
-          ? _value.wTime
-          : wTime // ignore: cast_nullable_to_non_nullable
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
               as int?,
-      wPercent: wPercent == freezed
-          ? _value.wPercent
-          : wPercent // ignore: cast_nullable_to_non_nullable
+      percent: percent == freezed
+          ? _value.percent
+          : percent // ignore: cast_nullable_to_non_nullable
               as int?,
-      wAverage: wAverage == freezed
-          ? _value.wAverage
-          : wAverage // ignore: cast_nullable_to_non_nullable
+      average: average == freezed
+          ? _value.average
+          : average // ignore: cast_nullable_to_non_nullable
               as int?,
-      wOk: wOk == freezed
-          ? _value.wOk
-          : wOk // ignore: cast_nullable_to_non_nullable
+      ok: ok == freezed
+          ? _value.ok
+          : ok // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -139,18 +139,18 @@ abstract class _$$_WordCopyWith<$Res> implements $WordCopyWith<$Res> {
       __$$_WordCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? wId,
-      String? wFrontName,
-      String? wBackName,
-      String? wTableName,
-      String? wFolderNameId,
-      int? wYes,
-      int? wNo,
-      int? wPlay,
-      int? wTime,
-      int? wPercent,
-      int? wAverage,
-      String? wOk});
+      {String? id,
+      String? frontName,
+      String? backName,
+      String? tableName,
+      String? folderNameId,
+      int? yesCount,
+      int? noCount,
+      int? play,
+      int? time,
+      int? percent,
+      int? average,
+      String? ok});
 }
 
 /// @nodoc
@@ -164,67 +164,67 @@ class __$$_WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? wId = freezed,
-    Object? wFrontName = freezed,
-    Object? wBackName = freezed,
-    Object? wTableName = freezed,
-    Object? wFolderNameId = freezed,
-    Object? wYes = freezed,
-    Object? wNo = freezed,
-    Object? wPlay = freezed,
-    Object? wTime = freezed,
-    Object? wPercent = freezed,
-    Object? wAverage = freezed,
-    Object? wOk = freezed,
+    Object? id = freezed,
+    Object? frontName = freezed,
+    Object? backName = freezed,
+    Object? tableName = freezed,
+    Object? folderNameId = freezed,
+    Object? yesCount = freezed,
+    Object? noCount = freezed,
+    Object? play = freezed,
+    Object? time = freezed,
+    Object? percent = freezed,
+    Object? average = freezed,
+    Object? ok = freezed,
   }) {
     return _then(_$_Word(
-      wId: wId == freezed
-          ? _value.wId
-          : wId // ignore: cast_nullable_to_non_nullable
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      wFrontName: wFrontName == freezed
-          ? _value.wFrontName
-          : wFrontName // ignore: cast_nullable_to_non_nullable
+      frontName: frontName == freezed
+          ? _value.frontName
+          : frontName // ignore: cast_nullable_to_non_nullable
               as String?,
-      wBackName: wBackName == freezed
-          ? _value.wBackName
-          : wBackName // ignore: cast_nullable_to_non_nullable
+      backName: backName == freezed
+          ? _value.backName
+          : backName // ignore: cast_nullable_to_non_nullable
               as String?,
-      wTableName: wTableName == freezed
-          ? _value.wTableName
-          : wTableName // ignore: cast_nullable_to_non_nullable
+      tableName: tableName == freezed
+          ? _value.tableName
+          : tableName // ignore: cast_nullable_to_non_nullable
               as String?,
-      wFolderNameId: wFolderNameId == freezed
-          ? _value.wFolderNameId
-          : wFolderNameId // ignore: cast_nullable_to_non_nullable
+      folderNameId: folderNameId == freezed
+          ? _value.folderNameId
+          : folderNameId // ignore: cast_nullable_to_non_nullable
               as String?,
-      wYes: wYes == freezed
-          ? _value.wYes
-          : wYes // ignore: cast_nullable_to_non_nullable
+      yesCount: yesCount == freezed
+          ? _value.yesCount
+          : yesCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      wNo: wNo == freezed
-          ? _value.wNo
-          : wNo // ignore: cast_nullable_to_non_nullable
+      noCount: noCount == freezed
+          ? _value.noCount
+          : noCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      wPlay: wPlay == freezed
-          ? _value.wPlay
-          : wPlay // ignore: cast_nullable_to_non_nullable
+      play: play == freezed
+          ? _value.play
+          : play // ignore: cast_nullable_to_non_nullable
               as int?,
-      wTime: wTime == freezed
-          ? _value.wTime
-          : wTime // ignore: cast_nullable_to_non_nullable
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
               as int?,
-      wPercent: wPercent == freezed
-          ? _value.wPercent
-          : wPercent // ignore: cast_nullable_to_non_nullable
+      percent: percent == freezed
+          ? _value.percent
+          : percent // ignore: cast_nullable_to_non_nullable
               as int?,
-      wAverage: wAverage == freezed
-          ? _value.wAverage
-          : wAverage // ignore: cast_nullable_to_non_nullable
+      average: average == freezed
+          ? _value.average
+          : average // ignore: cast_nullable_to_non_nullable
               as int?,
-      wOk: wOk == freezed
-          ? _value.wOk
-          : wOk // ignore: cast_nullable_to_non_nullable
+      ok: ok == freezed
+          ? _value.ok
+          : ok // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -232,70 +232,51 @@ class __$$_WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Word with DiagnosticableTreeMixin implements _Word {
+class _$_Word implements _Word {
   _$_Word(
-      {this.wId,
-      this.wFrontName,
-      this.wBackName,
-      this.wTableName,
-      this.wFolderNameId,
-      this.wYes,
-      this.wNo,
-      this.wPlay,
-      this.wTime,
-      this.wPercent,
-      this.wAverage,
-      this.wOk});
+      {this.id,
+      this.frontName,
+      this.backName,
+      this.tableName,
+      this.folderNameId,
+      this.yesCount,
+      this.noCount,
+      this.play,
+      this.time,
+      this.percent,
+      this.average,
+      this.ok});
 
   factory _$_Word.fromJson(Map<String, dynamic> json) => _$$_WordFromJson(json);
 
   @override
-  final String? wId;
+  final String? id;
   @override
-  final String? wFrontName;
+  final String? frontName;
   @override
-  final String? wBackName;
+  final String? backName;
   @override
-  final String? wTableName;
+  final String? tableName;
   @override
-  final String? wFolderNameId;
+  final String? folderNameId;
   @override
-  final int? wYes;
+  final int? yesCount;
   @override
-  final int? wNo;
+  final int? noCount;
   @override
-  final int? wPlay;
+  final int? play;
   @override
-  final int? wTime;
+  final int? time;
   @override
-  final int? wPercent;
+  final int? percent;
   @override
-  final int? wAverage;
+  final int? average;
   @override
-  final String? wOk;
+  final String? ok;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Word(wId: $wId, wFrontName: $wFrontName, wBackName: $wBackName, wTableName: $wTableName, wFolderNameId: $wFolderNameId, wYes: $wYes, wNo: $wNo, wPlay: $wPlay, wTime: $wTime, wPercent: $wPercent, wAverage: $wAverage, wOk: $wOk)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'Word'))
-      ..add(DiagnosticsProperty('wId', wId))
-      ..add(DiagnosticsProperty('wFrontName', wFrontName))
-      ..add(DiagnosticsProperty('wBackName', wBackName))
-      ..add(DiagnosticsProperty('wTableName', wTableName))
-      ..add(DiagnosticsProperty('wFolderNameId', wFolderNameId))
-      ..add(DiagnosticsProperty('wYes', wYes))
-      ..add(DiagnosticsProperty('wNo', wNo))
-      ..add(DiagnosticsProperty('wPlay', wPlay))
-      ..add(DiagnosticsProperty('wTime', wTime))
-      ..add(DiagnosticsProperty('wPercent', wPercent))
-      ..add(DiagnosticsProperty('wAverage', wAverage))
-      ..add(DiagnosticsProperty('wOk', wOk));
+  String toString() {
+    return 'Word(id: $id, frontName: $frontName, backName: $backName, tableName: $tableName, folderNameId: $folderNameId, yesCount: $yesCount, noCount: $noCount, play: $play, time: $time, percent: $percent, average: $average, ok: $ok)';
   }
 
   @override
@@ -303,39 +284,37 @@ class _$_Word with DiagnosticableTreeMixin implements _Word {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Word &&
-            const DeepCollectionEquality().equals(other.wId, wId) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.frontName, frontName) &&
+            const DeepCollectionEquality().equals(other.backName, backName) &&
+            const DeepCollectionEquality().equals(other.tableName, tableName) &&
             const DeepCollectionEquality()
-                .equals(other.wFrontName, wFrontName) &&
-            const DeepCollectionEquality().equals(other.wBackName, wBackName) &&
-            const DeepCollectionEquality()
-                .equals(other.wTableName, wTableName) &&
-            const DeepCollectionEquality()
-                .equals(other.wFolderNameId, wFolderNameId) &&
-            const DeepCollectionEquality().equals(other.wYes, wYes) &&
-            const DeepCollectionEquality().equals(other.wNo, wNo) &&
-            const DeepCollectionEquality().equals(other.wPlay, wPlay) &&
-            const DeepCollectionEquality().equals(other.wTime, wTime) &&
-            const DeepCollectionEquality().equals(other.wPercent, wPercent) &&
-            const DeepCollectionEquality().equals(other.wAverage, wAverage) &&
-            const DeepCollectionEquality().equals(other.wOk, wOk));
+                .equals(other.folderNameId, folderNameId) &&
+            const DeepCollectionEquality().equals(other.yesCount, yesCount) &&
+            const DeepCollectionEquality().equals(other.noCount, noCount) &&
+            const DeepCollectionEquality().equals(other.play, play) &&
+            const DeepCollectionEquality().equals(other.time, time) &&
+            const DeepCollectionEquality().equals(other.percent, percent) &&
+            const DeepCollectionEquality().equals(other.average, average) &&
+            const DeepCollectionEquality().equals(other.ok, ok));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(wId),
-      const DeepCollectionEquality().hash(wFrontName),
-      const DeepCollectionEquality().hash(wBackName),
-      const DeepCollectionEquality().hash(wTableName),
-      const DeepCollectionEquality().hash(wFolderNameId),
-      const DeepCollectionEquality().hash(wYes),
-      const DeepCollectionEquality().hash(wNo),
-      const DeepCollectionEquality().hash(wPlay),
-      const DeepCollectionEquality().hash(wTime),
-      const DeepCollectionEquality().hash(wPercent),
-      const DeepCollectionEquality().hash(wAverage),
-      const DeepCollectionEquality().hash(wOk));
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(frontName),
+      const DeepCollectionEquality().hash(backName),
+      const DeepCollectionEquality().hash(tableName),
+      const DeepCollectionEquality().hash(folderNameId),
+      const DeepCollectionEquality().hash(yesCount),
+      const DeepCollectionEquality().hash(noCount),
+      const DeepCollectionEquality().hash(play),
+      const DeepCollectionEquality().hash(time),
+      const DeepCollectionEquality().hash(percent),
+      const DeepCollectionEquality().hash(average),
+      const DeepCollectionEquality().hash(ok));
 
   @JsonKey(ignore: true)
   @override
@@ -352,45 +331,45 @@ class _$_Word with DiagnosticableTreeMixin implements _Word {
 
 abstract class _Word implements Word {
   factory _Word(
-      {final String? wId,
-      final String? wFrontName,
-      final String? wBackName,
-      final String? wTableName,
-      final String? wFolderNameId,
-      final int? wYes,
-      final int? wNo,
-      final int? wPlay,
-      final int? wTime,
-      final int? wPercent,
-      final int? wAverage,
-      final String? wOk}) = _$_Word;
+      {final String? id,
+      final String? frontName,
+      final String? backName,
+      final String? tableName,
+      final String? folderNameId,
+      final int? yesCount,
+      final int? noCount,
+      final int? play,
+      final int? time,
+      final int? percent,
+      final int? average,
+      final String? ok}) = _$_Word;
 
   factory _Word.fromJson(Map<String, dynamic> json) = _$_Word.fromJson;
 
   @override
-  String? get wId;
+  String? get id;
   @override
-  String? get wFrontName;
+  String? get frontName;
   @override
-  String? get wBackName;
+  String? get backName;
   @override
-  String? get wTableName;
+  String? get tableName;
   @override
-  String? get wFolderNameId;
+  String? get folderNameId;
   @override
-  int? get wYes;
+  int? get yesCount;
   @override
-  int? get wNo;
+  int? get noCount;
   @override
-  int? get wPlay;
+  int? get play;
   @override
-  int? get wTime;
+  int? get time;
   @override
-  int? get wPercent;
+  int? get percent;
   @override
-  int? get wAverage;
+  int? get average;
   @override
-  String? get wOk;
+  String? get ok;
   @override
   @JsonKey(ignore: true)
   _$$_WordCopyWith<_$_Word> get copyWith => throw _privateConstructorUsedError;
