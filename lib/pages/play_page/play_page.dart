@@ -1,36 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:wordstock/model/word/word.dart';
+import 'package:wordstock/pages/play_page/play_page_controller.dart';
 
-int good = 0;
-int bad = 0;
-
-//Goodボタンストック変数
-List<String> okList = [];
-//Badボタンストック変数
-List<String> ngList = [];
-
-class PlayPage extends StatelessWidget {
+class PlayPage extends ConsumerWidget {
   const PlayPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final Object? args = ModalRoute.of(context)?.settings.arguments;
-    final List<Word> wordExtract = args as List<Word>;
+  Widget build(BuildContext context, WidgetRef ref) {
+    //final Object? args = ModalRoute.of(context)?.settings.arguments;
+    //final List<Word> wordExtract = args as List<Word>;
+
+    final playsState = ref.watch(playsProvider);
+
+    final playsCtl = ref.read(playsProvider.notifier);
 
     //swipe_cardsデータ設定
-    List<SwipeItem> swipeItems = <SwipeItem>[];
-    final MatchEngine matchEngine;
-
-    for (int i = 0; i < wordExtract.length; i++) {
-      swipeItems.add(
-        SwipeItem(content: wordExtract[i].wId),
-      );
-    }
-
-    matchEngine = MatchEngine(swipeItems: swipeItems);
+    // List<SwipeItem> swipeItems = <SwipeItem>[];
+    // final MatchEngine matchEngine;
+    //
+    // for (int i = 0; i < wordExtract.length; i++) {
+    //   swipeItems.add(
+    //     SwipeItem(content: wordExtract[i].id),
+    //   );
+    // }
+    //
+    // matchEngine = MatchEngine(swipeItems: swipeItems);
 
 /*==============================================================================
 【プレイ画面】
@@ -47,45 +45,37 @@ class PlayPage extends StatelessWidget {
         ),
         backgroundColor: Colors.black,
       ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 350.h,
-            child: SwipeCards(
-                matchEngine: matchEngine,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      right: 15.w,
-                      top: 10.h,
-                    ),
-                    child: _buildFlipCard(context, wordExtract, index),
-                  );
-                },
+      body: playsCtl.matchEngine == null
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 350.h,
+                  child: SwipeCards(
+                      matchEngine: playsCtl.matchEngine!,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                            right: 15.w,
+                            top: 10.h,
+                          ),
+                          child:
+                              _buildFlipCard(context, playsState.value, index),
+                        );
+                      },
 
-                //全カードスワイプ後の処理
-                onStackFinished: () {
-                  List<dynamic> boxList = [
-                    good,
-                    bad,
-                    wordExtract[0].wFolderNameId,
-                    okList,
-                    ngList
-                  ];
-
-                  //初期化
-                  good = 0;
-                  bad = 0;
-                  okList = [];
-                  ngList = [];
-
-                  Navigator.pushNamed(context, "/play_result_page",
-                      arguments: boxList);
-                }),
-          ),
-          _buildButton(matchEngine),
-        ],
-      ),
+                      //全カードスワイプ後の処理
+                      onStackFinished: () {
+                        Navigator.pushNamed(
+                          context,
+                          "/play_result_page",
+                        );
+                        //arguments: boxList
+                      }),
+                ),
+                _buildButton(playsCtl.matchEngine!),
+              ],
+            ),
     );
   }
 }
@@ -93,7 +83,7 @@ class PlayPage extends StatelessWidget {
 /*==============================================================================
 【フリップカード処理】
 ==============================================================================*/
-Widget _buildFlipCard(BuildContext context, List<Word> wordExtract, int index) {
+Widget _buildFlipCard(BuildContext context, List<Word>? words, int index) {
   return FlipCard(
     direction: FlipDirection.VERTICAL,
     speed: 500,
@@ -103,7 +93,7 @@ Widget _buildFlipCard(BuildContext context, List<Word> wordExtract, int index) {
       child: SizedBox(
         width: 380.w,
         child: Center(
-          child: Text(wordExtract[index].wFrontName.toString()),
+          child: Text(words![index].frontName!),
         ),
       ),
     ),
@@ -113,7 +103,7 @@ Widget _buildFlipCard(BuildContext context, List<Word> wordExtract, int index) {
       child: SizedBox(
         width: 380.w,
         child: Center(
-          child: Text(wordExtract[index].wBackName.toString()),
+          child: Text(words[index].backName!),
         ),
       ),
     ),
@@ -142,12 +132,14 @@ Widget _buildButton(MatchEngine matchEngine) {
             ),
             onPressed: () {
               final String upId = matchEngine.currentItem?.content;
-              okList.add(upId);
-              matchEngine.currentItem?.nope();
-              good = good + 1;
+
+              matchEngine.currentItem?.nope(); //nopeAction
+
+              //Goodの処理を記述する
+              //OKに変更させる
             },
             child: const Icon(
-              Icons.thumb_up_alt,
+              Icons.thumb_down_alt, //,
               color: Colors.black,
             ),
           ),
@@ -165,12 +157,13 @@ Widget _buildButton(MatchEngine matchEngine) {
             ),
             onPressed: () {
               final String upId = matchEngine.currentItem?.content;
-              ngList.add(upId);
               matchEngine.currentItem?.like();
-              bad = bad + 1;
+
+              //bodの処理を記述する
+              //OKに変更させる
             },
             child: const Icon(
-              Icons.thumb_down_alt,
+              Icons.thumb_up_alt,
               color: Colors.black,
             ),
           ),
