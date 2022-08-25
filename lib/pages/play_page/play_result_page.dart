@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/pages/error_page/error_page.dart';
-import 'package:wordstock/pages/play_page/play_result_controller.dart';
+import 'package:wordstock/pages/play_page/play_page_controller.dart';
 
 class PlayResultPage extends ConsumerWidget {
   const PlayResultPage({Key? key}) : super(key: key);
@@ -33,9 +33,9 @@ class PlayResultPage extends ConsumerWidget {
     //再実行時受け渡し変数
     List<Word>? valueNg = [];
 
-    final playsState = ref.watch(endProvider);
+    final playsState = ref.watch(playsProvider);
 
-    final playsCtr = ref.read(endProvider.notifier);
+    final playsCtr = ref.read(playsProvider.notifier);
 
 /*==============================================================================
 【成績表画面】
@@ -70,7 +70,7 @@ class PlayResultPage extends ConsumerWidget {
                           width: 200.w,
                           child: ElevatedButton(
                             onPressed: () async {
-                              playsCtr.endFlat(folderID);
+                              playsCtr.playFlat(folderID);
                               await Navigator.of(context)
                                   .pushNamedAndRemoveUntil(
                                       "/", ModalRoute.withName("/"));
@@ -101,15 +101,15 @@ class PlayResultPage extends ConsumerWidget {
                                   //TODO:Mapにできない
                                   for (int i = 0; i < count; i++) {
                                     ngList.map((ng) {
-                                      if (playsState[i].wId == ng) {
+                                      if (playsState[i].id == ng) {
                                         valueNg.add(playsState[i]);
                                       }
                                     }).toList();
                                   }
                                   ngList.map((ngList) {
-                                    playsCtr.endBadUp(ngList);
+                                    playsCtr.playBadUp(ngList);
                                   }).toList();
-                                  playsCtr.endFlat(folderID);
+                                  playsCtr.playFlat(folderID);
                                   await Navigator.pushNamed(
                                       context, "/play_page",
                                       arguments: valueNg);
