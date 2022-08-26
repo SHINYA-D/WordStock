@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swipe_cards/swipe_cards.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
@@ -19,11 +18,11 @@ class PlayPageController extends StateNotifier<AsyncValue<List<Word>>> {
   final SqliteRepository sqliteRepo;
   final AsyncValue<List<Word>> allWords;
 
-  MatchEngine? get matchEngine => state.value != null
-      ? MatchEngine(
-          swipeItems:
-              state.value!.map((e) => SwipeItem(content: e.id)).toList())
-      : null;
+  // MatchEngine? get matchEngine => state.value != null
+  //     ? MatchEngine(
+  //         swipeItems:
+  //             state.value!.map((e) => SwipeItem(content: e.id)).toList())
+  //     : null;
 
   Future<void> playBadUp(String upId) async {
     for (int i = 0; i < state.value!.length; i++) {

@@ -4,19 +4,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:wordstock/model/word/word.dart';
-import 'package:wordstock/pages/play_page/play_page_controller.dart';
+import 'package:wordstock/pages/play_page/swipe_cards_controller.dart';
 
 class PlayPage extends ConsumerWidget {
   const PlayPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //final Object? args = ModalRoute.of(context)?.settings.arguments;
-    //final List<Word> wordExtract = args as List<Word>;
+    final Object? args = ModalRoute.of(context)?.settings.arguments;
 
-    final playsState = ref.watch(playsProvider);
+    final List<Word> wordExtract = args as List<Word>;
 
-    final playsCtl = ref.read(playsProvider.notifier);
+    final swipeCardState = ref.watch(swipeCardsProvider(wordExtract));
+
+    final swipeCardCtr = ref.read(swipeCardsProvider(wordExtract).notifier);
 
     //swipe_cardsデータ設定
     // List<SwipeItem> swipeItems = <SwipeItem>[];
@@ -45,22 +46,22 @@ class PlayPage extends ConsumerWidget {
         ),
         backgroundColor: Colors.black,
       ),
-      body: playsCtl.matchEngine == null
+      body: swipeCardCtr.matchEngine == null
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: <Widget>[
                 SizedBox(
                   height: 350.h,
                   child: SwipeCards(
-                      matchEngine: playsCtl.matchEngine!,
+                      matchEngine: swipeCardCtr.matchEngine,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: EdgeInsets.only(
                             right: 15.w,
                             top: 10.h,
                           ),
-                          child:
-                              _buildFlipCard(context, playsState.value, index),
+                          child: _buildFlipCard(
+                              context, swipeCardCtr.matchEngine, index),
                         );
                       },
 
@@ -73,7 +74,7 @@ class PlayPage extends ConsumerWidget {
                         //arguments: boxList
                       }),
                 ),
-                _buildButton(playsCtl.matchEngine!),
+                _buildButton(swipeCardCtr.matchEngine, wordExtract),
               ],
             ),
     );
@@ -83,7 +84,7 @@ class PlayPage extends ConsumerWidget {
 /*==============================================================================
 【フリップカード処理】
 ==============================================================================*/
-Widget _buildFlipCard(BuildContext context, List<Word>? words, int index) {
+Widget _buildFlipCard(BuildContext context, MatchEngine words, int index) {
   return FlipCard(
     direction: FlipDirection.VERTICAL,
     speed: 500,
@@ -93,7 +94,7 @@ Widget _buildFlipCard(BuildContext context, List<Word>? words, int index) {
       child: SizedBox(
         width: 380.w,
         child: Center(
-          child: Text(words![index].frontName!),
+          child: Text('テスト'),
         ),
       ),
     ),
@@ -103,7 +104,7 @@ Widget _buildFlipCard(BuildContext context, List<Word>? words, int index) {
       child: SizedBox(
         width: 380.w,
         child: Center(
-          child: Text(words[index].backName!),
+          child: Text('テスト'),
         ),
       ),
     ),
@@ -113,62 +114,68 @@ Widget _buildFlipCard(BuildContext context, List<Word>? words, int index) {
 /*==============================================================================
 【GOOD/BAD ボタン処理】
 ==============================================================================*/
-Widget _buildButton(MatchEngine matchEngine) {
-  return Padding(
-    padding: EdgeInsets.only(top: 40.h),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        SizedBox(
-          width: 120.w,
-          height: 100.h,
-          child: OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              primary: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+Widget _buildButton(MatchEngine matchEngine, List<Word> test) {
+  return Consumer(builder: (context, ref, _) {
+    final swipeCardState = ref.watch(swipeCardsProvider(test));
+
+    final swipeCardCtr = ref.read(swipeCardsProvider(test).notifier);
+
+    return Padding(
+      padding: EdgeInsets.only(top: 40.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          SizedBox(
+            width: 120.w,
+            height: 100.h,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                primary: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                side: const BorderSide(),
               ),
-              side: const BorderSide(),
-            ),
-            onPressed: () {
-              final String upId = matchEngine.currentItem?.content;
+              onPressed: () {
+                //final String upId = swipeCardState;
 
-              matchEngine.currentItem?.nope(); //nopeAction
+                swipeCardCtr.nope(); //nopeAction
 
-              //Goodの処理を記述する
-              //OKに変更させる
-            },
-            child: const Icon(
-              Icons.thumb_down_alt, //,
-              color: Colors.black,
+                //Goodの処理を記述する
+                //OKに変更させる
+              },
+              child: const Icon(
+                Icons.thumb_down_alt, //,
+                color: Colors.black,
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          width: 120.w,
-          height: 100.h,
-          child: OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              primary: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+          SizedBox(
+            width: 120.w,
+            height: 100.h,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                primary: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                side: const BorderSide(),
               ),
-              side: const BorderSide(),
-            ),
-            onPressed: () {
-              final String upId = matchEngine.currentItem?.content;
-              matchEngine.currentItem?.like();
+              onPressed: () {
+                final String upId = matchEngine.currentItem?.content;
+                swipeCardCtr.like();
 
-              //bodの処理を記述する
-              //OKに変更させる
-            },
-            child: const Icon(
-              Icons.thumb_up_alt,
-              color: Colors.black,
+                //bodの処理を記述する
+                //OKに変更させる
+              },
+              child: const Icon(
+                Icons.thumb_up_alt,
+                color: Colors.black,
+              ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  });
 }
