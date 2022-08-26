@@ -12,7 +12,6 @@ class PlayPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
-
     final List<Word> wordExtract = args as List<Word>;
 
     final swipeCardState = ref.watch(swipeCardsProvider(wordExtract));
@@ -138,7 +137,6 @@ Widget _buildButton(MatchEngine matchEngine, List<Word> test) {
               ),
               onPressed: () {
                 //final String upId = swipeCardState;
-
                 swipeCardCtr.nope(); //nopeAction
 
                 //Goodの処理を記述する
@@ -162,7 +160,7 @@ Widget _buildButton(MatchEngine matchEngine, List<Word> test) {
                 side: const BorderSide(),
               ),
               onPressed: () {
-                final String upId = matchEngine.currentItem?.content;
+                //final String upId = matchEngine.currentItem?.content;
                 swipeCardCtr.like();
 
                 //bodの処理を記述する
