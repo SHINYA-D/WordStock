@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:swipe_cards/swipe_cards.dart';
 import 'package:wordstock/model/word/word.dart';
+import 'package:wordstock/pages/play_page/swipe_cards_controller.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final allWordsProvider = FutureProvider.autoDispose(
@@ -9,14 +11,27 @@ final playsProvider = StateNotifierProvider.autoDispose<PlayPageController,
     AsyncValue<List<Word>>>((ref) {
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
   final allWords = ref.watch(allWordsProvider);
-  return PlayPageController(sqliteRepo, allWords);
+  final MatchEngine matchEngine;
+  allWords.value == null
+      ? matchEngine = MatchEngine(swipeItems: null)
+      : matchEngine = ref.watch(swipeCardsProvider(allWords));
+
+  return PlayPageController(sqliteRepo, allWords, matchEngine);
 });
 
 class PlayPageController extends StateNotifier<AsyncValue<List<Word>>> {
-  PlayPageController(this.sqliteRepo, this.allWords) : super(allWords);
+  PlayPageController(this.sqliteRepo, this.allWords, this.matchEngine)
+      : super(allWords);
 
   final SqliteRepository sqliteRepo;
   final AsyncValue<List<Word>> allWords;
+  final MatchEngine matchEngine;
+
+  get nope => matchEngine.currentItem?.nope();
+
+  void superLike() => matchEngine.currentItem?.superLike();
+
+  void like() => matchEngine.currentItem?.like();
 
   // MatchEngine? get matchEngine => state.value != null
   //     ? MatchEngine(

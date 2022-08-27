@@ -3,32 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swipe_cards/swipe_cards.dart';
-import 'package:wordstock/model/word/word.dart';
-import 'package:wordstock/pages/play_page/swipe_cards_controller.dart';
+import 'package:wordstock/pages/play_page/play_page_controller.dart';
 
 class PlayPage extends ConsumerWidget {
   const PlayPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Object? args = ModalRoute.of(context)?.settings.arguments;
-    final List<Word> wordExtract = args as List<Word>;
+    // final Object? args = ModalRoute.of(context)?.settings.arguments;
+    // final List<Word> wordExtract = args as List<Word>;
 
-    final swipeCardState = ref.watch(swipeCardsProvider(wordExtract));
+    final playState = ref.watch(playsProvider);
 
-    final swipeCardCtr = ref.read(swipeCardsProvider(wordExtract).notifier);
-
-    //swipe_cardsデータ設定
-    // List<SwipeItem> swipeItems = <SwipeItem>[];
-    // final MatchEngine matchEngine;
-    //
-    // for (int i = 0; i < wordExtract.length; i++) {
-    //   swipeItems.add(
-    //     SwipeItem(content: wordExtract[i].id),
-    //   );
-    // }
-    //
-    // matchEngine = MatchEngine(swipeItems: swipeItems);
+    final playCtr = ref.read(playsProvider.notifier);
 
 /*==============================================================================
 【プレイ画面】
@@ -45,14 +32,14 @@ class PlayPage extends ConsumerWidget {
         ),
         backgroundColor: Colors.black,
       ),
-      body: swipeCardCtr.matchEngine == null
+      body: playCtr.matchEngine == null
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: <Widget>[
                 SizedBox(
                   height: 350.h,
                   child: SwipeCards(
-                      matchEngine: swipeCardCtr.matchEngine,
+                      matchEngine: playCtr.matchEngine,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: EdgeInsets.only(
@@ -60,7 +47,7 @@ class PlayPage extends ConsumerWidget {
                             top: 10.h,
                           ),
                           child: _buildFlipCard(
-                              context, swipeCardCtr.matchEngine, index),
+                              context, playCtr.matchEngine, index),
                         );
                       },
 
@@ -73,7 +60,7 @@ class PlayPage extends ConsumerWidget {
                         //arguments: boxList
                       }),
                 ),
-                _buildButton(swipeCardCtr.matchEngine, wordExtract),
+                _buildButton(),
               ],
             ),
     );
@@ -113,11 +100,11 @@ Widget _buildFlipCard(BuildContext context, MatchEngine words, int index) {
 /*==============================================================================
 【GOOD/BAD ボタン処理】
 ==============================================================================*/
-Widget _buildButton(MatchEngine matchEngine, List<Word> test) {
+Widget _buildButton() {
   return Consumer(builder: (context, ref, _) {
-    final swipeCardState = ref.watch(swipeCardsProvider(test));
+    final playState = ref.watch(playsProvider);
 
-    final swipeCardCtr = ref.read(swipeCardsProvider(test).notifier);
+    final playCtr = ref.read(playsProvider.notifier);
 
     return Padding(
       padding: EdgeInsets.only(top: 40.h),
@@ -137,7 +124,7 @@ Widget _buildButton(MatchEngine matchEngine, List<Word> test) {
               ),
               onPressed: () {
                 //final String upId = swipeCardState;
-                swipeCardCtr.nope(); //nopeAction
+                playCtr.nope(); //nopeAction
 
                 //Goodの処理を記述する
                 //OKに変更させる
@@ -161,7 +148,7 @@ Widget _buildButton(MatchEngine matchEngine, List<Word> test) {
               ),
               onPressed: () {
                 //final String upId = matchEngine.currentItem?.content;
-                swipeCardCtr.like();
+                playCtr.like();
 
                 //bodの処理を記述する
                 //OKに変更させる
