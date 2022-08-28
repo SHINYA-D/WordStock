@@ -29,9 +29,34 @@ class WordRegistrationPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text('カード作成'),
-      ),
+          centerTitle: true,
+          title: const Text('カード作成'),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  try {
+                    _wordRegister(cardItemCount, frontTextController,
+                        backTextController, folderId, wordsCtr);
+                    Navigator.of(context).pop();
+                  } catch (e) {
+                    AlertDialog(
+                      title: const Text('単語登録中にエラーが発生しました'),
+                      actions: <Widget>[
+                        GestureDetector(
+                          child: const Text('閉じる'),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                },
+                child: const Text(
+                  '完了',
+                  style: TextStyle(color: Colors.white),
+                )),
+          ]),
       body: GestureDetector(
         child: ListView.builder(
           itemCount: cardItemCount,
@@ -51,15 +76,13 @@ class WordRegistrationPage extends ConsumerWidget {
                       ),
                       child: SizedBox(
                         width: 400.w,
-                        height: 240.h,
+                        height: 200.h,
                         child: Center(
                           child: Column(
                             children: [
                               Text('$x枚目のカード'),
                               _buildInputForm(frontTextController,
                                   backTextController, index),
-                              _buildCompletionButton(frontTextController,
-                                  backTextController, index, context),
                             ],
                           ),
                         ),
@@ -71,28 +94,6 @@ class WordRegistrationPage extends ConsumerWidget {
             );
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          try {
-            _wordRegister(cardItemCount, frontTextController,
-                backTextController, folderId, wordsCtr);
-            Navigator.of(context).pop();
-          } catch (e) {
-            AlertDialog(
-              title: const Text('単語登録中にエラーが発生しました'),
-              actions: <Widget>[
-                GestureDetector(
-                  child: const Text('閉じる'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            );
-          }
-        },
-        child: const Icon(Icons.add_box),
       ),
     );
   }
@@ -127,69 +128,6 @@ Widget _buildInputForm(List<TextEditingController> frontTextController,
       autofocus: true,
     ),
   ]);
-}
-
-/*==============================================================================
-【実行ボタン】
-==============================================================================*/
-Widget _buildCompletionButton(
-    List<TextEditingController> frontTextController,
-    List<TextEditingController> backTextController,
-    int index,
-    BuildContext context) {
-  return Row(
-    children: [
-      Padding(
-        padding: EdgeInsets.only(left: 80.w, top: 0, right: 40.w),
-        child: SizedBox(
-          height: 30.h,
-          width: 90.w,
-          child: ElevatedButton(
-            onPressed: () {
-              frontTextController[index].text = '';
-              backTextController[index].text = '';
-            },
-            child: const Text("取消"),
-          ),
-        ),
-      ),
-      SizedBox(
-        height: 30.h,
-        width: 90.w,
-        child: ElevatedButton(
-          onPressed: () {
-            if (frontTextController[index].text == '' ||
-                backTextController[index].text == '') {
-              showBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return Container(
-                    height: 200,
-                    alignment: Alignment.center,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 20,
-                        )
-                      ],
-                    ),
-                    child: const Text('未入力の箇所があります'),
-                  );
-                },
-              );
-              Future.delayed(const Duration(seconds: 1), () {
-                Navigator.of(context).pop();
-              });
-            } else {
-              FocusScope.of(context).unfocus();
-            }
-          }, //onPressed
-          child: const Text("完了"),
-        ),
-      ),
-    ],
-  );
 }
 
 /*==============================================================================
