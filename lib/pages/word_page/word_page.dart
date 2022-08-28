@@ -25,12 +25,36 @@ class WordPage extends ConsumerWidget {
 ==============================================================================*/
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text('単語一覧'),
-      ),
+          centerTitle: true,
+          title: const Text('単語一覧'),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  try {
+                    Navigator.pushReplacementNamed(context, "/play_page",
+                        arguments: wordsState /*folderId*/);
+                  } catch (e) {
+                    AlertDialog(
+                      title: const Text('Playページに遷移中エラーが発生しました'),
+                      actions: <Widget>[
+                        GestureDetector(
+                          child: const Text('閉じる'),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                },
+                child: const Text(
+                  'TEST開始',
+                  style: TextStyle(color: Colors.white),
+                )),
+          ]),
       body: SlidableAutoCloseBehavior(
         child: Padding(
-          padding: EdgeInsets.only(top: 100.h),
+          padding: EdgeInsets.only(top: 30.h),
           child: wordsState.when(
             data: (wordsState) => ListView.builder(
               itemCount: wordsState.length,
@@ -84,47 +108,13 @@ class WordPage extends ConsumerWidget {
           ),
         ),
       ),
-      floatingActionButton: Row(
-        children: [
-          Container(
-            margin: EdgeInsets.only(left: 280.w, bottom: 530.h),
-            child: FloatingActionButton(
-              heroTag: "btn1",
-              onPressed: () {
-                Navigator.pushNamed(context, "/word_registration_page",
-                    arguments: folderId);
-              },
-              child: const Icon(Icons.add),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 5.w, bottom: 530.h),
-            child: wordsState.when(
-              data: (wordsState) => FloatingActionButton(
-                heroTag: "btn2",
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, "/play_page",
-                      arguments: wordsState /*folderId*/);
-                },
-                child: const Icon(
-                  Icons.play_circle_filled,
-                ),
-              ),
-              error: (error, _) => AlertDialog(
-                title: const Text('単語画面でエラーが発生しました'),
-                actions: <Widget>[
-                  GestureDetector(
-                    child: const Text('閉じる'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-              loading: () => const CircularProgressIndicator(),
-            ),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        heroTag: "btn1",
+        onPressed: () {
+          Navigator.pushNamed(context, "/word_registration_page",
+              arguments: folderId);
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

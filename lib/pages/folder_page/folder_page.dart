@@ -25,7 +25,7 @@ class FolderPage extends ConsumerWidget {
       ),
       body: SlidableAutoCloseBehavior(
         child: Padding(
-          padding: EdgeInsets.only(top: 100.h),
+          padding: EdgeInsets.only(top: 30.h),
           child: foldersState.when(
             data: (foldersState) => ListView.builder(
               itemCount: foldersState.length,
@@ -87,19 +87,16 @@ class FolderPage extends ConsumerWidget {
           ),
         ),
       ),
-      floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: 530.h),
-        child: FloatingActionButton(
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return const FolderRegistrationPage();
-                });
-          },
-          child: const Icon(
-            Icons.create_new_folder,
-          ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return const FolderRegistrationPage();
+              });
+        },
+        child: const Icon(
+          Icons.create_new_folder,
         ),
       ),
     );
