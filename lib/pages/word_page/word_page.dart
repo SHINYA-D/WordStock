@@ -114,7 +114,7 @@ class WordPage extends ConsumerWidget {
           Navigator.pushNamed(context, "/word_registration_page",
               arguments: folderId);
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.post_add),
       ),
     );
   }
