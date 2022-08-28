@@ -11,6 +11,7 @@ final playsProvider = StateNotifierProvider.autoDispose<PlayPageController,
     AsyncValue<List<Word>>>((ref) {
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
   final allWords = ref.watch(allWordsProvider);
+  //TODO:コメントアウトは資料の シート「自己対応」の箇所
   // final MatchEngine matchEngine;
   // allWords.value == null
   //     ? matchEngine = MatchEngine(swipeItems: [])
