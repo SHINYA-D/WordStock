@@ -8,12 +8,13 @@ import 'package:wordstock/pages/play_page/play_page_controller.dart';
 class PlayPage extends ConsumerWidget {
   const PlayPage({Key? key}) : super(key: key);
 
+  // final Object? args = ModalRoute.of(context)?.settings.arguments;
+  // final List<Word> wordExtract = args as List<Word>;
+  // final playState = ref.watch(playsProvider);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final Object? args = ModalRoute.of(context)?.settings.arguments;
-    // final List<Word> wordExtract = args as List<Word>;
-
-    final playState = ref.watch(playsProvider);
+    ref.watch(playsProvider);
 
     final playCtr = ref.read(playsProvider.notifier);
 
@@ -46,8 +47,7 @@ class PlayPage extends ConsumerWidget {
                             right: 15.w,
                             top: 10.h,
                           ),
-                          child: _buildFlipCard(
-                              context, playCtr.matchEngine, index),
+                          child: _buildFlipCard(index),
                         );
                       },
 
@@ -70,31 +70,52 @@ class PlayPage extends ConsumerWidget {
 /*==============================================================================
 【フリップカード処理】
 ==============================================================================*/
-Widget _buildFlipCard(BuildContext context, MatchEngine words, int index) {
-  return FlipCard(
-    direction: FlipDirection.VERTICAL,
-    speed: 500,
-    front: Card(
-      margin: EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
-      color: const Color.fromARGB(255, 236, 239, 239),
-      child: SizedBox(
-        width: 380.w,
-        child: Center(
-          child: Text('テスト'),
+Widget _buildFlipCard(int index) {
+  return Consumer(builder: (context, ref, _) {
+    final playState = ref.watch(playsProvider);
+    //final playCtr = ref.read(playsProvider.notifier);
+
+    return playState.when(
+      data: (playState) => FlipCard(
+        direction: FlipDirection.VERTICAL,
+        speed: 500,
+        front: Card(
+          margin:
+              EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
+          color: const Color.fromARGB(255, 236, 239, 239),
+          child: SizedBox(
+            width: 380.w,
+            child: Center(
+              child: Text(playState[index].frontName!),
+            ),
+          ),
+        ),
+        back: Card(
+          margin:
+              EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
+          color: const Color.fromARGB(255, 232, 246, 248),
+          child: SizedBox(
+            width: 380.w,
+            child: Center(
+              child: Text(playState[index].backName!),
+            ),
+          ),
         ),
       ),
-    ),
-    back: Card(
-      margin: EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
-      color: const Color.fromARGB(255, 232, 246, 248),
-      child: SizedBox(
-        width: 380.w,
-        child: Center(
-          child: Text('テスト'),
-        ),
+      error: (error, _) => AlertDialog(
+        title: const Text('フォルダ名表示中に発生しました。'),
+        actions: <Widget>[
+          GestureDetector(
+            child: const Text('閉じる'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
-    ),
-  );
+      loading: () => const CircularProgressIndicator(),
+    );
+  });
 }
 
 /*==============================================================================
@@ -102,7 +123,9 @@ Widget _buildFlipCard(BuildContext context, MatchEngine words, int index) {
 ==============================================================================*/
 Widget _buildButton() {
   return Consumer(builder: (context, ref, _) {
-    final playState = ref.watch(playsProvider);
+    //final playState = ref.watch(playsProvider);
+
+    ref.watch(playsProvider);
 
     final playCtr = ref.read(playsProvider.notifier);
 

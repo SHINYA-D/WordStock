@@ -13,9 +13,8 @@ final playsProvider = StateNotifierProvider.autoDispose<PlayPageController,
   final allWords = ref.watch(allWordsProvider);
   final MatchEngine matchEngine;
   allWords.value == null
-      ? matchEngine = MatchEngine(swipeItems: null)
+      ? matchEngine = MatchEngine(swipeItems: [])
       : matchEngine = ref.watch(swipeCardsProvider(allWords));
-
   return PlayPageController(sqliteRepo, allWords, matchEngine);
 });
 
