@@ -19,16 +19,9 @@ class FolderPage extends ConsumerWidget {
 【フォルダ画面】
 ==============================================================================*/
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'WordStock',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.black,
+        title: const Text('WordStock'),
       ),
       body: SlidableAutoCloseBehavior(
         child: Padding(
@@ -46,7 +39,6 @@ class FolderPage extends ConsumerWidget {
                           Navigator.pushNamed(context, "/folder_edit_page",
                               arguments: index);
                         },
-                        backgroundColor: Colors.black,
                         icon: Icons.settings,
                         label: '編集',
                       ),
@@ -69,7 +61,6 @@ class FolderPage extends ConsumerWidget {
                             );
                           }
                         },
-                        backgroundColor: Colors.black,
                         icon: Icons.delete,
                         label: '削除',
                       ),
@@ -99,7 +90,6 @@ class FolderPage extends ConsumerWidget {
       floatingActionButton: Container(
         margin: EdgeInsets.only(bottom: 530.h),
         child: FloatingActionButton(
-          backgroundColor: Colors.white,
           onPressed: () {
             showDialog(
                 context: context,
@@ -109,7 +99,6 @@ class FolderPage extends ConsumerWidget {
           },
           child: const Icon(
             Icons.create_new_folder,
-            color: Colors.black,
           ),
         ),
       ),
@@ -128,7 +117,7 @@ Widget _buildFolderList(
         height: 60.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.w)),
-          color: Colors.white,
+          //  color: Colors.white,
         ),
         child: Center(
           child: SizedBox(
@@ -140,7 +129,6 @@ Widget _buildFolderList(
                     arguments: folderIdNum);
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -150,13 +138,10 @@ Widget _buildFolderList(
                   Icon(
                     Icons.folder,
                     size: 60.sp,
-                    color: Colors.black,
                   ),
                   Text(
                     foldersProvider[i].name ?? '値が入っていません！',
-                    style: const TextStyle(
-                      color: Colors.black,
-                    ),
+                    style: const TextStyle(),
                   ),
                 ],
               ),

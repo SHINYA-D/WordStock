@@ -35,16 +35,9 @@ class WordEditPage extends ConsumerWidget {
 【編集画面】
 ==============================================================================*/
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'WordStock',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.black,
+        title: const Text('WordStock'),
       ),
       body: ListView(
         children: [
@@ -54,7 +47,6 @@ class WordEditPage extends ConsumerWidget {
             child: Card(
               margin: EdgeInsets.only(
                   top: 10.h, right: 0.w, bottom: 0.h, left: 5.w),
-              color: Colors.white,
               child: SizedBox(
                 width: 380.w,
                 child: Center(
@@ -69,7 +61,6 @@ class WordEditPage extends ConsumerWidget {
             child: Card(
               margin: EdgeInsets.only(
                   top: 10.h, right: 0.w, bottom: 0.h, left: 5.w),
-              color: Colors.white,
               child: SizedBox(
                 width: 380.w,
                 child: Center(
@@ -162,7 +153,6 @@ class WordEditPage extends ConsumerWidget {
                 );
               });
         },
-        backgroundColor: Colors.pink,
         child: const Icon(Icons.mode_edit),
       ),
     );

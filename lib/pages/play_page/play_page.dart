@@ -22,16 +22,9 @@ class PlayPage extends ConsumerWidget {
 【プレイ画面】
 ==============================================================================*/
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 134, 134, 134),
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'PLAY',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.black,
+        title: const Text('PLAY'),
       ),
       body: playCtr.matchEngine == null
           ? const Center(child: CircularProgressIndicator())
@@ -57,7 +50,6 @@ class PlayPage extends ConsumerWidget {
                           context,
                           "/play_result_page",
                         );
-                        //arguments: boxList
                       }),
                 ),
                 _buildButton(),
@@ -82,7 +74,6 @@ Widget _buildFlipCard(int index) {
         front: Card(
           margin:
               EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
-          color: const Color.fromARGB(255, 236, 239, 239),
           child: SizedBox(
             width: 380.w,
             child: Center(
@@ -93,7 +84,6 @@ Widget _buildFlipCard(int index) {
         back: Card(
           margin:
               EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
-          color: const Color.fromARGB(255, 232, 246, 248),
           child: SizedBox(
             width: 380.w,
             child: Center(
@@ -139,22 +129,18 @@ Widget _buildButton() {
             height: 100.h,
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
-                primary: Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                side: const BorderSide(),
+                side: const BorderSide(color: Colors.blue),
               ),
               onPressed: () {
-                //final String upId = swipeCardState;
                 playCtr.nope(); //nopeAction
-
                 //Goodの処理を記述する
                 //OKに変更させる
               },
               child: const Icon(
-                Icons.thumb_down_alt, //,
-                color: Colors.black,
+                Icons.thumb_down_alt,
               ),
             ),
           ),
@@ -163,22 +149,18 @@ Widget _buildButton() {
             height: 100.h,
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
-                primary: Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                side: const BorderSide(),
+                side: const BorderSide(color: Colors.blue),
               ),
               onPressed: () {
-                //final String upId = matchEngine.currentItem?.content;
                 playCtr.like();
-
                 //bodの処理を記述する
                 //OKに変更させる
               },
               child: const Icon(
                 Icons.thumb_up_alt,
-                color: Colors.black,
               ),
             ),
           ),

@@ -24,16 +24,9 @@ class WordPage extends ConsumerWidget {
 【ワード画面】
 ==============================================================================*/
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          '単語一覧',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.black,
+        title: const Text('単語一覧'),
       ),
       body: SlidableAutoCloseBehavior(
         child: Padding(
@@ -65,7 +58,6 @@ class WordPage extends ConsumerWidget {
                             );
                           }
                         },
-                        backgroundColor: Colors.black,
                         icon: Icons.delete,
                         label: '削除',
                       ),
@@ -98,15 +90,11 @@ class WordPage extends ConsumerWidget {
             margin: EdgeInsets.only(left: 280.w, bottom: 530.h),
             child: FloatingActionButton(
               heroTag: "btn1",
-              backgroundColor: Colors.white,
               onPressed: () {
                 Navigator.pushNamed(context, "/word_registration_page",
                     arguments: folderId);
               },
-              child: const Icon(
-                Icons.add,
-                color: Colors.black,
-              ),
+              child: const Icon(Icons.add),
             ),
           ),
           Container(
@@ -114,14 +102,12 @@ class WordPage extends ConsumerWidget {
             child: wordsState.when(
               data: (wordsState) => FloatingActionButton(
                 heroTag: "btn2",
-                backgroundColor: Colors.white,
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, "/play_page",
                       arguments: wordsState /*folderId*/);
                 },
                 child: const Icon(
                   Icons.play_circle_filled,
-                  color: Colors.black,
                 ),
               ),
               error: (error, _) => AlertDialog(
@@ -155,7 +141,6 @@ Widget _buildFolderList(
         height: 60.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.w)),
-          color: Colors.white,
         ),
         child: Center(
           child: SizedBox(
@@ -166,7 +151,6 @@ Widget _buildFolderList(
                     arguments: EditBox(index, wordsProvider[0].folderNameId));
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -176,13 +160,10 @@ Widget _buildFolderList(
                   Icon(
                     Icons.description,
                     size: 60.sp,
-                    color: Colors.black,
                   ),
                   Text(
                     wordsProvider[index].frontName ?? 'NULL',
-                    style: const TextStyle(
-                      color: Colors.black,
-                    ),
+                    style: const TextStyle(),
                   ),
                 ],
               ),

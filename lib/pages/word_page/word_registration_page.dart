@@ -29,14 +29,8 @@ class WordRegistrationPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
         centerTitle: true,
-        title: const Text(
-          'カード作成',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
+        title: const Text('カード作成'),
       ),
       body: GestureDetector(
         child: ListView.builder(
@@ -52,7 +46,6 @@ class WordRegistrationPage extends ConsumerWidget {
                       left: 0.w,
                     ),
                     child: Card(
-                      color: Colors.white70,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -80,7 +73,6 @@ class WordRegistrationPage extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 238, 91, 117),
         onPressed: () {
           try {
             _wordRegister(cardItemCount, frontTextController,
@@ -100,10 +92,7 @@ class WordRegistrationPage extends ConsumerWidget {
             );
           }
         },
-        child: const Icon(
-          Icons.add_box,
-          color: Colors.black,
-        ),
+        child: const Icon(Icons.add_box),
       ),
     );
   }
@@ -179,10 +168,8 @@ Widget _buildCompletionButton(
                     alignment: Alignment.center,
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                      color: Colors.red,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black,
                           blurRadius: 20,
                         )
                       ],

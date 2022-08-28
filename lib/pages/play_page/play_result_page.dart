@@ -41,16 +41,9 @@ class PlayResultPage extends ConsumerWidget {
 【成績表画面】
 ==============================================================================*/
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          '成績表',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.black,
+        title: const Text('成績表'),
       ),
       body: SizedBox(
         height: 500.h,
@@ -76,18 +69,8 @@ class PlayResultPage extends ConsumerWidget {
                                       "/", ModalRoute.withName("/"));
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              side: const BorderSide(
-                                color: Colors.black,
-                                width: 1, //枠線！
-                              ),
-                            ),
-                            child: const Text(
-                              "終了",
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
+                                side: const BorderSide(width: 1)),
+                            child: const Text("終了"),
                           ),
                         ),
                         Visibility(
@@ -128,18 +111,9 @@ class PlayResultPage extends ConsumerWidget {
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
-                                side: const BorderSide(
-                                  color: Colors.black,
-                                  width: 1,
-                                ),
+                                side: const BorderSide(width: 1),
                               ),
-                              child: const Text(
-                                "間違えた箇所をもう一度",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
+                              child: const Text("間違えた箇所をもう一度"),
                             ),
                             error: (error, _) => AlertDialog(
                               title: const Text(''
@@ -179,10 +153,7 @@ Widget _buildScore(int good, int bad, int total) {
         child: Center(
           child: Text(
             '正解率：$total' '%',
-            style: const TextStyle(
-              fontSize: 30,
-              color: Colors.black,
-            ),
+            style: const TextStyle(fontSize: 30),
           ),
         ),
       ),
@@ -190,10 +161,7 @@ Widget _buildScore(int good, int bad, int total) {
         child: Center(
           child: Text(
             '正解数：$good',
-            style: const TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-            ),
+            style: const TextStyle(fontSize: 20),
           ),
         ),
       ),
@@ -201,10 +169,7 @@ Widget _buildScore(int good, int bad, int total) {
         child: Center(
           child: Text(
             '不正解数：$bad',
-            style: const TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-            ),
+            style: const TextStyle(fontSize: 20),
           ),
         ),
       ),

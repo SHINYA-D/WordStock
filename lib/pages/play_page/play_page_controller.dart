@@ -11,10 +11,11 @@ final playsProvider = StateNotifierProvider.autoDispose<PlayPageController,
     AsyncValue<List<Word>>>((ref) {
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
   final allWords = ref.watch(allWordsProvider);
-  final MatchEngine matchEngine;
-  allWords.value == null
-      ? matchEngine = MatchEngine(swipeItems: [])
-      : matchEngine = ref.watch(swipeCardsProvider(allWords));
+  // final MatchEngine matchEngine;
+  // allWords.value == null
+  //     ? matchEngine = MatchEngine(swipeItems: [])
+  //     : matchEngine = ref.watch(swipeCardsProvider(allWords));
+  final matchEngine = ref.watch(swipeCardsProvider(allWords));
   return PlayPageController(sqliteRepo, allWords, matchEngine);
 });
 
