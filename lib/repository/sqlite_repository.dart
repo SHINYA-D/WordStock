@@ -5,6 +5,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wordstock/model/folder/folder.dart';
+import 'package:wordstock/model/report_card/report_card.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/pages/error_page/error_page.dart';
 
@@ -145,20 +146,42 @@ class SqliteRepository {
         where: 'folderNameId = ? AND ok = ?', whereArgs: [folderId, 'OK']);
     return List.generate(maps.length, (i) {
       return Word(
-        id: maps[i]['id'],
-        frontName: maps[i]['frontName'],
-        backName: maps[i]['backName'],
-        tableName: maps[i]['tableName'],
-        folderNameId: maps[i]['folderNameId'],
-        yesCount: maps[i]['yesCount'],
-        noCount: maps[i]['noCount'],
-        play: maps[i]['play'],
-        time: maps[i]['time'],
-        percent: maps[i]['percent'],
-        average: maps[i]['average'],
-        ok: maps[i]['ok'],
-      );
+          id: maps[i]['id'],
+          frontName: maps[i]['frontName'],
+          backName: maps[i]['backName'],
+          tableName: maps[i]['tableName'],
+          folderNameId: maps[i]['folderNameId'],
+          yesCount: maps[i]['yesCount'],
+          noCount: maps[i]['noCount'],
+          play: maps[i]['play'],
+          time: maps[i]['time'],
+          percent: maps[i]['percent'],
+          average: maps[i]['average'],
+          ok: maps[i]['ok']);
     });
+  }
+
+  Future<ReportCard> getReportCard(String folderId) async {
+    bool visibleCheck = false;
+    int goodCount = 0;
+    int badCount = 0;
+
+    final good = await getPointGood(folderId);
+    final bad = await getPointNg(folderId);
+    good.isEmpty ? goodCount = 0 : goodCount = good.length;
+    bad.isEmpty ? badCount = 0 : badCount = bad.length;
+
+    var rate = (goodCount / (goodCount + badCount)) * 100;
+
+    int accuracyRate = rate.floor();
+    if (badCount != 0) visibleCheck = true;
+
+    return ReportCard(
+      goodCount: good.length,
+      badCount: bad.length,
+      accuracyRate: accuracyRate,
+      visible: visibleCheck,
+    );
   }
 
 /*==============================================================================
@@ -235,11 +258,12 @@ class SqliteRepository {
   }
 
   //Word編集
-  Future<void> upWord(Word up) async {
+  Future<void> upWord(Word word) async {
     final Database? db = await database;
     if (db == null) {
       throw const ErrorPage('DB:Word編集中にエラーが発生しました');
     }
-    await db.update('words', up.toJson(), where: 'id = ?', whereArgs: [up.id]);
+    await db
+        .update('words', word.toJson(), where: 'id = ?', whereArgs: [word.id]);
   }
 }
