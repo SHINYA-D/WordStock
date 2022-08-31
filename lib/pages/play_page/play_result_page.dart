@@ -2,40 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wordstock/model/word/word.dart';
-import 'package:wordstock/pages/error_page/error_page.dart';
-import 'package:wordstock/pages/play_page/play_page_controller.dart';
+import 'package:wordstock/pages/play_page/play_result_controller.dart';
 
 class PlayResultPage extends ConsumerWidget {
   const PlayResultPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Object? countList = ModalRoute.of(context)?.settings.arguments;
-    if (countList == null) {
-      throw const ErrorPage('成績表画面遷移中にエラーが発生しました');
-    }
-    final List<dynamic> counts = countList as List<dynamic>;
-    final good = counts[0];
-    final bad = counts[1];
-    final folderID = counts[2];
-    //TODO:成績グラフを作成時に使用
-    //List<String> okList = counts[3];
-    final List<String> ngList = counts[4];
+    Object? folderIdNum = ModalRoute.of(context)?.settings.arguments;
+    final String folderId = folderIdNum as String;
 
-    //スコア
-    final double percent = (good / (good + bad)) * 100;
-    final int total = percent.floor();
+    final resultState = ref.watch(resultsProvider(folderId));
 
-    //再実行ボタン表示・非表示
-    bool visible = true;
-    if (bad == 0) visible = false;
-
-    //再実行時受け渡し変数
-    List<Word>? valueNg = [];
-
-    final playsState = ref.watch(playsProvider);
-
-    final playsCtr = ref.read(playsProvider.notifier);
+    final resultCtr = ref.read(resultsProvider(folderId).notifier);
 
 /*==============================================================================
 【成績表画面】
@@ -50,92 +29,68 @@ class PlayResultPage extends ConsumerWidget {
         width: 430.w,
         child: Padding(
           padding: EdgeInsets.only(right: 50.w, left: 50.w, top: 60.h),
-          child: Card(
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.only(right: 50.w, left: 50.w, top: 100.h),
-                child: Column(
-                  children: [
-                    _buildScore(good, bad, total),
-                    Column(
-                      children: [
-                        SizedBox(
-                          width: 200.w,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              playsCtr.playFlat(folderID);
-                              await Navigator.of(context)
-                                  .pushNamedAndRemoveUntil(
-                                      "/", ModalRoute.withName("/"));
-                            },
-                            style: ElevatedButton.styleFrom(
-                                side: const BorderSide(width: 1)),
-                            child: const Text("終了"),
-                          ),
-                        ),
-                        Visibility(
-                          visible: visible,
-                          //maintainSize: true,
-                          child: playsState.when(
-                            data: (playsState) => ElevatedButton(
+          child: resultState.when(
+            data: (resultState) => Card(
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 50.w, left: 50.w, top: 100.h),
+                  child: Column(
+                    children: [
+                      _buildScore(
+                        resultState.goodCount,
+                        resultState.badCount,
+                        resultState.accuracyRate,
+                      ),
+                      Column(
+                        children: [
+                          SizedBox(
+                            width: 200.w,
+                            child: ElevatedButton(
                               onPressed: () async {
-                                try {
-                                  final int count = playsState.length;
-                                  //TODO:Mapにできない
-                                  for (int i = 0; i < count; i++) {
-                                    ngList.map((ng) {
-                                      if (playsState[i].id == ng) {
-                                        valueNg.add(playsState[i]);
-                                      }
-                                    }).toList();
-                                  }
-                                  ngList.map((ngList) {
-                                    playsCtr.playBadUp(ngList);
-                                  }).toList();
-                                  playsCtr.playFlat(folderID);
-                                  await Navigator.pushNamed(
-                                      context, "/play_page",
-                                      arguments: valueNg);
-                                } catch (e) {
-                                  AlertDialog(
-                                    title: const Text('再プレイでエラーが発生しました'),
-                                    actions: <Widget>[
-                                      GestureDetector(
-                                        child: const Text('閉じる'),
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                }
+                                resultCtr.resultFlat(folderId);
+                                await Navigator.pushNamedAndRemoveUntil(
+                                    context, "/", (_) => false);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  side: const BorderSide(width: 1)),
+                              child: const Text("終了"),
+                            ),
+                          ),
+                          Visibility(
+                            visible: resultState.visible!,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                List<Word> retest = await resultCtr.getBadPoint;
+                                resultCtr.resultFlat(folderId);
+                                await Navigator.pushNamedAndRemoveUntil(
+                                    context, "/play_page", (_) => false,
+                                    arguments: retest);
                               },
                               style: ElevatedButton.styleFrom(
                                 side: const BorderSide(width: 1),
                               ),
                               child: const Text("間違えた箇所をもう一度"),
                             ),
-                            error: (error, _) => AlertDialog(
-                              title: const Text(''
-                                  'フォルダ名入力でエラーが発生しました。'),
-                              actions: <Widget>[
-                                GestureDetector(
-                                  child: const Text('閉じる'),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            ),
-                            loading: () => const CircularProgressIndicator(),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
+            error: (error, _) => AlertDialog(
+              title: const Text('フォルダ名表示中に発生しました。'),
+              actions: <Widget>[
+                GestureDetector(
+                  child: const Text('閉じる'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+            loading: () => const CircularProgressIndicator(),
           ),
         ),
       ),
@@ -146,7 +101,7 @@ class PlayResultPage extends ConsumerWidget {
 /*==============================================================================
 【成績表表示】
 ==============================================================================*/
-Widget _buildScore(int good, int bad, int total) {
+Widget _buildScore(good, badCount, total) {
   return Column(
     children: [
       SizedBox(
@@ -168,7 +123,7 @@ Widget _buildScore(int good, int bad, int total) {
       SizedBox(
         child: Center(
           child: Text(
-            '不正解数：$bad',
+            '不正解数：$badCount',
             style: const TextStyle(fontSize: 20),
           ),
         ),
