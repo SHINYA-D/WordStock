@@ -28,7 +28,7 @@ void main() {
 
   testWidgets('test', (WidgetTester tester) async {
     await tester.pumpWidget(const ProviderScope(
-      child: const App(),
+      child: App(),
     ));
   });
 }
