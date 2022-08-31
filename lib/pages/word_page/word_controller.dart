@@ -2,15 +2,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-final allWordsProvider = FutureProvider.family<List<Word>, String>(
+final allWordsProvider = FutureProvider.autoDispose.family<List<Word>, String>(
     (ref, folderId) =>
         ref.read(sqliteRepositoryProvider).getPointWords(folderId));
 
-final wordProvider = StateNotifierProvider.family<WordController,
-    AsyncValue<List<Word>>, String>((ref, folderId) {
+final wordProvider = StateNotifierProvider.autoDispose
+    .family<WordController, AsyncValue<List<Word>>, String>((ref, folderId) {
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
   final allWords = ref.watch(allWordsProvider(folderId));
-
   return WordController(sqliteRepo, allWords);
 });
 
