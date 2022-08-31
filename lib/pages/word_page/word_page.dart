@@ -18,21 +18,21 @@ class WordPage extends ConsumerWidget {
 
     final wordsCtr = ref.read(wordProvider(folderId).notifier);
 
-    //wordsCtr.getPointData(folderIdNum);
-
 /*==============================================================================
 【ワード画面】
 ==============================================================================*/
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          title: const Text('単語一覧'),
-          actions: <Widget>[
-            TextButton(
+        centerTitle: true,
+        title: const Text('単語一覧'),
+        actions: <Widget>[
+          Visibility(
+            visible: wordsState.value?.length != 0 ? true : false,
+            child: TextButton(
                 onPressed: () {
                   try {
                     Navigator.pushReplacementNamed(context, "/play_page",
-                        arguments: wordsState /*folderId*/);
+                        arguments: wordsState.value);
                   } catch (e) {
                     AlertDialog(
                       title: const Text('Playページに遷移中エラーが発生しました'),
@@ -51,7 +51,9 @@ class WordPage extends ConsumerWidget {
                   'TEST開始',
                   style: TextStyle(color: Colors.white),
                 )),
-          ]),
+          ),
+        ],
+      ),
       body: SlidableAutoCloseBehavior(
         child: Padding(
           padding: EdgeInsets.only(top: 30.h),
