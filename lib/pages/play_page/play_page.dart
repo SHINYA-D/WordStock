@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swipe_cards/swipe_cards.dart';
+import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/pages/play_page/play_page_controller.dart';
 
 class PlayPage extends ConsumerWidget {
   const PlayPage({Key? key}) : super(key: key);
 
-  // final Object? args = ModalRoute.of(context)?.settings.arguments;
-  // final List<Word> wordExtract = args as List<Word>;
-  // final playState = ref.watch(playsProvider);
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(playsProvider);
+    final word = ModalRoute.of(context)?.settings.arguments;
+    final words = word as List<Word>;
 
-    final playCtr = ref.read(playsProvider.notifier);
+    ref.watch(playsProvider(words));
+
+    final playCtr = ref.read(playsProvider(words).notifier);
 
 /*==============================================================================
 【プレイ画面】
@@ -40,19 +40,17 @@ class PlayPage extends ConsumerWidget {
                             right: 15.w,
                             top: 10.h,
                           ),
-                          child: _buildFlipCard(index),
+                          child: _buildFlipCard(index, words),
                         );
                       },
-
                       //全カードスワイプ後の処理
-                      onStackFinished: () {
-                        Navigator.pushNamed(
-                          context,
-                          "/play_result_page",
-                        );
+                      onStackFinished: () async {
+                        await Navigator.of(context).pushNamedAndRemoveUntil(
+                            "/play_result_page", ModalRoute.withName("/"),
+                            arguments: words[0].folderNameId);
                       }),
                 ),
-                _buildButton(),
+                _buildButton(words),
               ],
             ),
     );
@@ -62,48 +60,33 @@ class PlayPage extends ConsumerWidget {
 /*==============================================================================
 【フリップカード処理】
 ==============================================================================*/
-Widget _buildFlipCard(int index) {
+Widget _buildFlipCard(int index, List<Word> words) {
   return Consumer(builder: (context, ref, _) {
-    final playState = ref.watch(playsProvider);
-    //final playCtr = ref.read(playsProvider.notifier);
+    ref.watch(playsProvider(words));
+    final playCtr = ref.read(playsProvider(words).notifier);
 
-    return playState.when(
-      data: (playState) => FlipCard(
-        direction: FlipDirection.VERTICAL,
-        speed: 500,
-        front: Card(
-          margin:
-              EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
-          child: SizedBox(
-            width: 380.w,
-            child: Center(
-              child: Text(playState[index].frontName!),
-            ),
-          ),
+    return FlipCard(
+      direction: FlipDirection.VERTICAL,
+      speed: 500,
+      front: Card(
+        margin: EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
+        child: SizedBox(
+          width: 380.w,
+          child: Center(
+              child: Text(
+                  playCtr.matchEngine.currentItem!.content![index].frontName)),
         ),
-        back: Card(
-          margin:
-              EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
-          child: SizedBox(
-            width: 380.w,
-            child: Center(
-              child: Text(playState[index].backName!),
-            ),
+      ),
+      back: Card(
+        margin: EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
+        child: SizedBox(
+          width: 380.w,
+          child: Center(
+            child:
+                Text(playCtr.matchEngine.currentItem!.content![index].backName),
           ),
         ),
       ),
-      error: (error, _) => AlertDialog(
-        title: const Text('フォルダ名表示中に発生しました。'),
-        actions: <Widget>[
-          GestureDetector(
-            child: const Text('閉じる'),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
-      loading: () => const CircularProgressIndicator(),
     );
   });
 }
@@ -111,13 +94,11 @@ Widget _buildFlipCard(int index) {
 /*==============================================================================
 【GOOD/BAD ボタン処理】
 ==============================================================================*/
-Widget _buildButton() {
+Widget _buildButton(List<Word> words) {
   return Consumer(builder: (context, ref, _) {
-    //final playState = ref.watch(playsProvider);
+    ref.watch(playsProvider(words));
 
-    ref.watch(playsProvider);
-
-    final playCtr = ref.read(playsProvider.notifier);
+    final playCtr = ref.read(playsProvider(words).notifier);
 
     return Padding(
       padding: EdgeInsets.only(top: 40.h),
@@ -135,9 +116,7 @@ Widget _buildButton() {
                 side: const BorderSide(color: Colors.blue),
               ),
               onPressed: () {
-                playCtr.nope(); //nopeAction
-                //Goodの処理を記述する
-                //OKに変更させる
+                playCtr.nope();
               },
               child: const Icon(
                 Icons.thumb_down_alt,
@@ -156,8 +135,6 @@ Widget _buildButton() {
               ),
               onPressed: () {
                 playCtr.like();
-                //bodの処理を記述する
-                //OKに変更させる
               },
               child: const Icon(
                 Icons.thumb_up_alt,
