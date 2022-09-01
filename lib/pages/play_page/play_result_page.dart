@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/pages/play_page/play_result_controller.dart';
 
 class PlayResultPage extends ConsumerWidget {
@@ -47,7 +46,6 @@ class PlayResultPage extends ConsumerWidget {
                             width: 200.w,
                             child: ElevatedButton(
                               onPressed: () async {
-                                resultCtr.resultFlat(folderId);
                                 await Navigator.pushNamedAndRemoveUntil(
                                     context, "/", (_) => false);
                               },
@@ -59,12 +57,8 @@ class PlayResultPage extends ConsumerWidget {
                           Visibility(
                             visible: resultState.visible!,
                             child: ElevatedButton(
-                              onPressed: () async {
-                                List<Word> retest = await resultCtr.getBadPoint;
-                                resultCtr.resultFlat(folderId);
-                                await Navigator.pushNamedAndRemoveUntil(
-                                    context, "/play_page", (_) => false,
-                                    arguments: retest);
+                              onPressed: () {
+                                resultCtr.resultNextPage(context);
                               },
                               style: ElevatedButton.styleFrom(
                                 side: const BorderSide(width: 1),
