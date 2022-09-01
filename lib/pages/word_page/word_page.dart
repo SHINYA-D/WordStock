@@ -27,7 +27,7 @@ class WordPage extends ConsumerWidget {
         title: const Text('単語一覧'),
         actions: <Widget>[
           Visibility(
-            visible: wordsState.value?.length != 0 ? true : false,
+            visible: wordsState.value?.isNotEmpty ?? false,
             child: TextButton(
                 onPressed: () {
                   try {
