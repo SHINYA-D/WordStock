@@ -26,33 +26,31 @@ class PlayPage extends ConsumerWidget {
         centerTitle: true,
         title: const Text('PLAY'),
       ),
-      body: playCtr.matchEngine == null
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 350.h,
-                  child: SwipeCards(
-                      matchEngine: playCtr.matchEngine,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            right: 15.w,
-                            top: 10.h,
-                          ),
-                          child: _buildFlipCard(index, words),
-                        );
-                      },
-                      //全カードスワイプ後の処理
-                      onStackFinished: () async {
-                        await Navigator.of(context).pushNamedAndRemoveUntil(
-                            "/play_result_page", ModalRoute.withName("/"),
-                            arguments: words[0].folderNameId);
-                      }),
-                ),
-                _buildButton(words),
-              ],
-            ),
+      body: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 350.h,
+            child: SwipeCards(
+                matchEngine: playCtr.matchEngine,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      right: 15.w,
+                      top: 10.h,
+                    ),
+                    child: _buildFlipCard(index, words),
+                  );
+                },
+                //全カードスワイプ後の処理
+                onStackFinished: () async {
+                  await Navigator.of(context).pushNamedAndRemoveUntil(
+                      "/play_result_page", ModalRoute.withName("/"),
+                      arguments: words[0].folderNameId);
+                }),
+          ),
+          _buildButton(words),
+        ],
+      ),
     );
   }
 }
