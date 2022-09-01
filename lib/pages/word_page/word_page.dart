@@ -26,31 +26,45 @@ class WordPage extends ConsumerWidget {
         centerTitle: true,
         title: const Text('単語一覧'),
         actions: <Widget>[
-          Visibility(
-            visible: wordsState.value?.isNotEmpty ?? false,
-            child: TextButton(
-                onPressed: () {
-                  try {
-                    Navigator.pushReplacementNamed(context, "/play_page",
-                        arguments: wordsState.value);
-                  } catch (e) {
-                    AlertDialog(
-                      title: const Text('Playページに遷移中エラーが発生しました'),
-                      actions: <Widget>[
-                        GestureDetector(
-                          child: const Text('閉じる'),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    );
-                  }
-                },
-                child: const Text(
-                  'TEST開始',
-                  style: TextStyle(color: Colors.white),
-                )),
+          wordsState.when(
+            data: (wordsState) => Visibility(
+              visible: wordsState.isNotEmpty,
+              child: TextButton(
+                  onPressed: () {
+                    try {
+                      Navigator.pushReplacementNamed(context, "/play_page",
+                          arguments: wordsState);
+                    } catch (e) {
+                      AlertDialog(
+                        title: const Text('Playページに遷移中エラーが発生しました'),
+                        actions: <Widget>[
+                          GestureDetector(
+                            child: const Text('閉じる'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    }
+                  },
+                  child: const Text(
+                    'TEST開始',
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            error: (error, _) => AlertDialog(
+              title: const Text('フォルダ名表示中に発生しました。'),
+              actions: <Widget>[
+                GestureDetector(
+                  child: const Text('閉じる'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+            loading: () => const CircularProgressIndicator(),
           ),
         ],
       ),
