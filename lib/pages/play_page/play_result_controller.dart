@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordstock/model/report_card/report_card.dart';
 import 'package:wordstock/model/word/word.dart';
@@ -22,16 +23,14 @@ class PlayResultController extends StateNotifier<AsyncValue<ReportCard>> {
       : super(pointWords);
 
   final SqliteRepository sqliteRepo;
-  //final AsyncValue<ReportCard> pointWords;
   final String folderId;
 
-  get getBadPoint => sqliteRepo.getPointNg(folderId);
+  Future<List<Word>> get getBadPoint => sqliteRepo.getPointNg(folderId);
 
-  Future<void> resultFlat(String folderId) async {
-    List<Word> getPointWord = await sqliteRepo.getPointWords(folderId);
-    getPointWord.map((goodPoint) {
-      goodPoint = goodPoint.copyWith(ok: 'FLAT');
-      sqliteRepo.upWord(goodPoint);
-    }).toList();
+  Future<void> resultNextPage(BuildContext context) async {
+    List<Word> retest = await getBadPoint;
+    if (!mounted) return;
+    Navigator.pushNamedAndRemoveUntil(context, "/play_page", (_) => false,
+        arguments: retest);
   }
 }
