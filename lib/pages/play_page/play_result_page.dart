@@ -14,7 +14,6 @@ class PlayResultPage extends ConsumerWidget {
     final resultState = ref.watch(resultsProvider(folderId));
 
     final resultCtr = ref.read(resultsProvider(folderId).notifier);
-
 /*==============================================================================
 【成績表画面】
 ==============================================================================*/
@@ -35,11 +34,8 @@ class PlayResultPage extends ConsumerWidget {
                   padding: EdgeInsets.only(right: 50.w, left: 50.w, top: 100.h),
                   child: Column(
                     children: [
-                      _buildScore(
-                        resultState.goodCount,
-                        resultState.badCount,
-                        resultState.accuracyRate,
-                      ),
+                      _buildScore(resultCtr.good, resultCtr.bad,
+                          resultCtr.accuracyRate, resultCtr.total),
                       Column(
                         children: [
                           SizedBox(
@@ -49,20 +45,16 @@ class PlayResultPage extends ConsumerWidget {
                                 await Navigator.pushNamedAndRemoveUntil(
                                     context, "/", (_) => false);
                               },
-                              style: ElevatedButton.styleFrom(
-                                  side: const BorderSide(width: 1)),
                               child: const Text("終了"),
                             ),
                           ),
                           Visibility(
-                            visible: resultState.visible!,
+                            visible: resultCtr.visibleCheck,
                             child: ElevatedButton(
                               onPressed: () {
+                                resultCtr.playFlat();
                                 resultCtr.resultNextPage(context);
                               },
-                              style: ElevatedButton.styleFrom(
-                                side: const BorderSide(width: 1),
-                              ),
                               child: const Text("間違えた箇所をもう一度"),
                             ),
                           ),
@@ -95,13 +87,13 @@ class PlayResultPage extends ConsumerWidget {
 /*==============================================================================
 【成績表表示】
 ==============================================================================*/
-Widget _buildScore(good, badCount, total) {
+Widget _buildScore(good, badCount, percent, total) {
   return Column(
     children: [
       SizedBox(
         child: Center(
           child: Text(
-            '正解率：$total' '%',
+            '正解率：$percent' '%',
             style: const TextStyle(fontSize: 30),
           ),
         ),
@@ -109,7 +101,7 @@ Widget _buildScore(good, badCount, total) {
       SizedBox(
         child: Center(
           child: Text(
-            '正解数：$good',
+            '問題数：' '$total',
             style: const TextStyle(fontSize: 20),
           ),
         ),
@@ -117,7 +109,15 @@ Widget _buildScore(good, badCount, total) {
       SizedBox(
         child: Center(
           child: Text(
-            '不正解数：$badCount',
+            '正：$good',
+            style: const TextStyle(fontSize: 20),
+          ),
+        ),
+      ),
+      SizedBox(
+        child: Center(
+          child: Text(
+            '誤：$badCount',
             style: const TextStyle(fontSize: 20),
           ),
         ),
