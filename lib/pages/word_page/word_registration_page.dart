@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uuid/uuid.dart';
+import 'package:wordstock/constant/passed.dart';
 import 'package:wordstock/model/word/word.dart';
 
 import 'word_controller.dart';
@@ -156,7 +157,7 @@ _wordRegister(
         time: 0,
         percent: 0,
         average: 0,
-        ok: 'FLAT',
+        passed: passedJudgement(Passed.flat),
       );
       controlWordsProvider.registerData(register);
     }
