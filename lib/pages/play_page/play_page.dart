@@ -72,7 +72,8 @@ Widget _buildFlipCard(int index, List<Word> words) {
           width: 380.w,
           child: Center(
               child: Text(
-                  playCtr.matchEngine.currentItem!.content![index].frontName)),
+                  playCtr.matchEngine.currentItem?.content[index].frontName ??
+                      '表示中にエラーが発生しました')),
         ),
       ),
       back: Card(
@@ -80,8 +81,9 @@ Widget _buildFlipCard(int index, List<Word> words) {
         child: SizedBox(
           width: 380.w,
           child: Center(
-            child:
-                Text(playCtr.matchEngine.currentItem!.content![index].backName),
+            child: Text(
+                playCtr.matchEngine.currentItem?.content[index].backName ??
+                    '表示中にエラーが発生しました'),
           ),
         ),
       ),
