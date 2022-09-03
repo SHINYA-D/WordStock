@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:wordstock/constant/passed.dart';
 import 'package:wordstock/model/folder/folder.dart';
-import 'package:wordstock/model/report_card/report_card.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/pages/error_page/error_page.dart';
 
@@ -23,7 +23,7 @@ class SqliteRepository {
   _initDatabase() async {
     final Directory documentsDirectory =
         await getApplicationDocumentsDirectory();
-    final String path = join(documentsDirectory.path, 'WordStock02.db');
+    final String path = join(documentsDirectory.path, 'WordStock03.db');
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
@@ -43,7 +43,7 @@ class SqliteRepository {
                 time INTEGER,
                 percent INTEGER,
                 average INTEGER,
-                ok TEXT
+                passed TEXT
                 )''');
   }
 
@@ -86,7 +86,7 @@ class SqliteRepository {
         time: maps[i]['time'],
         percent: maps[i]['percent'],
         average: maps[i]['average'],
-        ok: maps[i]['ok'],
+        passed: maps[i]['passed'],
       );
     });
   }
@@ -112,16 +112,17 @@ class SqliteRepository {
         time: maps[i]['time'],
         percent: maps[i]['percent'],
         average: maps[i]['average'],
-        ok: maps[i]['ok'],
+        passed: maps[i]['passed'],
       );
     });
   }
 
   //'対象フォルダ'かつ'NG'の場合を取得
-  Future<List<Word>> getPointNg(String folderId) async {
+  Future<List<Word>> getPointBad(String folderId) async {
     final Database? db = await database;
     final List<Map<String, dynamic>> maps = await db!.query('words',
-        where: 'folderNameId = ? AND ok = ?', whereArgs: [folderId, 'NG']);
+        where: 'folderNameId = ? AND passed = ?',
+        whereArgs: [folderId, passedJudgement(Passed.bad)]);
     return List.generate(maps.length, (i) {
       return Word(
         id: maps[i]['id'],
@@ -135,7 +136,7 @@ class SqliteRepository {
         time: maps[i]['time'],
         percent: maps[i]['percent'],
         average: maps[i]['average'],
-        ok: maps[i]['ok'],
+        passed: maps[i]['passed'],
       );
     });
   }
@@ -143,7 +144,8 @@ class SqliteRepository {
   Future<List<Word>> getPointGood(String folderId) async {
     final Database? db = await database;
     final List<Map<String, dynamic>> maps = await db!.query('words',
-        where: 'folderNameId = ? AND ok = ?', whereArgs: [folderId, 'OK']);
+        where: 'folderNameId = ? AND passed = ?',
+        whereArgs: [folderId, passedJudgement(Passed.flat)]);
     return List.generate(maps.length, (i) {
       return Word(
           id: maps[i]['id'],
@@ -157,31 +159,8 @@ class SqliteRepository {
           time: maps[i]['time'],
           percent: maps[i]['percent'],
           average: maps[i]['average'],
-          ok: maps[i]['ok']);
+          passed: maps[i]['passed']);
     });
-  }
-
-  Future<ReportCard> getReportCard(String folderId) async {
-    bool visibleCheck = false;
-    int goodCount = 0;
-    int badCount = 0;
-
-    final good = await getPointGood(folderId);
-    final bad = await getPointNg(folderId);
-    good.isEmpty ? goodCount = 0 : goodCount = good.length;
-    bad.isEmpty ? badCount = 0 : badCount = bad.length;
-
-    var rate = (goodCount / (goodCount + badCount)) * 100;
-
-    int accuracyRate = rate.floor();
-    if (badCount != 0) visibleCheck = true;
-
-    return ReportCard(
-      goodCount: good.length,
-      badCount: bad.length,
-      accuracyRate: accuracyRate,
-      visible: visibleCheck,
-    );
   }
 
 /*==============================================================================
