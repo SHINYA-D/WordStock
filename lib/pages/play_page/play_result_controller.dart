@@ -1,36 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordstock/model/report_card/report_card.dart';
+import 'package:wordstock/constant/passed.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-final reportProvider = FutureProvider.autoDispose.family<ReportCard, String>(
+final wordsProvider = FutureProvider.autoDispose.family<List<Word>, String>(
     (ref, folderId) =>
-        ref.watch(sqliteRepositoryProvider).getReportCard(folderId));
+        ref.watch(sqliteRepositoryProvider).getPointWords(folderId));
 
 final resultsProvider = StateNotifierProvider.autoDispose
-    .family<PlayResultController, AsyncValue<ReportCard>, String>(
+    .family<PlayResultController, AsyncValue<List<Word>>, String>(
         (ref, folderId) {
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
-  final reportCards = ref.watch(reportProvider(folderId));
+  final pointWords = ref.watch(wordsProvider(folderId));
   final String folderIdNum = folderId;
-  return PlayResultController(sqliteRepo, reportCards, folderIdNum);
+  return PlayResultController(sqliteRepo, pointWords, folderIdNum);
 });
 
-class PlayResultController extends StateNotifier<AsyncValue<ReportCard>> {
+class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
   PlayResultController(
-      this.sqliteRepo, AsyncValue<ReportCard> pointWords, this.folderId)
+      this.sqliteRepo, AsyncValue<List<Word>> pointWords, this.folderId)
       : super(pointWords);
 
   final SqliteRepository sqliteRepo;
   final String folderId;
 
-  Future<List<Word>> get getBadPoint => sqliteRepo.getPointNg(folderId);
+  int get bad => _badCounts();
+  int get good => _goodCounts();
+  int get accuracyRate => ((good / (good + bad)) * 100).floor();
+  int get total => bad + good;
+  bool get visibleCheck => bad != 0 ? true : false;
+  Future<List<Word>> get badReTest => sqliteRepo.getPointBad(folderId);
 
   Future<void> resultNextPage(BuildContext context) async {
-    List<Word> retest = await getBadPoint;
     if (!mounted) return;
     Navigator.pushNamedAndRemoveUntil(context, "/play_page", (_) => false,
-        arguments: retest);
+        arguments: await badReTest);
+  }
+
+  Future<void> playFlat() async {
+    if (state.value == null) return;
+    final flatValue = state.value?.map((flatValue) {
+      if (flatValue.passed == passedJudgement(Passed.good)) {
+        flatValue = flatValue.copyWith(passed: 'FLAT');
+        sqliteRepo.upWord(flatValue);
+        return flatValue;
+      } else {
+        return flatValue;
+      }
+    }).toList();
+    state = AsyncValue.data([...?flatValue]);
+  }
+
+  int _goodCounts() {
+    int count = 0;
+    if (state.value == null) return 0;
+    for (int i = 0; i < state.value!.length; i++) {
+      if (state.value![i].passed == passedJudgement(Passed.good)) {
+        count = count + 1;
+      }
+    }
+    return count;
+  }
+
+  int _badCounts() {
+    int count = 0;
+    if (state.value == null) return 0;
+    for (int i = 0; i < state.value!.length; i++) {
+      if (state.value![i].passed == passedJudgement(Passed.bad)) {
+        count = count + 1;
+      }
+    }
+    return count;
   }
 }
