@@ -154,7 +154,8 @@ Widget _buildFolderList(
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, "/word_edit_page",
-                    arguments: EditBox(index, wordsProvider[0].folderNameId));
+                    arguments: EditBox(index,
+                        wordsProvider[0].folderNameId ?? '引数に値が入っていません'));
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -181,7 +182,7 @@ Widget _buildFolderList(
 
 class EditBox {
   final int wordSelectNum;
-  final String? folderId;
+  final String folderId;
 
   EditBox(this.wordSelectNum, this.folderId);
 }
