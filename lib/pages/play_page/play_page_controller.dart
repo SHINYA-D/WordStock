@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swipe_cards/swipe_cards.dart';
+import 'package:wordstock/constant/passed.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
@@ -20,7 +21,7 @@ final playsProvider = StateNotifierProvider.autoDispose
 
   final matchEngine = MatchEngine(swipeItems: swipeItems);
   final pointWordProvider =
-      ref.watch(pointWordsProvider(words[0].folderNameId!));
+      ref.watch(pointWordsProvider(words[0].folderNameId ?? '引数が空です'));
 
   return PlayPageController(
       swipeItems, matchEngine, sqliteRepo, pointWordProvider);
@@ -37,12 +38,12 @@ class PlayPageController extends StateNotifier<List<SwipeItem>> {
 
   final AsyncValue<List<Word>> words;
 
-  //get nope => matchEngine.currentItem!.nope();
   void nope() {
     matchEngine.currentItem?.nope();
     for (int i = 0; i < state.length; i++) {
       if (matchEngine.currentItem?.hashCode == state[i].hashCode) {
-        state[i].content[i] = state[i].content[i].copyWith(ok: 'NG');
+        state[i].content[i] =
+            state[i].content[i].copyWith(passed: passedJudgement(Passed.bad));
         sqliteRepo.upWord(state[i].content[i]);
       }
     }
@@ -52,7 +53,8 @@ class PlayPageController extends StateNotifier<List<SwipeItem>> {
     matchEngine.currentItem?.like();
     for (int i = 0; i < state.length; i++) {
       if (matchEngine.currentItem?.hashCode == state[i].hashCode) {
-        state[i].content[i] = state[i].content[i].copyWith(ok: 'OK');
+        state[i].content[i] =
+            state[i].content[i].copyWith(passed: passedJudgement(Passed.good));
         sqliteRepo.upWord(state[i].content[i]);
       }
     }
