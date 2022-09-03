@@ -27,6 +27,7 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
   }
 
   Future<void> deleteData(Word selectWord) async {
+    if (selectWord.id == null) return;
     await sqliteRepo.deleteWord(selectWord.id!);
     state = state.value != null
         ? AsyncValue.data(state.value!..remove(selectWord))
@@ -35,6 +36,7 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
 
   Future<void> upData(Word upData) async {
     await sqliteRepo.upWord(upData);
+    if (state.value == null) return;
     for (var i = 0; i < state.value!.length; i++) {
       if (state.value![i].id == upData.id) {
         state.value![i] = upData;
