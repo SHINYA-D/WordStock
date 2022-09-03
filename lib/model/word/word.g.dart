@@ -18,7 +18,7 @@ _$_Word _$$_WordFromJson(Map<String, dynamic> json) => _$_Word(
       time: json['time'] as int?,
       percent: json['percent'] as int?,
       average: json['average'] as int?,
-      ok: json['ok'] as String?,
+      passed: json['passed'] as String?,
     );
 
 Map<String, dynamic> _$$_WordToJson(_$_Word instance) => <String, dynamic>{
@@ -33,5 +33,5 @@ Map<String, dynamic> _$$_WordToJson(_$_Word instance) => <String, dynamic>{
       'time': instance.time,
       'percent': instance.percent,
       'average': instance.average,
-      'ok': instance.ok,
+      'passed': instance.passed,
     };

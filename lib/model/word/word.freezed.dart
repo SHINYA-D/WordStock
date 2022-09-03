@@ -31,7 +31,7 @@ mixin _$Word {
   int? get time => throw _privateConstructorUsedError;
   int? get percent => throw _privateConstructorUsedError;
   int? get average => throw _privateConstructorUsedError;
-  String? get ok => throw _privateConstructorUsedError;
+  String? get passed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -54,7 +54,7 @@ abstract class $WordCopyWith<$Res> {
       int? time,
       int? percent,
       int? average,
-      String? ok});
+      String? passed});
 }
 
 /// @nodoc
@@ -78,7 +78,7 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
     Object? time = freezed,
     Object? percent = freezed,
     Object? average = freezed,
-    Object? ok = freezed,
+    Object? passed = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -125,9 +125,9 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
           ? _value.average
           : average // ignore: cast_nullable_to_non_nullable
               as int?,
-      ok: ok == freezed
-          ? _value.ok
-          : ok // ignore: cast_nullable_to_non_nullable
+      passed: passed == freezed
+          ? _value.passed
+          : passed // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -150,7 +150,7 @@ abstract class _$$_WordCopyWith<$Res> implements $WordCopyWith<$Res> {
       int? time,
       int? percent,
       int? average,
-      String? ok});
+      String? passed});
 }
 
 /// @nodoc
@@ -175,7 +175,7 @@ class __$$_WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
     Object? time = freezed,
     Object? percent = freezed,
     Object? average = freezed,
-    Object? ok = freezed,
+    Object? passed = freezed,
   }) {
     return _then(_$_Word(
       id: id == freezed
@@ -222,9 +222,9 @@ class __$$_WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
           ? _value.average
           : average // ignore: cast_nullable_to_non_nullable
               as int?,
-      ok: ok == freezed
-          ? _value.ok
-          : ok // ignore: cast_nullable_to_non_nullable
+      passed: passed == freezed
+          ? _value.passed
+          : passed // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -245,7 +245,7 @@ class _$_Word implements _Word {
       this.time,
       this.percent,
       this.average,
-      this.ok});
+      this.passed});
 
   factory _$_Word.fromJson(Map<String, dynamic> json) => _$$_WordFromJson(json);
 
@@ -272,11 +272,11 @@ class _$_Word implements _Word {
   @override
   final int? average;
   @override
-  final String? ok;
+  final String? passed;
 
   @override
   String toString() {
-    return 'Word(id: $id, frontName: $frontName, backName: $backName, tableName: $tableName, folderNameId: $folderNameId, yesCount: $yesCount, noCount: $noCount, play: $play, time: $time, percent: $percent, average: $average, ok: $ok)';
+    return 'Word(id: $id, frontName: $frontName, backName: $backName, tableName: $tableName, folderNameId: $folderNameId, yesCount: $yesCount, noCount: $noCount, play: $play, time: $time, percent: $percent, average: $average, passed: $passed)';
   }
 
   @override
@@ -296,7 +296,7 @@ class _$_Word implements _Word {
             const DeepCollectionEquality().equals(other.time, time) &&
             const DeepCollectionEquality().equals(other.percent, percent) &&
             const DeepCollectionEquality().equals(other.average, average) &&
-            const DeepCollectionEquality().equals(other.ok, ok));
+            const DeepCollectionEquality().equals(other.passed, passed));
   }
 
   @JsonKey(ignore: true)
@@ -314,7 +314,7 @@ class _$_Word implements _Word {
       const DeepCollectionEquality().hash(time),
       const DeepCollectionEquality().hash(percent),
       const DeepCollectionEquality().hash(average),
-      const DeepCollectionEquality().hash(ok));
+      const DeepCollectionEquality().hash(passed));
 
   @JsonKey(ignore: true)
   @override
@@ -342,7 +342,7 @@ abstract class _Word implements Word {
       final int? time,
       final int? percent,
       final int? average,
-      final String? ok}) = _$_Word;
+      final String? passed}) = _$_Word;
 
   factory _Word.fromJson(Map<String, dynamic> json) = _$_Word.fromJson;
 
@@ -369,7 +369,7 @@ abstract class _Word implements Word {
   @override
   int? get average;
   @override
-  String? get ok;
+  String? get passed;
   @override
   @JsonKey(ignore: true)
   _$$_WordCopyWith<_$_Word> get copyWith => throw _privateConstructorUsedError;
