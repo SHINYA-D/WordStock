@@ -14,7 +14,7 @@ class WordEditPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     EditBox args = ModalRoute.of(context)?.settings.arguments as EditBox;
     int wordSelectIndex = args.wordSelectNum;
-    String folderId = args.folderId!;
+    String folderId = args.folderId;
 
     final wordsState = ref.watch(wordProvider(folderId));
 
@@ -22,14 +22,14 @@ class WordEditPage extends ConsumerWidget {
 
     //入力コントローラ　表
     final frontTextController = TextEditingController(
-        text: wordsState.value![wordSelectIndex].frontName);
+        text: wordsState.value?[wordSelectIndex].frontName);
 
     //入力コントローラ　裏
     final backTextController = TextEditingController(
-        text: wordsState.value![wordSelectIndex].backName);
+        text: wordsState.value?[wordSelectIndex].backName);
 
-    final String? flont = wordsState.value![wordSelectIndex].frontName;
-    final String? back = wordsState.value![wordSelectIndex].backName;
+    final String? flont = wordsState.value?[wordSelectIndex].frontName;
+    final String? back = wordsState.value?[wordSelectIndex].backName;
 
 /*==============================================================================
 【編集画面】
