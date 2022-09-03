@@ -17,7 +17,7 @@ class Word with _$Word {
     int? time,
     int? percent,
     int? average,
-    String? ok,
+    String? passed,
   }) = _Word;
 
   factory Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
