@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordstock/model/folder/folder.dart';
 import 'package:wordstock/pages/folder_page/folder_controller.dart';
 
 class FolderEditPage extends ConsumerWidget {
@@ -44,9 +43,7 @@ class FolderEditPage extends ConsumerWidget {
             data: (foldersState) => ElevatedButton(
               onPressed: () {
                 try {
-                  Folder up = foldersState[index];
-                  up = up.copyWith(name: dateTextController.text);
-                  foldersCtl.upData(up);
+                  foldersCtl.upData(index, dateTextController.text);
                   Navigator.pop(context);
                 } catch (e) {
                   AlertDialog(
