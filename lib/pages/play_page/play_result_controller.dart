@@ -55,8 +55,8 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
   int _goodCounts() {
     int count = 0;
     if (state.value == null) return 0;
-    for (int i = 0; i < state.value!.length; i++) {
-      if (state.value![i].passed == passedJudgement(Passed.good)) {
+    for (var value in state.value!) {
+      if (value.passed == passedJudgement(Passed.good)) {
         count = count + 1;
       }
     }
@@ -66,8 +66,8 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
   int _badCounts() {
     int count = 0;
     if (state.value == null) return 0;
-    for (int i = 0; i < state.value!.length; i++) {
-      if (state.value![i].passed == passedJudgement(Passed.bad)) {
+    for (var value in state.value!) {
+      if (value.passed == passedJudgement(Passed.bad)) {
         count = count + 1;
       }
     }
