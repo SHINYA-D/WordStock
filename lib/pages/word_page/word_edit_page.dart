@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/pages/word_page/word_page.dart';
 
 import 'word_controller.dart';
@@ -114,11 +113,10 @@ class WordEditPage extends ConsumerWidget {
                       data: (wordsState) => ElevatedButton(
                         onPressed: () {
                           try {
-                            Word up = wordsState[wordSelectIndex];
-                            up = up.copyWith(
-                                frontName: frontTextController.text,
-                                backName: backTextController.text);
-                            wordsCtr.upData(up);
+                            wordsCtr.upData(
+                                wordSelectIndex,
+                                frontTextController.text,
+                                backTextController.text);
                             Navigator.pop(context);
                           } catch (e) {
                             AlertDialog(
