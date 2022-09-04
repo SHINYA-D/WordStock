@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
+import 'package:wordstock/constant/passed.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
@@ -19,11 +22,34 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
   final SqliteRepository sqliteRepo;
   final AsyncValue<List<Word>> allWords;
 
-  Future<void> registerData(Word register) async {
-    await sqliteRepo.registerWord(register);
-    state = state.value != null
-        ? AsyncValue.data([...state.value!, register])
-        : const AsyncValue.data([]);
+  Future<void> registerData(
+      int cardItemCount,
+      List<TextEditingController> front,
+      List<TextEditingController> back,
+      String folderId) async {
+    for (var i = 0; i < cardItemCount; i++) {
+      if ((front[i].text != "") && (back[i].text != "")) {
+        final String createId = const Uuid().v4();
+        Word register = Word(
+          id: createId,
+          frontName: front[i].text,
+          backName: back[i].text,
+          tableName: 'words',
+          folderNameId: folderId,
+          yesCount: 0,
+          noCount: 0,
+          play: 0,
+          time: 0,
+          percent: 0,
+          average: 0,
+          passed: passedJudgement(Passed.flat),
+        );
+        await sqliteRepo.registerWord(register);
+        state = state.value != null
+            ? AsyncValue.data([...state.value!, register])
+            : const AsyncValue.data([]);
+      }
+    }
   }
 
   Future<void> deleteData(Word selectWord) async {
@@ -34,15 +60,12 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
         : const AsyncValue.data([]);
   }
 
-  Future<void> upData(Word upData) async {
-    await sqliteRepo.upWord(upData);
+  Future<void> upData(int index, String front, String back) async {
     if (state.value == null) return;
-    for (var i = 0; i < state.value!.length; i++) {
-      if (state.value![i].id == upData.id) {
-        state.value![i] = upData;
-        state = AsyncValue.data([...state.value!]);
-      }
-    }
+    state.value![index] = state.value![index].copyWith(frontName: front);
+    state.value![index] = state.value![index].copyWith(backName: back);
+    await sqliteRepo.upWord(state.value![index]);
+    state = AsyncValue.data([...state.value!]);
   }
 
   Future<void> getPointData(String? folderIdNum) async {
