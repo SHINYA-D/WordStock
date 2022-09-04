@@ -34,14 +34,10 @@ class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
     state = AsyncValue.data(state.value!..remove(selectFolder));
   }
 
-  Future<void> upData(Folder upData) async {
-    await sqliteRepo.upFolder(upData);
+  Future<void> upData(int index, String detaText) async {
     if (state.value == null) return;
-    final newFolders = state.value!.map((folder) {
-      if (folder.id == upData.id) return upData;
-      return folder;
-    }).toList();
-
-    state = AsyncValue.data([...newFolders]);
+    state.value![index] = state.value![index].copyWith(name: detaText);
+    await sqliteRepo.upFolder(state.value![index]);
+    state = AsyncValue.data([...state.value!]);
   }
 }
