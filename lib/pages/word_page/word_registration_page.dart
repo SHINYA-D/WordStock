@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:uuid/uuid.dart';
-import 'package:wordstock/constant/passed.dart';
-import 'package:wordstock/model/word/word.dart';
 
 import 'word_controller.dart';
 
@@ -36,8 +33,8 @@ class WordRegistrationPage extends ConsumerWidget {
             TextButton(
                 onPressed: () {
                   try {
-                    _wordRegister(cardItemCount, frontTextController,
-                        backTextController, folderId, wordsCtr);
+                    wordsCtr.registerData(cardItemCount, frontTextController,
+                        backTextController, folderId);
                     Navigator.of(context).pop();
                   } catch (e) {
                     AlertDialog(
@@ -129,37 +126,4 @@ Widget _buildInputForm(List<TextEditingController> frontTextController,
       autofocus: true,
     ),
   ]);
-}
-
-/*==============================================================================
-【登録処理】
-==============================================================================*/
-_wordRegister(
-    int cardItemCount,
-    List<TextEditingController> frontTextController,
-    List<TextEditingController> backTextController,
-    String? folderId,
-    controlWordsProvider) {
-  //TODO:Mapにできない
-  for (var i = 0; i < cardItemCount; i++) {
-    if ((frontTextController[i].text != "") &&
-        (backTextController[i].text != "")) {
-      final String uid = const Uuid().v4();
-      final Word register = Word(
-        id: uid,
-        frontName: frontTextController[i].text,
-        backName: backTextController[i].text,
-        tableName: 'words',
-        folderNameId: folderId,
-        yesCount: 0,
-        noCount: 0,
-        play: 0,
-        time: 0,
-        percent: 0,
-        average: 0,
-        passed: passedJudgement(Passed.flat),
-      );
-      controlWordsProvider.registerData(register);
-    }
-  }
 }
