@@ -74,7 +74,7 @@ class WordRegistrationPage extends ConsumerWidget {
                       ),
                       child: SizedBox(
                         width: 400.w,
-                        height: 200.h,
+                        height: 230.h,
                         child: Center(
                           child: Column(
                             children: [
