@@ -80,8 +80,8 @@ class WordEditPage extends ConsumerWidget {
                   title: const Text('カード編集'),
                   content: SingleChildScrollView(
                     child: SizedBox(
-                      height: 100.h,
-                      width: 100.w,
+                      height: 200.h,
+                      width: 150.w,
                       child: Column(
                         children: [
                           TextField(
