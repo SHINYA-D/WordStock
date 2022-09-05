@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:wordstock/model/word/word.dart';
+import 'package:wordstock/pages/presentation/parts/loading.dart';
 
 import 'word_controller.dart';
 
@@ -64,7 +65,7 @@ class WordPage extends ConsumerWidget {
                 ),
               ],
             ),
-            loading: () => const CircularProgressIndicator(),
+            loading: () => const Loading(),
           ),
         ],
       ),
@@ -120,7 +121,7 @@ class WordPage extends ConsumerWidget {
                 ),
               ],
             ),
-            loading: () => const CircularProgressIndicator(),
+            loading: () => const Loading(),
           ),
         ),
       ),

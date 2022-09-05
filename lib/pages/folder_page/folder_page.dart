@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:wordstock/model/folder/folder.dart';
 import 'package:wordstock/pages/folder_page/folder_controller.dart';
 import 'package:wordstock/pages/folder_page/folder_registration_page.dart';
+import 'package:wordstock/pages/presentation/parts/loading.dart';
 
 class FolderPage extends ConsumerWidget {
   const FolderPage({Key? key}) : super(key: key);
@@ -83,7 +84,7 @@ class FolderPage extends ConsumerWidget {
                 ),
               ],
             ),
-            loading: () => const CircularProgressIndicator(),
+            loading: () => const Loading(),
           ),
         ),
       ),
