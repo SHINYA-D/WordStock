@@ -4,6 +4,7 @@ import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 import '../domain/dummy_folder.dart';
+import '../domain/dummy_word.dart';
 
 class DummyRepository implements SqliteRepository {
   @override
@@ -41,10 +42,8 @@ class DummyRepository implements SqliteRepository {
   }
 
   @override
-  Future<List<Word>> getPointWords(String folderIdNum) {
-    // TODO: implement getPointWords
-    throw UnimplementedError();
-  }
+  Future<List<Word>> getPointWords(String folderIdNum) =>
+      Future.value(DummyWord.initialValue);
 
   @override
   Future<List<Word>> getWords() {
