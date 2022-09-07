@@ -72,7 +72,7 @@ void wordPageTest() {
       expect(find.text('TEST開始'), findsOneWidget);
     });
 
-    testWidgets('単語登録画面遷移（1つ以上ある場合)', (WidgetTester tester) async {
+    testWidgets('単語登録画面（1つ以上ある場合)', (WidgetTester tester) async {
       await tester.pumpWidget(_testApp);
 
       // 再描画
@@ -96,19 +96,28 @@ void wordPageTest() {
       expect(find.text('カード作成'), findsOneWidget);
       expect(find.text('完了'), findsOneWidget);
       expect(find.text('1枚目のカード'), findsOneWidget);
+      expect(find.text('2枚目のカード'), findsOneWidget);
+      expect(find.text('3枚目のカード'), findsOneWidget);
+      expect(find.text('4枚目のカード'), findsNothing);
+      expect(find.text('5枚目のカード'), findsNothing);
+
+      // スクロール
+      await tester.dragUntilVisible(
+        find.text('3枚目のカード'),
+        find.byKey(const ValueKey('4枚目のカード')),
+        const Offset(-250, 0),
+      );
 
       // 2フレーム目
       await tester.pump();
-      expect(find.text('2枚目のカード'), findsOneWidget);
-
-      // 3フレーム目
-      await tester.pump();
+      expect(find.text('1枚目のカード'), findsNothing);
+      expect(find.text('2枚目のカード'), findsNothing);
       expect(find.text('3枚目のカード'), findsOneWidget);
-
-      //TODO: 4枚目5枚目 解決できない
+      expect(find.text('4枚目のカード'), findsOneWidget);
+      expect(find.text('5枚目のカード'), findsOneWidget);
     });
 
-    testWidgets('単語登録画面遷移（何もない場合)', (WidgetTester tester) async {
+    testWidgets('単語登録画面（何もない場合)', (WidgetTester tester) async {
       await tester.pumpWidget(_notApp);
 
       // 再描画
@@ -132,19 +141,27 @@ void wordPageTest() {
       expect(find.text('カード作成'), findsOneWidget);
       expect(find.text('完了'), findsOneWidget);
       expect(find.text('1枚目のカード'), findsOneWidget);
-
-      // 2フレーム目
-      await tester.pump();
       expect(find.text('2枚目のカード'), findsOneWidget);
-
-      // 3フレーム目
-      await tester.pump();
       expect(find.text('3枚目のカード'), findsOneWidget);
+      expect(find.text('4枚目のカード'), findsNothing);
+      expect(find.text('5枚目のカード'), findsNothing);
+
+      // // スクロール
+      await tester.dragUntilVisible(
+        find.text('3枚目のカード'),
+        find.byKey(const ValueKey('4枚目のカード')),
+        const Offset(-250, 0),
+      );
+
+      await tester.pump();
+      expect(find.text('1枚目のカード'), findsNothing);
+      expect(find.text('2枚目のカード'), findsNothing);
+      expect(find.text('3枚目のカード'), findsOneWidget);
+      expect(find.text('4枚目のカード'), findsOneWidget);
+      expect(find.text('5枚目のカード'), findsOneWidget);
     });
 
-    //TODO: 4枚目5枚目 解決できない
-
-    testWidgets('単語編集画面遷移', (WidgetTester tester) async {
+    testWidgets('単語編集画面', (WidgetTester tester) async {
       await tester.pumpWidget(_testApp);
 
       // 再描画
@@ -162,23 +179,23 @@ void wordPageTest() {
 
       // 再描画
       await tester.pump();
+      await tester.pumpAndSettle();
 
       // 1フレーム目
       expect(find.text('frontName'), findsOneWidget);
-      expect(find.text('backName'), findsNothing);
-      expect(find.byIcon(Icons.mode_edit), findsNothing);
-
-      // 再描画
-      await tester.pump();
-
-      // 2フレーム目
-      //TODO: await tester.pump(); findsNothing 解決できない
-      //expect(find.text('v'), findsNothing);
       expect(find.text('backName'), findsOneWidget);
       expect(find.byIcon(Icons.mode_edit), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.mode_edit));
+      await tester.pumpAndSettle();
+
+      // 2フレーム目
+      expect(find.text('カード編集'), findsOneWidget);
+      expect(find.text('OK'), findsOneWidget);
+      expect(find.text('CANCEL'), findsOneWidget);
     });
 
-    testWidgets('単語削除画面遷移', (WidgetTester tester) async {
+    testWidgets('単語削除画面', (WidgetTester tester) async {
       await tester.pumpWidget(_testApp);
 
       // 再描画
