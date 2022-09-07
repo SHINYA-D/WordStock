@@ -1,3 +1,4 @@
+import 'package:wordstock/model/folder/folder.dart';
 import 'package:wordstock/model/word/word.dart';
 
 class DummyNotWord {
@@ -15,6 +16,13 @@ class DummyNotWord {
       percent: null,
       average: null,
       passed: null,
+    )
+  ];
+  static List<Folder> initialFolderValue = [
+    Folder(
+      id: null,
+      name: null,
+      tableName: null,
     )
   ];
 }

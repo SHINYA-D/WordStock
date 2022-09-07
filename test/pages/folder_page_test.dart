@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wordstock/app.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-import '../repository/dummy_not_repository.dart';
-import '../repository/dummy_repository.dart';
+import '../repository/folder/dummy_folder_repository.dart';
+import '../repository/folder/dummy_not_folder_repository.dart';
 
 //共通化する　ProviderScope
 final _testApp = ProviderScope(
@@ -57,9 +56,19 @@ void folderPageTest() {
       // 再描画
       await tester.pump();
 
+      // 1フレーム目
       await tester.tap(find.byIcon(Icons.create_new_folder));
+      expect(find.text('フォルダ名入力'), findsNothing);
+      expect(find.text('フォルダ名'), findsNothing);
+      expect(find.text('OK'), findsNothing);
+
+      // 再描画
       await tester.pump();
+
+      // 2フレーム目
       expect(find.text('フォルダ名入力'), findsOneWidget);
+      expect(find.text('フォルダ名'), findsOneWidget);
+      expect(find.text('OK'), findsOneWidget);
     });
 
     testWidgets('フォルダの登録画面遷移（何もない時）', (WidgetTester tester) async {
@@ -67,48 +76,67 @@ void folderPageTest() {
 
       // 再描画
       await tester.pump();
+
+      // 1フレーム目
       await tester.tap(find.byIcon(Icons.create_new_folder));
+      expect(find.text('フォルダ名入力'), findsNothing);
+      expect(find.text('フォルダ名'), findsNothing);
+      expect(find.text('OK'), findsNothing);
+
+      // 再描画
       await tester.pump();
+
+      // 2フレーム目
       expect(find.text('フォルダ名入力'), findsOneWidget);
+      expect(find.text('フォルダ名'), findsOneWidget);
+      expect(find.text('OK'), findsOneWidget);
     });
 
     testWidgets('フォルダの編集画面遷移', (WidgetTester tester) async {
       await tester.pumpWidget(_testApp);
+
       // 再描画
-      //expect(find.byKey(const Key('Slidable')), findsOneWidget);
       await tester.pump();
 
-      find.byWidget(ActionPane(
-        motion: const StretchMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (BuildContext context) {},
-            icon: Icons.settings,
-          ),
-        ],
-      ));
+      // 1フレーム目
+      await tester.drag(find.byIcon(Icons.folder), const Offset(-500.0, 0.0));
+      await tester.pumpAndSettle();
+      expect(find.byIcon(Icons.settings), findsOneWidget);
+      expect(find.byIcon(Icons.add), findsNothing);
+      await tester.tap(find.byIcon(Icons.settings));
+      expect(find.text('フォルダ名入力'), findsNothing);
+      expect(find.text('新フォルダネームを入力してください'), findsNothing);
+      expect(find.text('OK'), findsNothing);
 
-      expect(
-          find.byWidget(SlidableAction(
-            onPressed: (BuildContext context) {},
-            icon: Icons.settings,
-          )),
-          findsOneWidget);
+      // 再描画
+      await tester.pump();
+      await tester.pump();
+
+      // 2フレーム目
+      expect(find.text('フォルダ名入力'), findsOneWidget);
+      expect(find.text('新フォルダネームを入力してください'), findsOneWidget);
+      expect(find.text('OK'), findsOneWidget);
     });
 
     testWidgets('フォルダの削除画面遷移', (WidgetTester tester) async {
       await tester.pumpWidget(_testApp);
+
       // 再描画
       await tester.pump();
-      find.byWidget(ActionPane(
-        motion: const StretchMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (BuildContext context) {},
-            icon: Icons.delete,
-          ),
-        ],
-      ));
+
+      // 1フレーム目
+      await tester.drag(find.byIcon(Icons.folder), const Offset(-500.0, 0.0));
+      await tester.pumpAndSettle();
+      expect(find.byIcon(Icons.delete), findsOneWidget);
+      expect(find.byIcon(Icons.add), findsNothing);
+      await tester.tap(find.byIcon(Icons.delete));
+      expect(find.byIcon(Icons.folder), findsOneWidget);
+
+      // 再描画
+      await tester.pump();
+
+      // 2フレーム目
+      expect(find.byIcon(Icons.folder), findsNothing);
     });
   });
 }

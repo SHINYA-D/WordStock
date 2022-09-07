@@ -3,5 +3,5 @@ import 'pages/word_page_test.dart';
 
 void main() {
   folderPageTest();
-  WordPageTest();
+  wordPageTest();
 }

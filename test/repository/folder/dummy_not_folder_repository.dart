@@ -3,8 +3,7 @@ import 'package:wordstock/model/folder/folder.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-import '../domain/dummy_not_folder.dart';
-import '../domain/dummy_not_word.dart';
+import '../../domain/folder/dummy_not_folder.dart';
 
 class DummyNotRepository implements SqliteRepository {
   @override
@@ -43,7 +42,7 @@ class DummyNotRepository implements SqliteRepository {
 
   @override
   Future<List<Word>> getPointWords(String folderIdNum) =>
-      Future.value(DummyNotWord.initialValue);
+      Future.value(DummyNotFolder.initialWordValue);
 
   @override
   Future<List<Word>> getWords() {
@@ -52,10 +51,8 @@ class DummyNotRepository implements SqliteRepository {
   }
 
   @override
-  Future<void> registerFolder(Folder indata) {
-    // TODO: implement registerFolder
-    throw UnimplementedError();
-  }
+  Future<List<Folder>> registerFolder(Folder indata) =>
+      Future.value(DummyNotFolder.initialValue);
 
   @override
   Future<void> registerWord(Word indata) {

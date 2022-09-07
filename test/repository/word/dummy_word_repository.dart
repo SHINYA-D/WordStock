@@ -3,31 +3,29 @@ import 'package:wordstock/model/folder/folder.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-import '../domain/dummy_folder.dart';
-import '../domain/dummy_word.dart';
+import '../../domain/word/dummy_not_word.dart';
+import '../../domain/word/dummy_word.dart';
 
-class DummyRepository implements SqliteRepository {
+class DummyWordRepository implements SqliteRepository {
   @override
   // TODO: implement database
   Future<Database?> get database => throw UnimplementedError();
 
   @override
-  Future<void> deleteFolder(String? id) {
-    // TODO: implement deleteFolder
+  Future<List<Folder>> deleteFolder(String? id) {
+    // TODO: implement registerWord
     throw UnimplementedError();
   }
 
   @override
-  Future<void> deleteIdSearch(String? folderNameId) {
-    // TODO: implement deleteIdSearch
+  Future<List<Word>> deleteIdSearch(String? folderNameId) {
+    // TODO: implement registerWord
     throw UnimplementedError();
   }
 
   @override
-  Future<void> deleteWord(String id) {
-    // TODO: implement deleteWord
-    throw UnimplementedError();
-  }
+  Future<List<Word>> deleteWord(String id) =>
+      Future.value(DummyNotWord.initialValue);
 
   @override
   Future<List<Word>> getPointBad(String folderId) {
@@ -52,8 +50,8 @@ class DummyRepository implements SqliteRepository {
   }
 
   @override
-  Future<void> registerFolder(Folder indata) {
-    // TODO: implement registerFolder
+  Future<List<Word>> registerFolder(Folder indata) {
+    // TODO: implement registerWord
     throw UnimplementedError();
   }
 
@@ -76,5 +74,6 @@ class DummyRepository implements SqliteRepository {
   }
 
   @override
-  Future<List<Folder>> getFolders() => Future.value(DummyFolder.initialValue);
+  Future<List<Folder>> getFolders() =>
+      Future.value(DummyWord.initialFolderValue);
 }

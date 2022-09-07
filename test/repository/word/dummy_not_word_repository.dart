@@ -3,8 +3,8 @@ import 'package:wordstock/model/folder/folder.dart';
 import 'package:wordstock/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-import '../domain/dummy_folder.dart';
-import '../domain/dummy_not_word.dart';
+import '../../domain/word/dummy_not_word.dart';
+import '../../domain/word/dummy_word.dart';
 
 class DummyNotWordRepository implements SqliteRepository {
   @override
@@ -13,7 +13,7 @@ class DummyNotWordRepository implements SqliteRepository {
 
   @override
   Future<void> deleteFolder(String? id) {
-    // TODO: implement deleteFolder
+    // TODO: implement deleteIdSearch
     throw UnimplementedError();
   }
 
@@ -76,5 +76,6 @@ class DummyNotWordRepository implements SqliteRepository {
   }
 
   @override
-  Future<List<Folder>> getFolders() => Future.value(DummyFolder.initialValue);
+  Future<List<Folder>> getFolders() =>
+      Future.value(DummyWord.initialFolderValue);
 }
