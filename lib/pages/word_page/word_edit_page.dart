@@ -43,29 +43,21 @@ class WordEditPage extends ConsumerWidget {
         children: [
           SizedBox(
             height: 250.h,
-            width: 400.w,
             child: Card(
               margin: EdgeInsets.only(
-                  top: 10.h, right: 0.w, bottom: 0.h, left: 5.w),
-              child: SizedBox(
-                width: 380.w,
-                child: Center(
-                  child: Text('$flont'),
-                ),
+                  top: 10.h, right: 0.w, bottom: 0.h, left: 0.w),
+              child: Center(
+                child: Text('$flont'),
               ),
             ),
           ),
           SizedBox(
             height: 250.h,
-            width: 400.w,
             child: Card(
               margin: EdgeInsets.only(
-                  top: 10.h, right: 0.w, bottom: 0.h, left: 5.w),
-              child: SizedBox(
-                width: 380.w,
-                child: Center(
-                  child: Text('$back'),
-                ),
+                  top: 10.h, right: 0.w, bottom: 0.h, left: 0.w),
+              child: Center(
+                child: Text('$back'),
               ),
             ),
           ),
