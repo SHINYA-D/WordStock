@@ -70,18 +70,21 @@ class WordRegistrationPage extends ConsumerWidget {
                     ),
                     child: Card(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
-                      child: SizedBox(
-                        width: 400.w,
-                        height: 230.h,
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Text('$x枚目のカード'),
-                              _buildInputForm(frontTextController,
-                                  backTextController, index),
-                            ],
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20.h, horizontal: 20.w),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Text('$x枚目のカード'),
+                                _buildInputForm(frontTextController,
+                                    backTextController, index),
+                              ],
+                            ),
                           ),
                         ),
                       ),
