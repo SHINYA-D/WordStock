@@ -50,7 +50,7 @@ void folderPageTest() {
       expect(find.text('testFolderName'), findsNothing);
     });
 
-    testWidgets('フォルダの登録画面遷移（1つ以上ある場合）', (WidgetTester tester) async {
+    testWidgets('フォルダの登録画面（1つ以上ある場合）', (WidgetTester tester) async {
       await tester.pumpWidget(_testApp);
 
       // 再描画
@@ -71,7 +71,7 @@ void folderPageTest() {
       expect(find.text('OK'), findsOneWidget);
     });
 
-    testWidgets('フォルダの登録画面遷移（何もない時）', (WidgetTester tester) async {
+    testWidgets('フォルダの登録画面（何もない時）', (WidgetTester tester) async {
       await tester.pumpWidget(_notApp);
 
       // 再描画
@@ -92,7 +92,7 @@ void folderPageTest() {
       expect(find.text('OK'), findsOneWidget);
     });
 
-    testWidgets('フォルダの編集画面遷移', (WidgetTester tester) async {
+    testWidgets('フォルダの編集画面', (WidgetTester tester) async {
       await tester.pumpWidget(_testApp);
 
       // 再描画
@@ -118,7 +118,7 @@ void folderPageTest() {
       expect(find.text('OK'), findsOneWidget);
     });
 
-    testWidgets('フォルダの削除画面遷移', (WidgetTester tester) async {
+    testWidgets('フォルダの削除画面', (WidgetTester tester) async {
       await tester.pumpWidget(_testApp);
 
       // 再描画
