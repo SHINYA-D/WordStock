@@ -24,7 +24,7 @@ class PlayPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('PLAY'),
+        title: const Text('単語テスト'),
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () async {

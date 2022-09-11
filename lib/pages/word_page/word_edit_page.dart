@@ -37,7 +37,7 @@ class WordEditPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('WordStock'),
+        title: const Text('単語編集'),
       ),
       body: ListView(
         children: [
