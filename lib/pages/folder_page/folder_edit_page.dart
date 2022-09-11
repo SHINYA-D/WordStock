@@ -15,7 +15,7 @@ class FolderEditPage extends ConsumerWidget {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
     final int index = args as int;
 
-    final dateTextController = TextEditingController(text: '');
+    final dateTextCtr = TextEditingController(text: '');
 
     final foldersState = ref.watch(folderProvider);
 
@@ -29,7 +29,7 @@ class FolderEditPage extends ConsumerWidget {
         title: const Text('フォルダ名入力'),
         content: TextField(
           inputFormatters: [LengthLimitingTextInputFormatter(20)],
-          controller: dateTextController,
+          controller: dateTextCtr,
           decoration: const InputDecoration(
             hintText: '新フォルダネームを入力してください',
           ),
@@ -44,7 +44,7 @@ class FolderEditPage extends ConsumerWidget {
             data: (foldersState) => ElevatedButton(
               onPressed: () {
                 try {
-                  foldersCtl.upData(index, dateTextController.text);
+                  foldersCtl.upData(index, dateTextCtr.text);
                   Navigator.pop(context);
                 } catch (e) {
                   AlertDialog(

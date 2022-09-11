@@ -21,11 +21,11 @@ class WordEditPage extends ConsumerWidget {
     final wordsCtr = ref.read(wordProvider(folderId).notifier);
 
     //入力コントローラ　表
-    final frontTextController = TextEditingController(
+    final frontTextCtr = TextEditingController(
         text: wordsState.value?[wordSelectIndex].frontName);
 
     //入力コントローラ　裏
-    final backTextController = TextEditingController(
+    final backTextCtr = TextEditingController(
         text: wordsState.value?[wordSelectIndex].backName);
 
     final String? flont = wordsState.value?[wordSelectIndex].frontName;
@@ -81,7 +81,7 @@ class WordEditPage extends ConsumerWidget {
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(20)
                             ],
-                            controller: frontTextController,
+                            controller: frontTextCtr,
                             decoration: const InputDecoration(),
                             autofocus: true,
                           ),
@@ -89,7 +89,7 @@ class WordEditPage extends ConsumerWidget {
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(20)
                             ],
-                            controller: backTextController,
+                            controller: backTextCtr,
                             decoration: const InputDecoration(),
                             autofocus: true,
                           ),
@@ -106,10 +106,8 @@ class WordEditPage extends ConsumerWidget {
                       data: (wordsState) => ElevatedButton(
                         onPressed: () {
                           try {
-                            wordsCtr.upData(
-                                wordSelectIndex,
-                                frontTextController.text,
-                                backTextController.text);
+                            wordsCtr.upData(wordSelectIndex, frontTextCtr.text,
+                                backTextCtr.text);
                             Navigator.pop(context);
                           } catch (e) {
                             AlertDialog(

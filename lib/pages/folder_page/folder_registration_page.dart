@@ -13,7 +13,7 @@ class FolderRegistrationPage extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final dateTextController = TextEditingController(text: '');
+    final dateTextCtr = TextEditingController(text: '');
 
     final foldersCtl = ref.read(folderProvider.notifier);
 
@@ -26,7 +26,7 @@ class FolderRegistrationPage extends ConsumerWidget {
         title: const Text('フォルダ名入力'),
         content: TextField(
           inputFormatters: [LengthLimitingTextInputFormatter(20)],
-          controller: dateTextController,
+          controller: dateTextCtr,
           decoration: const InputDecoration(
             hintText: "フォルダ名",
           ),
@@ -42,9 +42,7 @@ class FolderRegistrationPage extends ConsumerWidget {
               try {
                 final String uid = const Uuid().v4();
                 final Folder register = Folder(
-                    id: uid,
-                    name: dateTextController.text,
-                    tableName: 'folders');
+                    id: uid, name: dateTextCtr.text, tableName: 'folders');
                 foldersCtl.registerData(register);
                 Navigator.pop(context);
               } catch (e) {
