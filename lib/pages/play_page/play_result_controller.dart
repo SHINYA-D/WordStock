@@ -40,16 +40,12 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
 
   Future<void> playFlat() async {
     if (state.value == null) return;
-    final flatValue = state.value?.map((flatValue) {
+    for (var flatValue in state.value!) {
       if (flatValue.passed == passedJudgement(Passed.good)) {
         flatValue = flatValue.copyWith(passed: 'FLAT');
         sqliteRepo.upWord(flatValue);
-        return flatValue;
-      } else {
-        return flatValue;
       }
-    }).toList();
-    state = AsyncValue.data([...?flatValue]);
+    }
   }
 
   int _goodCounts() {
