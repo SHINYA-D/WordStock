@@ -10,14 +10,14 @@ class WordRegistrationPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
-    final String folderId = args as String;
+    final folderId = args as String;
 
     const int cardItemCount = 5;
 
-    final List<TextEditingController> frontTextController =
+    final List<TextEditingController> frontTextCtr =
         List.generate(5, (i) => TextEditingController(text: ''));
 
-    final List<TextEditingController> backTextController =
+    final List<TextEditingController> backTextCtr =
         List.generate(5, (i) => TextEditingController(text: ''));
 
     final wordsCtr = ref.read(wordProvider(folderId).notifier);
@@ -33,8 +33,8 @@ class WordRegistrationPage extends ConsumerWidget {
             TextButton(
                 onPressed: () {
                   try {
-                    wordsCtr.registerData(cardItemCount, frontTextController,
-                        backTextController, folderId);
+                    wordsCtr.registerData(
+                        cardItemCount, frontTextCtr, backTextCtr, folderId);
                     Navigator.of(context).pop();
                   } catch (e) {
                     AlertDialog(
@@ -81,8 +81,8 @@ class WordRegistrationPage extends ConsumerWidget {
                             child: Column(
                               children: [
                                 Text('$x枚目のカード'),
-                                _buildInputForm(frontTextController,
-                                    backTextController, index),
+                                _buildInputForm(
+                                    frontTextCtr, backTextCtr, index),
                               ],
                             ),
                           ),
@@ -103,30 +103,28 @@ class WordRegistrationPage extends ConsumerWidget {
 /*==============================================================================
 【フォーム画面】
 ==============================================================================*/
-Widget _buildInputForm(List<TextEditingController> frontTextController,
-    List<TextEditingController> backTextController, int index) {
+Widget _buildInputForm(List<TextEditingController> frontTextCtr,
+    List<TextEditingController> backTextCtr, int index) {
   return Column(children: [
     TextField(
       maxLength: 20,
-      controller: frontTextController[index],
+      controller: frontTextCtr[index],
       decoration: const InputDecoration(
         hintText: '表面の値を入力してください',
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Color.fromARGB(15, 16, 15, 15)),
         ),
       ),
-      autofocus: true,
     ),
     TextField(
       maxLength: 20,
-      controller: backTextController[index],
+      controller: backTextCtr[index],
       decoration: const InputDecoration(
         hintText: '裏面の値を入力してください',
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Color.fromARGB(15, 16, 15, 15)),
         ),
       ),
-      autofocus: true,
     ),
   ]);
 }
