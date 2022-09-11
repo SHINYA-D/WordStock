@@ -22,6 +22,7 @@ class PlayResultPage extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('成績表'),
+        automaticallyImplyLeading: false,
       ),
       body: SizedBox(
         height: 500.h,
@@ -43,8 +44,10 @@ class PlayResultPage extends ConsumerWidget {
                             width: 200.w,
                             child: ElevatedButton(
                               onPressed: () async {
-                                await Navigator.pushNamedAndRemoveUntil(
-                                    context, "/", (_) => false);
+                                await Navigator.of(context)
+                                    .pushNamedAndRemoveUntil(
+                                        "/word_page", ModalRoute.withName("/"),
+                                        arguments: folderIdNum);
                               },
                               child: const Text("終了"),
                             ),

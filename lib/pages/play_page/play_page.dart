@@ -25,6 +25,18 @@ class PlayPage extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('PLAY'),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () async {
+            await Navigator.of(context).pushNamedAndRemoveUntil(
+                "/word_page", ModalRoute.withName("/"),
+                arguments: word[0].folderNameId);
+          },
+          icon: const Icon(
+            Icons.highlight_off,
+            color: Colors.red,
+          ),
+        ),
       ),
       body: Column(
         children: <Widget>[

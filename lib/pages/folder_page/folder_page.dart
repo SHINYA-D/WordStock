@@ -23,6 +23,7 @@ class FolderPage extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('WordStock'),
+        automaticallyImplyLeading: false,
       ),
       body: SlidableAutoCloseBehavior(
         child: Padding(

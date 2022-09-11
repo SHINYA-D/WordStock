@@ -26,6 +26,15 @@ class WordPage extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('単語一覧'),
+        leading: IconButton(
+          onPressed: () async {
+            await Navigator.of(context)
+                .pushNamedAndRemoveUntil("/", ModalRoute.withName("/"));
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+        ),
         actions: <Widget>[
           wordsState.when(
             data: (wordsState) => Visibility(
@@ -33,7 +42,7 @@ class WordPage extends ConsumerWidget {
               child: TextButton(
                   onPressed: () {
                     try {
-                      Navigator.pushReplacementNamed(context, "/play_page",
+                      Navigator.pushNamed(context, "/play_page",
                           arguments: wordsState);
                     } catch (e) {
                       AlertDialog(
