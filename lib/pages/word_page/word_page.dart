@@ -13,7 +13,7 @@ class WordPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final folderIdNum = ModalRoute.of(context)?.settings.arguments;
-    final String folderId = folderIdNum as String;
+    final folderId = folderIdNum as String;
 
     final wordsState = ref.watch(wordProvider(folderId));
 

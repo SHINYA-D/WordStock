@@ -10,7 +10,7 @@ class PlayResultPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Object? folderIdNum = ModalRoute.of(context)?.settings.arguments;
-    final String folderId = folderIdNum as String;
+    final folderId = folderIdNum as String;
 
     final resultState = ref.watch(resultsProvider(folderId));
 
