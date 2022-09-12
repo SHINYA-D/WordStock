@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wordstock/pages/presentation/parts/loading.dart';
 import 'package:wordstock/pages/word_page/word_page.dart';
 
 import 'word_controller.dart';
@@ -136,7 +135,7 @@ class WordEditPage extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      loading: () => const Loading(),
+                      loading: () => const CircularProgressIndicator(),
                     ),
                   ],
                 );

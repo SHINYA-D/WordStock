@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wordstock/pages/play_page/play_result_controller.dart';
-import 'package:wordstock/pages/presentation/parts/loading.dart';
 
 class PlayResultPage extends ConsumerWidget {
   const PlayResultPage({Key? key}) : super(key: key);
@@ -80,7 +79,7 @@ class PlayResultPage extends ConsumerWidget {
                 ),
               ],
             ),
-            loading: () => const Loading(),
+            loading: () => const CircularProgressIndicator(),
           ),
         ),
       ),
