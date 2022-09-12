@@ -24,14 +24,14 @@ void folderPageTest() {
       await tester.pumpWidget(_testApp);
 
       // 1フレーム目
-      expect(find.byKey(const Key('Loading')), findsOneWidget);
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
       expect(find.text('testFolderName'), findsNothing);
 
       // 再描画
       await tester.pump();
 
       // 2フレーム目
-      expect(find.byKey(const Key('Loading')), findsNothing);
+      expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.text('testFolderName'), findsOneWidget);
     });
 
@@ -39,14 +39,14 @@ void folderPageTest() {
       await tester.pumpWidget(_notApp);
 
       // 1フレーム目
-      expect(find.byKey(const Key('Loading')), findsOneWidget);
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
       expect(find.text('testFolderName'), findsNothing);
 
       // 再描画
       await tester.pump();
 
       // 2フレーム目
-      expect(find.byKey(const Key('Loading')), findsNothing);
+      expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.text('testFolderName'), findsNothing);
     });
 
