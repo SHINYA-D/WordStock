@@ -7,7 +7,7 @@ import 'package:wordstock/pages/play_page/play_result_page.dart';
 import 'package:wordstock/pages/word_page/word_edit_page.dart';
 import 'package:wordstock/pages/word_page/word_page.dart';
 import 'package:wordstock/pages/word_page/word_registration_page.dart';
-import 'package:wordstock/theme_data_management.dart';
+import 'package:wordstock/presentation/parts/wordstock_theme.dart.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class App extends StatelessWidget {
               '/play_result_page': (BuildContext context) =>
                   const PlayResultPage(),
             },
-            theme: themeDataManagement(),
+            theme: WordStockTheme.light(),
           );
         });
   }
