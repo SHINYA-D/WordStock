@@ -90,6 +90,17 @@ class WordPage extends ConsumerWidget {
                     motion: const StretchMotion(),
                     children: [
                       SlidableAction(
+                        onPressed: (context) {
+                          Navigator.pushNamed(context, "/word_edit_page",
+                              arguments: EditBox(
+                                  index,
+                                  wordsState[0].folderNameId ??
+                                      '引数に値が入っていません'));
+                        },
+                        icon: Icons.settings,
+                        label: '編集',
+                      ),
+                      SlidableAction(
                         onPressed: (_) {
                           try {
                             final selectWord = wordsState[index];
