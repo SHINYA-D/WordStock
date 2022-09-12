@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:wordstock/constant/passed.dart';
-import 'package:wordstock/model/folder/folder.dart';
-import 'package:wordstock/model/word/word.dart';
-import 'package:wordstock/pages/error_page/error_page.dart';
+import 'package:wordstock/domain/enum/passed.dart';
+import 'package:wordstock/domain/model/folder/folder.dart';
+import 'package:wordstock/domain/model/word/word.dart';
+import 'package:wordstock/presentation/pages/error_page/error_page.dart';
 
 final sqliteRepositoryProvider = Provider((ref) => SqliteRepository());
 

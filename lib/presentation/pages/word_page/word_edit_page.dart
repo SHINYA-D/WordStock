@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wordstock/pages/word_page/word_page.dart';
+import 'package:wordstock/presentation/pages/word_page/word_page.dart';
 
 import 'word_controller.dart';
 

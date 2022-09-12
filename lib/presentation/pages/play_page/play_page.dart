@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swipe_cards/swipe_cards.dart';
-import 'package:wordstock/model/word/word.dart';
-import 'package:wordstock/pages/play_page/play_page_controller.dart';
+import 'package:wordstock/domain/model/word/word.dart';
+import 'package:wordstock/presentation/pages/play_page/play_page_controller.dart';
 
 class PlayPage extends ConsumerWidget {
   const PlayPage({Key? key}) : super(key: key);

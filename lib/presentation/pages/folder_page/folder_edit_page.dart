@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordstock/pages/folder_page/folder_controller.dart';
+import 'package:wordstock/presentation/pages/folder_page/folder_controller.dart';
 
 class FolderEditPage extends ConsumerWidget {
   const FolderEditPage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swipe_cards/swipe_cards.dart';
-import 'package:wordstock/constant/passed.dart';
-import 'package:wordstock/model/word/word.dart';
+import 'package:wordstock/domain/enum/passed.dart';
+import 'package:wordstock/domain/model/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final pointWordsProvider = FutureProvider.autoDispose
