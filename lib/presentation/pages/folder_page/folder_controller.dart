@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordstock/domain/model/folder/folder.dart';
+import 'package:wordstock/domain/folder/folder.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final allFoldersProvider =

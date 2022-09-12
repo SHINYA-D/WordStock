@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
-import 'package:wordstock/domain/model/folder/folder.dart';
+import 'package:wordstock/domain/folder/folder.dart';
 import 'package:wordstock/presentation/pages/folder_page/folder_controller.dart';
 
 class FolderRegistrationPage extends ConsumerWidget {

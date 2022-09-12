@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordstock/domain/enum/passed.dart';
-import 'package:wordstock/domain/model/word/word.dart';
+import 'package:wordstock/domain/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final allWordsProvider = FutureProvider.autoDispose.family<List<Word>, String>(
