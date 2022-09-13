@@ -15,6 +15,9 @@ class FolderPage extends ConsumerWidget {
 
     final foldersCtl = ref.read(folderProvider.notifier);
 
+    final animationListKey = GlobalKey<AnimatedListState>();
+    const animationDuration = Duration(milliseconds: 200);
+
 /*==============================================================================
 【フォルダ画面】
 ==============================================================================*/
@@ -28,9 +31,10 @@ class FolderPage extends ConsumerWidget {
         child: Padding(
           padding: EdgeInsets.only(top: 30.h),
           child: foldersState.when(
-            data: (foldersState) => ListView.builder(
-              itemCount: foldersState.length,
-              itemBuilder: (context, index) {
+            data: (foldersState) => AnimatedList(
+              key: animationListKey,
+              initialItemCount: foldersState.length,
+              itemBuilder: (context, index, animation) {
                 return Slidable(
                   endActionPane: ActionPane(
                     motion: const StretchMotion(),
@@ -46,8 +50,25 @@ class FolderPage extends ConsumerWidget {
                       SlidableAction(
                         onPressed: (_) {
                           try {
-                            final selectFolder = foldersState[index];
-                            foldersCtl.deleteData(selectFolder, index);
+                            animationListKey.currentState?.removeItem(
+                              index, //データ住所（番号指定検索）
+                              (context, animation) {
+                                //削除する処理の内容↓
+                                // Widget一覧から削除された後にStateから削除
+                                animation.addStatusListener((listener) {
+                                  if (listener == AnimationStatus.dismissed) {
+                                    final selectFolder = foldersState[index];
+                                    foldersCtl.deleteData(selectFolder, index);
+                                  }
+                                });
+                                return _buildFolder(
+                                  foldersState[index],
+                                  context,
+                                  animation,
+                                );
+                              },
+                              duration: animationDuration, //移動感間隔
+                            );
                           } catch (e) {
                             AlertDialog(
                               title: const Text('フォルダ削除でエラーが発生しました'),
@@ -67,8 +88,10 @@ class FolderPage extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  child: ListTile(
-                    title: _buildFolderList(index, foldersState, context),
+                  child: _buildFolder(
+                    foldersState[index],
+                    context,
+                    animation,
                   ),
                 );
               },
@@ -107,41 +130,52 @@ class FolderPage extends ConsumerWidget {
 /*==============================================================================
 【フォルダリストの生成】
 ==============================================================================*/
-Widget _buildFolderList(
-        int i, List<Folder> foldersProvider, BuildContext context) =>
-    Padding(
-      padding: EdgeInsets.only(top: 10.h),
-      child: Container(
-        height: 60.h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10.w)),
-          //  color: Colors.white,
+Widget _buildFolder(
+  Folder folder,
+  BuildContext context,
+  Animation<double> animation,
+) =>
+    SizeTransition(
+      sizeFactor: animation,
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 10.h,
+          right: 20,
+          left: 20,
         ),
-        child: Center(
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                final String? folderIdNum = foldersProvider[i].id;
-                Navigator.pushNamed(context, "/word_page",
-                    arguments: folderIdNum);
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+        child: Container(
+          height: 60.h,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10.w)),
+            //  color: Colors.white,
+          ),
+          child: Center(
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  final String? folderIdNum = folder.id;
+                  Navigator.pushNamed(context, "/word_page",
+                      arguments: folderIdNum);
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.folder,
-                    size: 60.sp,
-                  ),
-                  Text(
-                    foldersProvider[i].name ?? '値が入っていません！',
-                    style: const TextStyle(),
-                  ),
-                ],
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.folder,
+                      size: 60.sp,
+                    ),
+                    Text(
+                      folder.name ?? '値が入っていません！',
+                      style: const TextStyle(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
