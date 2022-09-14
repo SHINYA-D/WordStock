@@ -16,7 +16,7 @@ class FolderPage extends ConsumerWidget {
     final foldersCtl = ref.read(folderProvider.notifier);
 
     final animationListKey = GlobalKey<AnimatedListState>();
-    const animationDuration = Duration(milliseconds: 200);
+    const animationDuration = Duration(milliseconds: 500);
 
 /*==============================================================================
 【フォルダ画面】
@@ -128,7 +128,7 @@ class FolderPage extends ConsumerWidget {
 }
 
 /*==============================================================================
-【フォルダリストの生成】
+【フォルダの生成】
 ==============================================================================*/
 Widget _buildFolder(
   Folder folder,
@@ -138,45 +138,34 @@ Widget _buildFolder(
     SizeTransition(
       sizeFactor: animation,
       child: Padding(
-        padding: EdgeInsets.only(
-          top: 10.h,
-          right: 20,
-          left: 20,
-        ),
+        padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 10.h),
         child: Container(
           height: 60.h,
-          width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(10.w)),
-            //  color: Colors.white,
           ),
-          child: Center(
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  final String? folderIdNum = folder.id;
-                  Navigator.pushNamed(context, "/word_page",
-                      arguments: folderIdNum);
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.folder,
-                      size: 60.sp,
-                    ),
-                    Text(
-                      folder.name ?? '値が入っていません！',
-                      style: const TextStyle(),
-                    ),
-                  ],
-                ),
+          child: ElevatedButton(
+            onPressed: () {
+              final String? folderIdNum = folder.id;
+              Navigator.pushNamed(context, "/word_page",
+                  arguments: folderIdNum);
+            },
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.folder,
+                  size: 60.sp,
+                ),
+                Text(
+                  folder.name ?? '値が入っていません！',
+                  style: const TextStyle(),
+                ),
+              ],
             ),
           ),
         ),
