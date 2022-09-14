@@ -29,7 +29,7 @@ class SqliteRepository {
 
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE folders (id TEXT PRIMARY KEY, name TEXT, tableName TEXT)''');
+      CREATE TABLE folders (id TEXT PRIMARY KEY, name TEXT)''');
     await db.execute('''
       CREATE TABLE words(
                 id TEXT PRIMARY KEY,
@@ -60,8 +60,7 @@ class SqliteRepository {
     return List.generate(maps.length, (i) {
       return Folder(
         id: maps[i]['id'],
-        name: maps[i]['name'],
-        tableName: maps[i]['tableName'],
+        name: maps[i]['name']
       );
     });
   }
@@ -174,7 +173,7 @@ class SqliteRepository {
     }
     await db.insert(
       'folders',
-      indata.toJson(),
+      indata.toJson(),//.removeFields(['words']),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
