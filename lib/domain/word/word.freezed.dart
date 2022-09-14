@@ -23,7 +23,6 @@ mixin _$Word {
   String? get id => throw _privateConstructorUsedError;
   String? get frontName => throw _privateConstructorUsedError;
   String? get backName => throw _privateConstructorUsedError;
-  String? get tableName => throw _privateConstructorUsedError;
   String? get folderNameId => throw _privateConstructorUsedError;
   int? get yesCount => throw _privateConstructorUsedError;
   int? get noCount => throw _privateConstructorUsedError;
@@ -46,7 +45,6 @@ abstract class $WordCopyWith<$Res> {
       {String? id,
       String? frontName,
       String? backName,
-      String? tableName,
       String? folderNameId,
       int? yesCount,
       int? noCount,
@@ -70,7 +68,6 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
     Object? id = freezed,
     Object? frontName = freezed,
     Object? backName = freezed,
-    Object? tableName = freezed,
     Object? folderNameId = freezed,
     Object? yesCount = freezed,
     Object? noCount = freezed,
@@ -92,10 +89,6 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
       backName: backName == freezed
           ? _value.backName
           : backName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tableName: tableName == freezed
-          ? _value.tableName
-          : tableName // ignore: cast_nullable_to_non_nullable
               as String?,
       folderNameId: folderNameId == freezed
           ? _value.folderNameId
@@ -142,7 +135,6 @@ abstract class _$$_WordCopyWith<$Res> implements $WordCopyWith<$Res> {
       {String? id,
       String? frontName,
       String? backName,
-      String? tableName,
       String? folderNameId,
       int? yesCount,
       int? noCount,
@@ -167,7 +159,6 @@ class __$$_WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
     Object? id = freezed,
     Object? frontName = freezed,
     Object? backName = freezed,
-    Object? tableName = freezed,
     Object? folderNameId = freezed,
     Object? yesCount = freezed,
     Object? noCount = freezed,
@@ -189,10 +180,6 @@ class __$$_WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
       backName: backName == freezed
           ? _value.backName
           : backName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tableName: tableName == freezed
-          ? _value.tableName
-          : tableName // ignore: cast_nullable_to_non_nullable
               as String?,
       folderNameId: folderNameId == freezed
           ? _value.folderNameId
@@ -237,7 +224,6 @@ class _$_Word implements _Word {
       {this.id,
       this.frontName,
       this.backName,
-      this.tableName,
       this.folderNameId,
       this.yesCount,
       this.noCount,
@@ -255,8 +241,6 @@ class _$_Word implements _Word {
   final String? frontName;
   @override
   final String? backName;
-  @override
-  final String? tableName;
   @override
   final String? folderNameId;
   @override
@@ -276,7 +260,7 @@ class _$_Word implements _Word {
 
   @override
   String toString() {
-    return 'Word(id: $id, frontName: $frontName, backName: $backName, tableName: $tableName, folderNameId: $folderNameId, yesCount: $yesCount, noCount: $noCount, play: $play, time: $time, percent: $percent, average: $average, passed: $passed)';
+    return 'Word(id: $id, frontName: $frontName, backName: $backName, folderNameId: $folderNameId, yesCount: $yesCount, noCount: $noCount, play: $play, time: $time, percent: $percent, average: $average, passed: $passed)';
   }
 
   @override
@@ -287,7 +271,6 @@ class _$_Word implements _Word {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.frontName, frontName) &&
             const DeepCollectionEquality().equals(other.backName, backName) &&
-            const DeepCollectionEquality().equals(other.tableName, tableName) &&
             const DeepCollectionEquality()
                 .equals(other.folderNameId, folderNameId) &&
             const DeepCollectionEquality().equals(other.yesCount, yesCount) &&
@@ -306,7 +289,6 @@ class _$_Word implements _Word {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(frontName),
       const DeepCollectionEquality().hash(backName),
-      const DeepCollectionEquality().hash(tableName),
       const DeepCollectionEquality().hash(folderNameId),
       const DeepCollectionEquality().hash(yesCount),
       const DeepCollectionEquality().hash(noCount),
@@ -334,7 +316,6 @@ abstract class _Word implements Word {
       {final String? id,
       final String? frontName,
       final String? backName,
-      final String? tableName,
       final String? folderNameId,
       final int? yesCount,
       final int? noCount,
@@ -352,8 +333,6 @@ abstract class _Word implements Word {
   String? get frontName;
   @override
   String? get backName;
-  @override
-  String? get tableName;
   @override
   String? get folderNameId;
   @override

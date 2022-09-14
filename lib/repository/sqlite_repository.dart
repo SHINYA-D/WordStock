@@ -35,7 +35,6 @@ class SqliteRepository {
                 id TEXT PRIMARY KEY,
                 frontName TEXT,
                 backName TEXT,
-                tableName TEXT,
                 folderNameId TEXT,
                 yesCount INTEGER,
                 noCount INTEGER,
@@ -58,10 +57,7 @@ class SqliteRepository {
     }
     final List<Map<String, dynamic>> maps = await db.query('folders');
     return List.generate(maps.length, (i) {
-      return Folder(
-        id: maps[i]['id'],
-        name: maps[i]['name']
-      );
+      return Folder(id: maps[i]['id'], name: maps[i]['name']);
     });
   }
 
@@ -77,7 +73,6 @@ class SqliteRepository {
         id: maps[i]['id'],
         frontName: maps[i]['frontName'],
         backName: maps[i]['backName'],
-        tableName: maps[i]['tableName'],
         folderNameId: maps[i]['folderNameId'],
         yesCount: maps[i]['yesCount'],
         noCount: maps[i]['noCount'],
@@ -103,7 +98,6 @@ class SqliteRepository {
         id: maps[i]['id'],
         frontName: maps[i]['frontName'],
         backName: maps[i]['backName'],
-        tableName: maps[i]['tableName'],
         folderNameId: maps[i]['folderNameId'],
         yesCount: maps[i]['yesCount'],
         noCount: maps[i]['noCount'],
@@ -127,7 +121,6 @@ class SqliteRepository {
         id: maps[i]['id'],
         frontName: maps[i]['frontName'],
         backName: maps[i]['backName'],
-        tableName: maps[i]['tableName'],
         folderNameId: maps[i]['folderNameId'],
         yesCount: maps[i]['yesCount'],
         noCount: maps[i]['noCount'],
@@ -150,7 +143,6 @@ class SqliteRepository {
           id: maps[i]['id'],
           frontName: maps[i]['frontName'],
           backName: maps[i]['backName'],
-          tableName: maps[i]['tableName'],
           folderNameId: maps[i]['folderNameId'],
           yesCount: maps[i]['yesCount'],
           noCount: maps[i]['noCount'],
@@ -173,7 +165,7 @@ class SqliteRepository {
     }
     await db.insert(
       'folders',
-      indata.toJson(),//.removeFields(['words']),
+      indata.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }

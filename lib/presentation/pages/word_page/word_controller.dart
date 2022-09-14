@@ -34,7 +34,6 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
           id: createId,
           frontName: front[i].text,
           backName: back[i].text,
-          tableName: 'words',
           folderNameId: folderId,
           yesCount: 0,
           noCount: 0,
@@ -66,14 +65,5 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
     state.value![index] = state.value![index].copyWith(backName: back);
     await sqliteRepo.upWord(state.value![index]);
     state = AsyncValue.data([...state.value!]);
-  }
-
-  Future<void> getPointData(String? folderIdNum) async {
-    List<Word> wordget;
-    if (folderIdNum != null) {
-      wordget = await sqliteRepo.getPointWords(folderIdNum);
-      if (!mounted) return;
-      state = AsyncValue.data([...wordget]);
-    }
   }
 }

@@ -9,7 +9,6 @@ class Word with _$Word {
     String? id,
     String? frontName,
     String? backName,
-    String? tableName,
     String? folderNameId,
     int? yesCount,
     int? noCount,
