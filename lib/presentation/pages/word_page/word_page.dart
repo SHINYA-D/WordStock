@@ -18,6 +18,9 @@ class WordPage extends ConsumerWidget {
 
     final wordsCtr = ref.read(wordProvider(folderId).notifier);
 
+    final animationListKey = GlobalKey<AnimatedListState>();
+    const animationDuration = Duration(milliseconds: 500);
+
 /*==============================================================================
 【ワード画面】
 ==============================================================================*/
@@ -81,9 +84,10 @@ class WordPage extends ConsumerWidget {
         child: Padding(
           padding: EdgeInsets.only(top: 30.h),
           child: wordsState.when(
-            data: (wordsState) => ListView.builder(
-              itemCount: wordsState.length,
-              itemBuilder: (context, index) {
+            data: (wordsState) => AnimatedList(
+              key: animationListKey,
+              initialItemCount: wordsState.length,
+              itemBuilder: (context, index, animation) {
                 return Slidable(
                   endActionPane: ActionPane(
                     motion: const StretchMotion(),
@@ -93,7 +97,7 @@ class WordPage extends ConsumerWidget {
                           Navigator.pushNamed(context, "/word_edit_page",
                               arguments: EditBox(
                                   index,
-                                  wordsState[0].folderNameId ??
+                                  wordsState[index].folderNameId ??
                                       '引数に値が入っていません'));
                         },
                         icon: Icons.settings,
@@ -102,8 +106,20 @@ class WordPage extends ConsumerWidget {
                       SlidableAction(
                         onPressed: (_) {
                           try {
-                            final selectWord = wordsState[index];
-                            wordsCtr.deleteData(selectWord);
+                            animationListKey.currentState?.removeItem(
+                              index,
+                              (context, animation) {
+                                animation.addStatusListener((listener) {
+                                  if (listener == AnimationStatus.dismissed) {
+                                    final selectWord = wordsState[index];
+                                    wordsCtr.deleteData(selectWord);
+                                  }
+                                });
+                                return _buildWords(index, wordsState[index],
+                                    context, animation);
+                              },
+                              duration: animationDuration,
+                            );
                           } catch (e) {
                             AlertDialog(
                               title: const Text('単語削除中にエラーが発生しました'),
@@ -123,9 +139,8 @@ class WordPage extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  child: ListTile(
-                    title: _buildFolderList(index, wordsState, context),
-                  ),
+                  child:
+                      _buildWords(index, wordsState[index], context, animation),
                 );
               },
             ),
@@ -157,43 +172,41 @@ class WordPage extends ConsumerWidget {
 }
 
 /*==============================================================================
-【フォルダリストの生成】
+【フォルダの生成】
 ==============================================================================*/
-Widget _buildFolderList(
-        int index, List<Word> wordsProvider, BuildContext context) =>
-    Padding(
-      padding: EdgeInsets.only(top: 10.h),
-      child: Container(
-        height: 60.h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10.w)),
-        ),
-        child: Center(
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "/word_edit_page",
-                    arguments: EditBox(index,
-                        wordsProvider[0].folderNameId ?? '引数に値が入っていません'));
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+Widget _buildWords(int index, Word words, BuildContext context,
+        Animation<double> animation) =>
+    SizeTransition(
+      sizeFactor: animation,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 10.h),
+        child: Container(
+          height: 60.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10.w)),
+          ),
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, "/word_edit_page",
+                  arguments:
+                      EditBox(index, words.folderNameId ?? '引数に値が入っていません'));
+            },
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.description,
+                  size: 60.sp,
                 ),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.description,
-                    size: 60.sp,
-                  ),
-                  Text(
-                    wordsProvider[index].frontName ?? 'NULL',
-                    style: const TextStyle(),
-                  ),
-                ],
-              ),
+                Text(
+                  words.frontName ?? 'NULL',
+                  style: const TextStyle(),
+                ),
+              ],
             ),
           ),
         ),
