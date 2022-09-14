@@ -42,7 +42,7 @@ class FolderRegistrationPage extends ConsumerWidget {
               try {
                 final String uid = const Uuid().v4();
                 final Folder register = Folder(
-                    id: uid, name: dateTextCtr.text, tableName: 'folders');
+                    id: uid, name: dateTextCtr.text);
                 foldersCtl.registerData(register);
                 Navigator.pop(context);
               } catch (e) {
