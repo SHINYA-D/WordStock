@@ -40,9 +40,8 @@ class FolderRegistrationPage extends ConsumerWidget {
           ElevatedButton(
             onPressed: () {
               try {
-                final String uid = const Uuid().v4();
-                final Folder register = Folder(
-                    id: uid, name: dateTextCtr.text);
+                final uid = const Uuid().v4();
+                final Folder register = Folder(id: uid, name: dateTextCtr.text);
                 foldersCtl.registerData(register);
                 Navigator.pop(context);
               } catch (e) {

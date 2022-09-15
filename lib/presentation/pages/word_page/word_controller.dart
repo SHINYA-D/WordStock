@@ -29,7 +29,7 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
       String folderId) async {
     for (var i = 0; i < cardItemCount; i++) {
       if ((front[i].text != "") && (back[i].text != "")) {
-        final String createId = const Uuid().v4();
+        final createId = const Uuid().v4();
         Word register = Word(
           id: createId,
           frontName: front[i].text,

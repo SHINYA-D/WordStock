@@ -146,7 +146,7 @@ Widget _buildFolder(
           ),
           child: ElevatedButton(
             onPressed: () {
-              final String? folderIdNum = folder.id;
+              final folderIdNum = folder.id;
               Navigator.pushNamed(context, "/word_page",
                   arguments: folderIdNum);
             },

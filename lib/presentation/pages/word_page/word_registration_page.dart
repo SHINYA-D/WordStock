@@ -59,7 +59,7 @@ class WordRegistrationPage extends ConsumerWidget {
         child: ListView.builder(
           itemCount: cardItemCount,
           itemBuilder: (context, index) {
-            final int x = index + 1;
+            final x = index + 1;
             return ListTile(
               title: Column(
                 children: [

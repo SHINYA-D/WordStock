@@ -12,7 +12,7 @@ class FolderEditPage extends ConsumerWidget {
     WidgetRef ref,
   ) {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
-    final int index = args as int;
+    final index = args as int;
 
     final dateTextCtr = TextEditingController(text: '');
 

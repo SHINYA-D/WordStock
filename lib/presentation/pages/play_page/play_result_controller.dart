@@ -13,7 +13,7 @@ final resultsProvider = StateNotifierProvider.autoDispose
         (ref, folderId) {
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
   final pointWords = ref.watch(wordsProvider(folderId));
-  final String folderIdNum = folderId;
+  final folderIdNum = folderId;
   return PlayResultController(sqliteRepo, pointWords, folderIdNum);
 });
 

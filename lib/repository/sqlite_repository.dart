@@ -23,7 +23,7 @@ class SqliteRepository {
   _initDatabase() async {
     final Directory documentsDirectory =
         await getApplicationDocumentsDirectory();
-    final String path = join(documentsDirectory.path, 'WordStock03.db');
+    final path = join(documentsDirectory.path, 'WordStock03.db');
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 

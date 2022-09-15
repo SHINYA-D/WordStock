@@ -27,8 +27,8 @@ class WordEditPage extends ConsumerWidget {
     final backTextCtr = TextEditingController(
         text: wordsState.value?[wordSelectIndex].backName);
 
-    final String? flont = wordsState.value?[wordSelectIndex].frontName;
-    final String? back = wordsState.value?[wordSelectIndex].backName;
+    final flont = wordsState.value?[wordSelectIndex].frontName;
+    final back = wordsState.value?[wordSelectIndex].backName;
 
 /*==============================================================================
 【編集画面】
