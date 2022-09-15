@@ -4,10 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wordstock/app.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-import '../repository/folder/dummy_folder_repository.dart';
-import '../repository/folder/dummy_not_folder_repository.dart';
+import '../repository/dummy_not_repository.dart';
+import '../repository/dummy_repository.dart';
 
-//共通化する　ProviderScope
 final _testApp = ProviderScope(
   overrides: [sqliteRepositoryProvider.overrideWithValue(DummyRepository())],
   child: const App(),
@@ -133,7 +132,7 @@ void folderPageTest() {
       expect(find.byIcon(Icons.folder), findsOneWidget);
 
       // 再描画
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // 2フレーム目
       expect(find.byIcon(Icons.folder), findsNothing);
