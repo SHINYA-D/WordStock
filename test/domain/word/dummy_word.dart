@@ -1,5 +1,5 @@
-import 'package:wordstock/model/folder/folder.dart';
-import 'package:wordstock/model/word/word.dart';
+import 'package:wordstock/domain/folder/folder.dart';
+import 'package:wordstock/domain/word/word.dart';
 
 class DummyWord {
   static List<Word> initialValue = [
@@ -7,7 +7,6 @@ class DummyWord {
       id: 'id',
       frontName: 'frontName',
       backName: 'backName',
-      tableName: 'tableName',
       folderNameId: 'folderNameId',
       yesCount: 1,
       noCount: 1,
@@ -19,11 +18,12 @@ class DummyWord {
     )
   ];
 
+  static List<Word> wordEmptyValue = [];
+
   static List<Folder> initialFolderValue = [
     Folder(
       id: "wordTestFolderId",
       name: "wordTestFolderName",
-      tableName: "wordTestFolderTableName",
     )
   ];
 }
