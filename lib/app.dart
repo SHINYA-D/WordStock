@@ -20,6 +20,7 @@ class App extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, _) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             initialRoute: '/',
             routes: <String, WidgetBuilder>{
               '/': (BuildContext context) => const FolderPage(),
