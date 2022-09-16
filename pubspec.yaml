@@ -31,6 +31,7 @@ dependencies:
   path: ^1.8.1
   swipeable_stack: ^0.4.3
   swipable_stack: ^1.2.0
+  google_fonts: ^3.0.1
 
 
 
