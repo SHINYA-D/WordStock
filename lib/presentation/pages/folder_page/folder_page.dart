@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,8 +25,15 @@ class FolderPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('WordStock'),
+        title: const Text('フォルダ一覧'),
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () async {
+            //ログアウト
+            await FirebaseAuth.instance.signOut();
+          },
+          icon: const Icon(Icons.logout),
+        ),
       ),
       body: SlidableAutoCloseBehavior(
         child: Padding(

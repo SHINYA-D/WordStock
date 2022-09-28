@@ -16,8 +16,8 @@ class ErrorPage extends StatelessWidget {
           GestureDetector(
             child: const Text('ホーム画面に戻ります'),
             onTap: () {
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil("/", ModalRoute.withName("/"));
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  "/folder_page", ModalRoute.withName("/folder_page"));
             },
           ),
         ],

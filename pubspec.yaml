@@ -31,6 +31,9 @@ dependencies:
   path: ^1.8.1
   swipeable_stack: ^0.4.3
   swipable_stack: ^1.2.0
+  google_fonts: ^3.0.1
+  firebase_core: ^1.23.0
+  firebase_auth: ^3.10.0
 
 
 
@@ -66,6 +69,9 @@ flutter_icons:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/login.png
+
 
 
 
