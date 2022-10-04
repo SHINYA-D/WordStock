@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wordstock/presentation/pages/folder_page/folder_edit_page.dart';
 import 'package:wordstock/presentation/pages/folder_page/folder_page.dart';
-import 'package:wordstock/presentation/pages/login/login.dart';
+import 'package:wordstock/presentation/pages/login/login_page.dart';
+import 'package:wordstock/presentation/pages/login/user_registration.dart';
 import 'package:wordstock/presentation/pages/play_page/play_page.dart';
 import 'package:wordstock/presentation/pages/play_page/play_result_page.dart';
 import 'package:wordstock/presentation/pages/word_page/word_edit_page.dart';
@@ -24,7 +25,9 @@ class App extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             initialRoute: '/',
             routes: <String, WidgetBuilder>{
-              '/': (BuildContext context) => const Login(),
+              '/': (BuildContext context) => const LoginPage(),
+              '/user_registration': (BuildContext context) =>
+                  const UserRegistration(),
               '/folder_page': (BuildContext context) => const FolderPage(),
               '/folder_edit_page': (BuildContext context) =>
                   const FolderEditPage(),
