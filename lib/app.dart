@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wordstock/presentation/pages/folder_page/folder_edit_page.dart';
 import 'package:wordstock/presentation/pages/folder_page/folder_page.dart';
 import 'package:wordstock/presentation/pages/login/login_page.dart';
 import 'package:wordstock/presentation/pages/login/user_registration.dart';
@@ -31,8 +30,6 @@ class App extends StatelessWidget {
               '/user_registration': (BuildContext context) =>
                   const UserRegistration(),
               '/folder_page': (BuildContext context) => const FolderPage(),
-              '/folder_edit_page': (BuildContext context) =>
-                  const FolderEditPage(),
               '/word_page': (BuildContext context) => const WordPage(),
               '/word_registration_page': (BuildContext context) =>
                   const WordRegistrationPage(),

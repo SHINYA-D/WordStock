@@ -17,7 +17,10 @@ class FolderPage extends ConsumerWidget {
 
     final foldersCtl = ref.read(folderProvider.notifier);
 
-    final dateTextCtr = TextEditingController(text: '');
+    //登録処理テキスト
+    final dateRegistrationTextCtr = TextEditingController(text: '');
+    //編集処理テキスト
+    final dateEditTextCtr = TextEditingController(text: '');
 
     final animationListKey = GlobalKey<AnimatedListState>();
     const animationDuration = Duration(milliseconds: 500);
@@ -52,8 +55,10 @@ class FolderPage extends ConsumerWidget {
                     children: [
                       SlidableAction(
                         onPressed: (context) {
-                          Navigator.pushNamed(context, "/folder_edit_page",
-                              arguments: index);
+                          // Navigator.pushNamed(context, "/folder_edit_page",
+                          //     arguments: index);
+                          _buildEdit(context, dateEditTextCtr, foldersCtl,
+                              foldersState, index);
                         },
                         icon: Icons.settings,
                         label: '編集',
@@ -124,7 +129,7 @@ class FolderPage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _buildRegistration(context, dateTextCtr, foldersCtl);
+          _buildRegistration(context, dateRegistrationTextCtr, foldersCtl);
         },
         child: const Icon(
           Icons.create_new_folder,
@@ -182,7 +187,9 @@ Widget _buildFolder(
 /*==============================================================================
 【フォルダ登録】
 ==============================================================================*/
-_buildRegistration(BuildContext context, TextEditingController dateTextCtr,
+_buildRegistration(
+        BuildContext context,
+        TextEditingController dateRegistrationTextCtr,
         FolderController foldersCtl) =>
     showDialog(
       context: context,
@@ -194,7 +201,7 @@ _buildRegistration(BuildContext context, TextEditingController dateTextCtr,
               title: const Text('フォルダ名入力'),
               content: TextField(
                 inputFormatters: [LengthLimitingTextInputFormatter(20)],
-                controller: dateTextCtr,
+                controller: dateRegistrationTextCtr,
                 decoration: const InputDecoration(
                   hintText: "フォルダ名",
                 ),
@@ -210,7 +217,7 @@ _buildRegistration(BuildContext context, TextEditingController dateTextCtr,
                     try {
                       final uid = const Uuid().v4();
                       final Folder register =
-                          Folder(id: uid, name: dateTextCtr.text);
+                          Folder(id: uid, name: dateRegistrationTextCtr.text);
                       foldersCtl.registerData(register);
                       Navigator.pop(context);
                     } catch (e) {
@@ -235,3 +242,55 @@ _buildRegistration(BuildContext context, TextEditingController dateTextCtr,
         );
       },
     );
+/*==============================================================================
+【フォルダ編集】
+==============================================================================*/
+_buildEdit(BuildContext context, TextEditingController dateEditTextCtr,
+        FolderController foldersCtl, List<Folder> foldersState, int index) =>
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AlertDialog(
+                title: const Text('フォルダ名入力'),
+                content: TextField(
+                  inputFormatters: [LengthLimitingTextInputFormatter(20)],
+                  controller: dateEditTextCtr,
+                  decoration: const InputDecoration(
+                    hintText: '新フォルダネームを入力してください',
+                  ),
+                  autofocus: true,
+                ),
+                actions: <Widget>[
+                  ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("CANCEL"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      try {
+                        foldersCtl.upData(index, dateEditTextCtr.text);
+                        Navigator.pop(context);
+                      } catch (e) {
+                        AlertDialog(
+                          title: const Text('フォルダ編集でエラーが発生しました。'),
+                          actions: <Widget>[
+                            GestureDetector(
+                              child: const Text('閉じる'),
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                    child: const Text("OK"),
+                  ),
+                ],
+              ),
+            ],
+          );
+        });
