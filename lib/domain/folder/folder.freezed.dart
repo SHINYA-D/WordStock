@@ -20,11 +20,8 @@ Folder _$FolderFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Folder {
-  @JsonKey(name: 'id')
   String? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'name')
   String? get name => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
   List<Word>? get words => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,10 +33,7 @@ mixin _$Folder {
 abstract class $FolderCopyWith<$Res> {
   factory $FolderCopyWith(Folder value, $Res Function(Folder) then) =
       _$FolderCopyWithImpl<$Res>;
-  $Res call(
-      {@JsonKey(name: 'id') String? id,
-      @JsonKey(name: 'name') String? name,
-      @JsonKey(ignore: true) List<Word>? words});
+  $Res call({String? id, String? name, List<Word>? words});
 }
 
 /// @nodoc
@@ -78,10 +72,7 @@ abstract class _$$_FolderCopyWith<$Res> implements $FolderCopyWith<$Res> {
   factory _$$_FolderCopyWith(_$_Folder value, $Res Function(_$_Folder) then) =
       __$$_FolderCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {@JsonKey(name: 'id') String? id,
-      @JsonKey(name: 'name') String? name,
-      @JsonKey(ignore: true) List<Word>? words});
+  $Res call({String? id, String? name, List<Word>? words});
 }
 
 /// @nodoc
@@ -119,24 +110,19 @@ class __$$_FolderCopyWithImpl<$Res> extends _$FolderCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Folder with DiagnosticableTreeMixin implements _Folder {
-  _$_Folder(
-      {@JsonKey(name: 'id') this.id,
-      @JsonKey(name: 'name') this.name,
-      @JsonKey(ignore: true) final List<Word>? words = const []})
+  _$_Folder({this.id, this.name, final List<Word>? words = const []})
       : _words = words;
 
   factory _$_Folder.fromJson(Map<String, dynamic> json) =>
       _$$_FolderFromJson(json);
 
   @override
-  @JsonKey(name: 'id')
   final String? id;
   @override
-  @JsonKey(name: 'name')
   final String? name;
   final List<Word>? _words;
   @override
-  @JsonKey(ignore: true)
+  @JsonKey()
   List<Word>? get words {
     final value = _words;
     if (value == null) return null;
@@ -192,20 +178,17 @@ class _$_Folder with DiagnosticableTreeMixin implements _Folder {
 
 abstract class _Folder implements Folder {
   factory _Folder(
-      {@JsonKey(name: 'id') final String? id,
-      @JsonKey(name: 'name') final String? name,
-      @JsonKey(ignore: true) final List<Word>? words}) = _$_Folder;
+      {final String? id,
+      final String? name,
+      final List<Word>? words}) = _$_Folder;
 
   factory _Folder.fromJson(Map<String, dynamic> json) = _$_Folder.fromJson;
 
   @override
-  @JsonKey(name: 'id')
   String? get id;
   @override
-  @JsonKey(name: 'name')
   String? get name;
   @override
-  @JsonKey(ignore: true)
   List<Word>? get words;
   @override
   @JsonKey(ignore: true)

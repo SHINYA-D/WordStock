@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wordstock/domain/login/login.dart';
-import 'package:wordstock/presentation/pages/folder_page/folder_page.dart';
+import 'package:wordstock/presentation/pages/folder/folder_page.dart';
 import 'package:wordstock/presentation/pages/login/login_controller.dart';
 
 class LoginPage extends StatelessWidget {

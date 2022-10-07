@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:wordstock/domain/enum/passed.dart';
 import 'package:wordstock/domain/folder/folder.dart';
 import 'package:wordstock/domain/word/word.dart';
-import 'package:wordstock/presentation/pages/error_page/error_page.dart';
+import 'package:wordstock/presentation/pages/error/error_page.dart';
 
 final sqliteRepositoryProvider = Provider((ref) => SqliteRepository());
 

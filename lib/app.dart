@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wordstock/presentation/pages/folder_page/folder_page.dart';
+import 'package:wordstock/presentation/pages/folder/folder_page.dart';
 import 'package:wordstock/presentation/pages/login/login_page.dart';
 import 'package:wordstock/presentation/pages/login/user_registration.dart';
-import 'package:wordstock/presentation/pages/play_page/play_page.dart';
-import 'package:wordstock/presentation/pages/play_page/play_result_page.dart';
-import 'package:wordstock/presentation/pages/word_page/word_edit_page.dart';
-import 'package:wordstock/presentation/pages/word_page/word_page.dart';
-import 'package:wordstock/presentation/pages/word_page/word_registration_page.dart';
+import 'package:wordstock/presentation/pages/play/play_page.dart';
+import 'package:wordstock/presentation/pages/play/play_result_page.dart';
+import 'package:wordstock/presentation/pages/word/word_edit_page.dart';
+import 'package:wordstock/presentation/pages/word/word_page.dart';
+import 'package:wordstock/presentation/pages/word/word_registration_page.dart';
 import 'package:wordstock/presentation/parts/wordstock_theme.dart.dart';
 
 class App extends StatelessWidget {

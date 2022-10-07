@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordstock/domain/folder/folder.dart';
-import 'package:wordstock/presentation/pages/folder_page/folder_controller.dart';
+import 'package:wordstock/presentation/pages/folder/folder_controller.dart';
 
 class FolderPage extends ConsumerWidget {
   const FolderPage({Key? key}) : super(key: key);
