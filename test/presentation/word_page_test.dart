@@ -124,7 +124,7 @@ void wordPageTest() {
       // スクロール
       await tester.dragUntilVisible(
         find.text('3枚目のカード'),
-        find.byKey(const ValueKey('4枚目のカード')),
+        find.text('4枚目のカード'),
         const Offset(-250, 0),
       );
 
@@ -176,7 +176,7 @@ void wordPageTest() {
       // スクロール
       await tester.dragUntilVisible(
         find.text('3枚目のカード'),
-        find.byKey(const ValueKey('4枚目のカード')),
+        find.text('4枚目のカード'),
         const Offset(-250, 0),
       );
 
