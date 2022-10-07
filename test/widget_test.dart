@@ -1,6 +1,6 @@
-import 'pages/folder_page_test.dart';
-import 'pages/play_page_test.dart';
-import 'pages/word_page_test.dart';
+import 'presentation/folder_page_test.dart';
+import 'presentation/play_page_test.dart';
+import 'presentation/word_page_test.dart';
 
 void main() {
   folderPageTest();
