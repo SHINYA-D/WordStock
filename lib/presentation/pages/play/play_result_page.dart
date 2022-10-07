@@ -8,8 +8,7 @@ class PlayResultPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Object? folderIdNum = ModalRoute.of(context)?.settings.arguments;
-    final folderId = folderIdNum as String;
+    final folderId = ModalRoute.of(context)?.settings.arguments as String;
 
     final resultState = ref.watch(resultsProvider(folderId));
 
@@ -46,7 +45,7 @@ class PlayResultPage extends ConsumerWidget {
                                 await Navigator.of(context)
                                     .pushNamedAndRemoveUntil(
                                         "/word_page", ModalRoute.withName("/"),
-                                        arguments: folderIdNum);
+                                        arguments: folderId);
                               },
                               child: const Text("終了"),
                             ),

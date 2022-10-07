@@ -9,8 +9,7 @@ class WordRegistrationPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Object? args = ModalRoute.of(context)?.settings.arguments;
-    final folderId = args as String;
+    final folderId = ModalRoute.of(context)?.settings.arguments as String;
 
     const int cardItemCount = 5;
 
