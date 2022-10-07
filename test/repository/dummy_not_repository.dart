@@ -3,8 +3,8 @@ import 'package:wordstock/domain/folder/folder.dart';
 import 'package:wordstock/domain/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-import '../domain/folder/dummy_folder.dart';
-import '../domain/word/dummy_word.dart';
+import '../domain/dummy_folder.dart';
+import '../domain/dummy_word.dart';
 
 class DummyNotRepository implements SqliteRepository {
   @override
