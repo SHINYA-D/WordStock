@@ -44,7 +44,7 @@ class PlayPageController extends StateNotifier<List<SwipeItem>> {
       if (matchEngine.currentItem?.hashCode == state[i].hashCode) {
         state[i].content[i] =
             state[i].content[i].copyWith(passed: passedJudgement(Passed.bad));
-        sqliteRepo.upWord(state[i].content[i]);
+        sqliteRepo.updateWord(state[i].content[i]);
       }
     }
   }
@@ -55,7 +55,7 @@ class PlayPageController extends StateNotifier<List<SwipeItem>> {
       if (matchEngine.currentItem?.hashCode == state[i].hashCode) {
         state[i].content[i] =
             state[i].content[i].copyWith(passed: passedJudgement(Passed.good));
-        sqliteRepo.upWord(state[i].content[i]);
+        sqliteRepo.updateWord(state[i].content[i]);
       }
     }
   }

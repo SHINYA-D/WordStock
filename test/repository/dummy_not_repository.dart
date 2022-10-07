@@ -62,13 +62,13 @@ class DummyNotRepository implements SqliteRepository {
   }
 
   @override
-  Future<void> upFolder(Folder up) {
+  Future<void> updateFolder(Folder up) {
     // TODO: implement upFolder
     throw UnimplementedError();
   }
 
   @override
-  Future<void> upWord(Word word) {
+  Future<void> updateWord(Word word) {
     // TODO: implement upWord
     throw UnimplementedError();
   }

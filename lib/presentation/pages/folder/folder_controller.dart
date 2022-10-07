@@ -37,7 +37,7 @@ class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
   Future<void> upData(int index, String dataText) async {
     if (state.value == null) return;
     state.value![index] = state.value![index].copyWith(name: dataText);
-    await sqliteRepo.upFolder(state.value![index]);
+    await sqliteRepo.updateFolder(state.value![index]);
     state = AsyncValue.data([...state.value!]);
   }
 }

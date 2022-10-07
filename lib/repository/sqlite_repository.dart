@@ -218,17 +218,17 @@ class SqliteRepository {
 【編集】
 ==============================================================================*/
   //Folder編集
-  Future<void> upFolder(Folder up) async {
+  Future<void> updateFolder(Folder update) async {
     final Database? db = await database;
     if (db == null) {
       throw const ErrorPage('DB:Folder編集中にエラーが発生しました');
     }
-    await db
-        .update('folders', up.toJson(), where: 'id = ?', whereArgs: [up.id]);
+    await db.update('folders', update.toJson(),
+        where: 'id = ?', whereArgs: [update.id]);
   }
 
   //Word編集
-  Future<void> upWord(Word word) async {
+  Future<void> updateWord(Word word) async {
     final Database? db = await database;
     if (db == null) {
       throw const ErrorPage('DB:Word編集中にエラーが発生しました');

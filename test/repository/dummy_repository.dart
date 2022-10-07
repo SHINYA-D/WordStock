@@ -54,11 +54,12 @@ class DummyRepository implements SqliteRepository {
       Future.value(DummyWord.initialValue);
 
   @override
-  Future<List<Folder>> upFolder(Folder up) =>
+  Future<List<Folder>> updateFolder(Folder up) =>
       Future.value(DummyFolder.initialValue);
 
   @override
-  Future<List<Word>> upWord(Word word) => Future.value(DummyWord.initialValue);
+  Future<List<Word>> updateWord(Word word) =>
+      Future.value(DummyWord.initialValue);
 
   @override
   Future<List<Folder>> getFolders() => Future.value(DummyFolder.initialValue);

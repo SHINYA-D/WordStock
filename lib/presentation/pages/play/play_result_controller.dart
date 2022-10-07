@@ -43,7 +43,7 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
     for (var flatValue in state.value!) {
       if (flatValue.passed == passedJudgement(Passed.good)) {
         flatValue = flatValue.copyWith(passed: 'FLAT');
-        sqliteRepo.upWord(flatValue);
+        sqliteRepo.updateWord(flatValue);
       }
     }
   }

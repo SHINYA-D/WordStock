@@ -63,7 +63,7 @@ class WordController extends StateNotifier<AsyncValue<List<Word>>> {
     if (state.value == null) return;
     state.value![index] = state.value![index].copyWith(frontName: front);
     state.value![index] = state.value![index].copyWith(backName: back);
-    await sqliteRepo.upWord(state.value![index]);
+    await sqliteRepo.updateWord(state.value![index]);
     state = AsyncValue.data([...state.value!]);
   }
 }
