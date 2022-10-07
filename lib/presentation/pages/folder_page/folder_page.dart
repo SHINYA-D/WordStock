@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wordstock/domain/folder/folder.dart';
 import 'package:wordstock/presentation/pages/folder_page/folder_controller.dart';
-import 'package:wordstock/presentation/pages/folder_page/folder_registration_page.dart';
 
 class FolderPage extends ConsumerWidget {
   const FolderPage({Key? key}) : super(key: key);
@@ -15,6 +16,8 @@ class FolderPage extends ConsumerWidget {
     final foldersState = ref.watch(folderProvider);
 
     final foldersCtl = ref.read(folderProvider.notifier);
+
+    final dateTextCtr = TextEditingController(text: '');
 
     final animationListKey = GlobalKey<AnimatedListState>();
     const animationDuration = Duration(milliseconds: 500);
@@ -121,11 +124,7 @@ class FolderPage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return const FolderRegistrationPage();
-              });
+          _buildRegistration(context, dateTextCtr, foldersCtl);
         },
         child: const Icon(
           Icons.create_new_folder,
@@ -178,4 +177,61 @@ Widget _buildFolder(
           ),
         ),
       ),
+    );
+
+/*==============================================================================
+【フォルダ登録】
+==============================================================================*/
+_buildRegistration(BuildContext context, TextEditingController dateTextCtr,
+        FolderController foldersCtl) =>
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AlertDialog(
+              title: const Text('フォルダ名入力'),
+              content: TextField(
+                inputFormatters: [LengthLimitingTextInputFormatter(20)],
+                controller: dateTextCtr,
+                decoration: const InputDecoration(
+                  hintText: "フォルダ名",
+                ),
+                autofocus: true,
+              ),
+              actions: <Widget>[
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("CANCEL"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    try {
+                      final uid = const Uuid().v4();
+                      final Folder register =
+                          Folder(id: uid, name: dateTextCtr.text);
+                      foldersCtl.registerData(register);
+                      Navigator.pop(context);
+                    } catch (e) {
+                      AlertDialog(
+                        title: const Text('登録でエラーが発生しました。'),
+                        actions: <Widget>[
+                          GestureDetector(
+                            child: const Text('閉じる'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    }
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );

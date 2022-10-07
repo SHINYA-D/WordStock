@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wordstock/domain/login/login.dart';
 import 'package:wordstock/presentation/pages/folder_page/folder_page.dart';
-import 'package:wordstock/presentation/pages/login/login_controller.dart';
+import 'package:wordstock/presentation/pages/login/user_registration_controller.dart';
 
 class UserRegistration extends ConsumerWidget {
   const UserRegistration({Key? key}) : super(key: key);
@@ -20,14 +21,21 @@ class UserRegistration extends ConsumerWidget {
 }
 
 /*==============================================================================
-【新規作成画面】
+【登録画面】
 ==============================================================================*/
 class RegistrationPage extends ConsumerWidget {
   const RegistrationPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(loginProvider);
+    final inputState = ref.watch(userRegistrationProvider);
+    final inputCtr = ref.watch(userRegistrationProvider.notifier);
+
+    //メールアドレス
+    final mailCtr = TextEditingController(text: inputState.value?.mail);
+
+    //パスワード
+    final passWordCtr = TextEditingController(text: inputState.value?.passWord);
 
     return Scaffold(
       appBar: AppBar(
@@ -50,10 +58,8 @@ class RegistrationPage extends ConsumerWidget {
           Center(
             child: ListView(
               children: [
-                //新規アカウント生成
-                _buildNewAccount(),
-                //ログイン生成
-                //_buildLogin(),
+                _buildRegistration(
+                    context, inputState, inputCtr, mailCtr, passWordCtr),
               ],
             ),
           ),
@@ -64,85 +70,48 @@ class RegistrationPage extends ConsumerWidget {
 }
 
 /*==============================================================================
-【新規アカウント生成】
+【登録生成】
 ==============================================================================*/
-Widget _buildNewAccount() {
-  return Consumer(
-    builder: (context, ref, _) {
-      final inputState = ref.watch(loginProvider);
-      final inputCtr = ref.watch(loginProvider.notifier);
-
-      //メールアドレス
-      final mailTextCtr = TextEditingController(text: inputState.value?.mail);
-
-      //パスワード
-      final passWordTextCtr =
-          TextEditingController(text: inputState.value?.passWord);
-
-      return Column(
-        children: [
-          _buildTitleDecoration('新規アカウント作成'),
-          Padding(
-            padding: EdgeInsets.only(bottom: 20.h),
-            child: SizedBox(
-              width: 380.w,
-              child: TextFormField(
-                decoration: _buildInputDecoration('メールアドレス', 'mail'),
-                controller: mailTextCtr,
-                //TODO:削除予定
-                // onChanged: (String value) {
-                //   inputState.value?.copyWith(mail: value);
-                // },
-              ),
-            ),
-          ),
-          // パスワード入力
-          Padding(
-            padding: EdgeInsets.only(bottom: 20.h),
-            child: SizedBox(
-              width: 380.w,
-              child: TextFormField(
-                decoration: _buildInputDecoration('パスワード', 'pass'),
-                controller: passWordTextCtr,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 100.w,
-            child: ElevatedButton(
-                style: _buildButtonDecoration(),
-                child: const Text('登録'),
-                onPressed: () async {
-                  // TODO:メール/新規ユーザー登録
-                  String messageData = await inputCtr.registerData(
-                      mailTextCtr.text, passWordTextCtr.text);
-
-                  if (messageData != 'newUserOK') {
-                    showModalBottomSheet(
-                        isDismissible: true,
-                        backgroundColor: Colors.transparent,
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Container(
-                            height: 80.h,
-                            decoration: const BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(messageData),
-                            ),
-                          );
-                        });
-                  }
-                }),
-          ),
-        ],
-      );
+Widget _buildRegistration(
+    BuildContext context,
+    AsyncValue<Login> inputState,
+    UserRegistrationController inputCtr,
+    TextEditingController mailTextCtr,
+    TextEditingController passWordTextCtr) {
+  return inputState.when(
+    data: (inputState) {
+      if (inputState.errorMessage != null &&
+          inputState.errorMessage != 'newUserOK' &&
+          inputState.errorMessage!.isNotEmpty) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [Text(inputState.errorMessage!)],
+                ),
+              );
+            },
+          );
+        });
+      }
+      return _buildRegistrationForm(
+          context, inputCtr, mailTextCtr, passWordTextCtr);
     },
+    error: (error, _) => AlertDialog(
+      title: const Text('新規作成画面示中に発生しました。'),
+      actions: <Widget>[
+        GestureDetector(
+          child: const Text('閉じる'),
+          onTap: () async {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    ),
+    loading: () => const CircularProgressIndicator(),
   );
 }
 
@@ -189,4 +158,49 @@ _buildButtonDecoration() => ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
+    );
+/*==============================================================================
+【共通ボタンデザイン生成】
+==============================================================================*/
+Widget _buildRegistrationForm(
+        BuildContext context,
+        UserRegistrationController inputCtr,
+        TextEditingController mailTextCtr,
+        TextEditingController passWordTextCtr) =>
+
+//スタックで管理する
+    Column(
+      children: [
+        _buildTitleDecoration('登録'),
+        Padding(
+          padding: EdgeInsets.only(bottom: 20.h),
+          child: SizedBox(
+            width: 380.w,
+            child: TextFormField(
+              decoration: _buildInputDecoration('メールアドレス', 'mail'),
+              controller: mailTextCtr,
+            ),
+          ),
+        ),
+// パスワード入力
+        Padding(
+          padding: EdgeInsets.only(bottom: 20.h),
+          child: SizedBox(
+            width: 380.w,
+            child: TextFormField(
+              decoration: _buildInputDecoration('パスワード', 'pass'),
+              controller: passWordTextCtr,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 100.w,
+          child: ElevatedButton(
+            style: _buildButtonDecoration(),
+            child: const Text('登録'),
+            onPressed: () =>
+                inputCtr.registerData(mailTextCtr.text, passWordTextCtr.text),
+          ),
+        ),
+      ],
     );

@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wordstock/domain/login/login.dart';
 import 'package:wordstock/presentation/pages/folder_page/folder_page.dart';
 import 'package:wordstock/presentation/pages/login/login_controller.dart';
 
-class LoginPage extends ConsumerWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context, WidgetRef ref) => StreamBuilder<User?>(
+  Widget build(BuildContext context) => StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -27,7 +28,15 @@ class SignInPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(loginProvider);
+    final inputState = ref.watch(loginProvider);
+    final inputCtr = ref.watch(loginProvider.notifier);
+
+    //メールアドレス
+    final mailTextCtr = TextEditingController(text: inputState.value?.mail);
+
+    //パスワード
+    final passWordTextCtr =
+        TextEditingController(text: inputState.value?.passWord);
 
     return Scaffold(
       appBar: AppBar(
@@ -50,10 +59,8 @@ class SignInPage extends ConsumerWidget {
           Center(
             child: ListView(
               children: [
-                //新規アカウント生成
-                //_buildNewAccount(),
-                //ログイン生成
-                _buildLogin(),
+                _buildLogin(context, inputState, inputCtr, mailTextCtr,
+                    passWordTextCtr),
               ],
             ),
           ),
@@ -66,90 +73,46 @@ class SignInPage extends ConsumerWidget {
 /*==============================================================================
 【ログイン生成】
 ==============================================================================*/
-Widget _buildLogin() {
-  return Consumer(builder: (context, ref, _) {
-    final inputState = ref.watch(loginProvider);
-    final inputCtr = ref.watch(loginProvider.notifier);
-
-    //メールアドレス
-    final mailTextCtr = TextEditingController(text: inputState.value?.mail);
-
-    //パスワード
-    final passWordTextCtr =
-        TextEditingController(text: inputState.value?.passWord);
-
-    return Column(children: [
-      _buildTitleDecoration('ログイン'),
-      Padding(
-        padding: EdgeInsets.only(bottom: 20.h),
-        child: SizedBox(
-          width: 380.w,
-          child: TextFormField(
-            decoration: _buildInputDecoration('メールアドレス', 'mail'),
-            controller: mailTextCtr,
-          ),
+Widget _buildLogin(
+    BuildContext context,
+    AsyncValue<Login> inputState,
+    LoginController inputCtr,
+    TextEditingController mailTextCtr,
+    TextEditingController passWordTextCtr) {
+  return inputState.when(
+    data: (inputState) {
+      if (inputState.errorMessage != null &&
+          inputState.errorMessage != 'loginOk' &&
+          inputState.errorMessage!.isNotEmpty) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [Text(inputState.errorMessage!)],
+                ),
+              );
+            },
+          );
+        });
+      }
+      return _buildLoginForm(context, inputCtr, mailTextCtr, passWordTextCtr);
+    },
+    error: (error, _) => AlertDialog(
+      title: const Text('ログイン画面示中に発生しました。'),
+      actions: <Widget>[
+        GestureDetector(
+          child: const Text('閉じる'),
+          onTap: () async {
+            Navigator.pop(context);
+          },
         ),
-      ),
-      // パスワード入力
-      Padding(
-        padding: EdgeInsets.only(bottom: 20.h),
-        child: SizedBox(
-          width: 380.w,
-          child: TextFormField(
-            decoration: _buildInputDecoration('パスワード', 'pass'),
-            controller: passWordTextCtr,
-          ),
-        ),
-      ),
-      SizedBox(
-        width: 380.w,
-        child: Column(
-          children: [
-            ElevatedButton(
-              style: _buildButtonDecoration(),
-              child: const Text('ログイン'),
-              onPressed: () async {
-                // TODO:メール/パスワードでユーザーログイン
-                String messageData = await inputCtr.loginData(
-                    mailTextCtr.text, passWordTextCtr.text);
-
-                if (messageData != 'loginOk') {
-                  showModalBottomSheet(
-                      isDismissible: true,
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Container(
-                          height: 80.h,
-                          decoration: const BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(messageData),
-                          ),
-                        );
-                      });
-                }
-              },
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "/user_registration");
-              },
-              child: const Text(
-                '新規アカウント作成',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ]);
-  });
+      ],
+    ),
+    loading: () => const CircularProgressIndicator(),
+  );
 }
 
 /*==============================================================================
@@ -195,4 +158,55 @@ _buildButtonDecoration() => ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
+    );
+/*==============================================================================
+【共通ボタンデザイン生成】
+==============================================================================*/
+Widget _buildLoginForm(
+        BuildContext context,
+        LoginController inputCtr,
+        TextEditingController mailTextCtr,
+        TextEditingController passWordTextCtr) =>
+    Column(
+      children: [
+        _buildTitleDecoration('ログイン'),
+        Padding(
+          padding: EdgeInsets.only(bottom: 20.h),
+          child: SizedBox(
+            width: 380.w,
+            child: TextFormField(
+              decoration: _buildInputDecoration('メールアドレス', 'mail'),
+              controller: mailTextCtr,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 20.h),
+          child: SizedBox(
+            width: 380.w,
+            child: TextFormField(
+              decoration: _buildInputDecoration('パスワード', 'pass'),
+              controller: passWordTextCtr,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 100.w,
+          child: ElevatedButton(
+            style: _buildButtonDecoration(),
+            child: const Text('ログイン'),
+            onPressed: () =>
+                inputCtr.loginData(mailTextCtr.text, passWordTextCtr.text),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, "/user_registration");
+          },
+          child: const Text(
+            '新規アカウント作成',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ],
     );

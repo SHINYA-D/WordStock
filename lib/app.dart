@@ -26,6 +26,8 @@ class App extends StatelessWidget {
             initialRoute: '/',
             routes: <String, WidgetBuilder>{
               '/': (BuildContext context) => const LoginPage(),
+              //SignInPage
+              '/sign_in_page': (BuildContext context) => const SignInPage(),
               '/user_registration': (BuildContext context) =>
                   const UserRegistration(),
               '/folder_page': (BuildContext context) => const FolderPage(),

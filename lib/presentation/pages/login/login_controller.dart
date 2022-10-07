@@ -19,27 +19,16 @@ class LoginController extends StateNotifier<AsyncValue<Login>> {
   final AuthRepository authRepo;
   final AsyncValue<Login> firstProvider;
 
-  //登録処理
-  Future<String> registerData(String mail, String passWord) async {
-    String message = await authRepo.registerUser(mail, passWord);
-    if (message != 'newUserOK') {
-      state = AsyncValue.data(state.value!.copyWith(errorMessage: message));
-      message = state.value!.errorMessage!;
-    }
-    return message;
-    // Login values = Login(mail: mail, passWord: passWord);
-    // state = state.value != null
-    //     ? state = AsyncValue.data(values)
-    //     : state = firstProvider;
-  }
-
   //ログイン処理
-  Future<String> loginData(String mail, String passWord) async {
+  Future<void> loginData(String mail, String passWord) async {
     String message = await authRepo.loginUser(mail, passWord);
     if (message != 'loginOk') {
       state = AsyncValue.data(state.value!.copyWith(errorMessage: message));
-      message = state.value!.errorMessage!;
     }
-    return message;
+  }
+
+  //エラーメッセージ初期化処理
+  Future<void> flatData() async {
+    state = AsyncValue.data(state.value!.copyWith(errorMessage: ''));
   }
 }

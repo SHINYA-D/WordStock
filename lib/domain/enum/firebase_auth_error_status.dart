@@ -83,7 +83,7 @@ class FirebaseAuthExceptionHandler {
         break;
 
       default:
-        message = '予期せぬエラーが発生しました。';
+        message = '文字列を入力してください';
         break;
     }
     return message;
