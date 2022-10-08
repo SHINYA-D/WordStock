@@ -6,7 +6,7 @@ import 'package:wordstock/repository/sqlite_repository.dart';
 
 final pointWordsProvider = FutureProvider.autoDispose
     .family<List<Word>, String>((ref, folderId) =>
-        ref.read(sqliteRepositoryProvider).getPointWords(folderId));
+        ref.read(sqliteRepositoryProvider).getWordsByFolderId(folderId));
 
 final playsProvider = StateNotifierProvider.autoDispose
     .family<PlayPageController, List<SwipeItem>, List<Word>>((ref, words) {

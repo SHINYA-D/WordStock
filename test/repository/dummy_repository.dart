@@ -24,19 +24,18 @@ class DummyRepository implements SqliteRepository {
       Future.value(DummyWord.wordEmptyValue);
 
   @override
-  Future<List<Word>> getPointBad(String folderId) {
+  Future<List<Word>> getBadWords(String folderId) {
     // TODO: implement getPointBad
     throw UnimplementedError();
   }
 
-  @override
-  Future<List<Word>> getPointGood(String folderId) {
-    // TODO: implement getPointGood
-    throw UnimplementedError();
-  }
+  // @override
+  // Future<List<Word>> getPointGood(String folderId) {
+  //   throw UnimplementedError();
+  // }
 
   @override
-  Future<List<Word>> getPointWords(String folderIdNum) =>
+  Future<List<Word>> getWordsByFolderId(String folderIdNum) =>
       Future.value(DummyFolder.initialWordValue);
 
   @override

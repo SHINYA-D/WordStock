@@ -86,7 +86,7 @@ class SqliteRepository {
   }
 
   //ID検索取得
-  Future<List<Word>> getPointWords(String folderIdNum) async {
+  Future<List<Word>> getWordsByFolderId(String folderIdNum) async {
     final Database? db = await database;
     if (db == null) {
       throw const ErrorPage('DB:ID検索取得中にエラーが発生しました');
@@ -111,7 +111,7 @@ class SqliteRepository {
   }
 
   //'対象フォルダ'かつ'NG'の場合を取得
-  Future<List<Word>> getPointBad(String folderId) async {
+  Future<List<Word>> getBadWords(String folderId) async {
     final Database? db = await database;
     final List<Map<String, dynamic>> maps = await db!.query('words',
         where: 'folderNameId = ? AND passed = ?',
@@ -133,6 +133,7 @@ class SqliteRepository {
     });
   }
 
+  /*TODO:GoodのWordを取得：成績表作成時に使用予定
   Future<List<Word>> getPointGood(String folderId) async {
     final Database? db = await database;
     final List<Map<String, dynamic>> maps = await db!.query('words',
@@ -152,7 +153,7 @@ class SqliteRepository {
           average: maps[i]['average'],
           passed: maps[i]['passed']);
     });
-  }
+  }*/
 
 /*==============================================================================
 【登録】

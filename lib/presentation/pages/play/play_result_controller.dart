@@ -6,7 +6,7 @@ import 'package:wordstock/repository/sqlite_repository.dart';
 
 final wordsProvider = FutureProvider.autoDispose.family<List<Word>, String>(
     (ref, folderId) =>
-        ref.watch(sqliteRepositoryProvider).getPointWords(folderId));
+        ref.watch(sqliteRepositoryProvider).getWordsByFolderId(folderId));
 
 final resultsProvider = StateNotifierProvider.autoDispose
     .family<PlayResultController, AsyncValue<List<Word>>, String>(
@@ -30,7 +30,7 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
   int get accuracyRate => ((good / (good + bad)) * 100).floor();
   int get total => bad + good;
   bool get visibleCheck => bad != 0 ? true : false;
-  Future<List<Word>> get badReTest => sqliteRepo.getPointBad(folderId);
+  Future<List<Word>> get badReTest => sqliteRepo.getBadWords(folderId);
 
   Future<void> resultNextPage(BuildContext context) async {
     if (!mounted) return;
