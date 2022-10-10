@@ -83,7 +83,7 @@ class FirebaseAuthExceptionHandler {
         break;
 
       default:
-        message = '文字列を入力してください';
+        message = '文字列が入力されているか確認してください';
         break;
     }
     return message;
