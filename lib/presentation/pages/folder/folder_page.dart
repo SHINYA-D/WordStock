@@ -9,8 +9,8 @@ import 'package:wordstock/domain/folder/folder.dart';
 import 'package:wordstock/presentation/pages/folder/folder_controller.dart';
 
 class FolderPage extends ConsumerWidget {
-  const FolderPage({Key? key}) : super(key: key);
-
+  const FolderPage(this.uid, {Key? key}) : super(key: key);
+  final String uid;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final foldersState = ref.watch(folderProvider);

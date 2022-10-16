@@ -23,6 +23,7 @@ mixin _$Login {
   String? get mail => throw _privateConstructorUsedError;
   String? get passWord => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
+  String? get uid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +34,8 @@ mixin _$Login {
 abstract class $LoginCopyWith<$Res> {
   factory $LoginCopyWith(Login value, $Res Function(Login) then) =
       _$LoginCopyWithImpl<$Res>;
-  $Res call({String? mail, String? passWord, String? errorMessage});
+  $Res call(
+      {String? mail, String? passWord, String? errorMessage, String? uid});
 }
 
 /// @nodoc
@@ -49,6 +51,7 @@ class _$LoginCopyWithImpl<$Res> implements $LoginCopyWith<$Res> {
     Object? mail = freezed,
     Object? passWord = freezed,
     Object? errorMessage = freezed,
+    Object? uid = freezed,
   }) {
     return _then(_value.copyWith(
       mail: mail == freezed
@@ -63,6 +66,10 @@ class _$LoginCopyWithImpl<$Res> implements $LoginCopyWith<$Res> {
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -72,7 +79,8 @@ abstract class _$$_LoginCopyWith<$Res> implements $LoginCopyWith<$Res> {
   factory _$$_LoginCopyWith(_$_Login value, $Res Function(_$_Login) then) =
       __$$_LoginCopyWithImpl<$Res>;
   @override
-  $Res call({String? mail, String? passWord, String? errorMessage});
+  $Res call(
+      {String? mail, String? passWord, String? errorMessage, String? uid});
 }
 
 /// @nodoc
@@ -89,6 +97,7 @@ class __$$_LoginCopyWithImpl<$Res> extends _$LoginCopyWithImpl<$Res>
     Object? mail = freezed,
     Object? passWord = freezed,
     Object? errorMessage = freezed,
+    Object? uid = freezed,
   }) {
     return _then(_$_Login(
       mail: mail == freezed
@@ -103,6 +112,10 @@ class __$$_LoginCopyWithImpl<$Res> extends _$LoginCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -110,7 +123,7 @@ class __$$_LoginCopyWithImpl<$Res> extends _$LoginCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Login implements _Login {
-  _$_Login({this.mail, this.passWord, this.errorMessage});
+  _$_Login({this.mail, this.passWord, this.errorMessage, this.uid});
 
   factory _$_Login.fromJson(Map<String, dynamic> json) =>
       _$$_LoginFromJson(json);
@@ -121,10 +134,12 @@ class _$_Login implements _Login {
   final String? passWord;
   @override
   final String? errorMessage;
+  @override
+  final String? uid;
 
   @override
   String toString() {
-    return 'Login(mail: $mail, passWord: $passWord, errorMessage: $errorMessage)';
+    return 'Login(mail: $mail, passWord: $passWord, errorMessage: $errorMessage, uid: $uid)';
   }
 
   @override
@@ -135,7 +150,8 @@ class _$_Login implements _Login {
             const DeepCollectionEquality().equals(other.mail, mail) &&
             const DeepCollectionEquality().equals(other.passWord, passWord) &&
             const DeepCollectionEquality()
-                .equals(other.errorMessage, errorMessage));
+                .equals(other.errorMessage, errorMessage) &&
+            const DeepCollectionEquality().equals(other.uid, uid));
   }
 
   @JsonKey(ignore: true)
@@ -144,7 +160,8 @@ class _$_Login implements _Login {
       runtimeType,
       const DeepCollectionEquality().hash(mail),
       const DeepCollectionEquality().hash(passWord),
-      const DeepCollectionEquality().hash(errorMessage));
+      const DeepCollectionEquality().hash(errorMessage),
+      const DeepCollectionEquality().hash(uid));
 
   @JsonKey(ignore: true)
   @override
@@ -163,7 +180,8 @@ abstract class _Login implements Login {
   factory _Login(
       {final String? mail,
       final String? passWord,
-      final String? errorMessage}) = _$_Login;
+      final String? errorMessage,
+      final String? uid}) = _$_Login;
 
   factory _Login.fromJson(Map<String, dynamic> json) = _$_Login.fromJson;
 
@@ -173,6 +191,8 @@ abstract class _Login implements Login {
   String? get passWord;
   @override
   String? get errorMessage;
+  @override
+  String? get uid;
   @override
   @JsonKey(ignore: true)
   _$$_LoginCopyWith<_$_Login> get copyWith =>

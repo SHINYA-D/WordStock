@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wordstock/presentation/pages/folder/folder_page.dart';
 import 'package:wordstock/presentation/pages/login/login_page.dart';
 import 'package:wordstock/presentation/pages/login/user_registration.dart';
 import 'package:wordstock/presentation/pages/play/play_page.dart';
@@ -25,11 +24,10 @@ class App extends StatelessWidget {
             initialRoute: '/',
             routes: <String, WidgetBuilder>{
               '/': (BuildContext context) => const LoginPage(),
-              //SignInPage
               '/sign_in_page': (BuildContext context) => const SignInPage(),
               '/user_registration': (BuildContext context) =>
                   const UserRegistration(),
-              '/folder_page': (BuildContext context) => const FolderPage(),
+              //'/folder_page': (BuildContext context) => const FolderPage(),
               '/word_page': (BuildContext context) => const WordPage(),
               '/word_registration_page': (BuildContext context) =>
                   const WordRegistrationPage(),
