@@ -6,13 +6,13 @@ import 'package:wordstock/domain/login/login.dart';
 final authRepoProvider = Provider((ref) => AuthRepository());
 
 class AuthRepository {
-  //Fastメソッド
+  //初期化（空文字が入る）
   Future<Login> getNothing() async {
     Login valueNothing = Login(mail: '', passWord: '', errorMessage: '');
     return valueNothing;
   }
 
-  //登録メソッド
+  //アカウント登録
   Future<String> registerUser(String mail, String passWord) async {
     try {
       final FirebaseAuth auth = FirebaseAuth.instance;
@@ -29,7 +29,7 @@ class AuthRepository {
     }
   }
 
-//ログインメソッド
+//ログイン判定
   Future<String> loginUser(String mail, String passWord) async {
     try {
       final FirebaseAuth auth = FirebaseAuth.instance;
