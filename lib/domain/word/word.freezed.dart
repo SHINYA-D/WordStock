@@ -40,7 +40,8 @@ mixin _$Word {
 /// @nodoc
 abstract class $WordCopyWith<$Res> {
   factory $WordCopyWith(Word value, $Res Function(Word) then) =
-      _$WordCopyWithImpl<$Res>;
+      _$WordCopyWithImpl<$Res, Word>;
+  @useResult
   $Res call(
       {String? id,
       String? frontName,
@@ -56,13 +57,16 @@ abstract class $WordCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
+class _$WordCopyWithImpl<$Res, $Val extends Word>
+    implements $WordCopyWith<$Res> {
   _$WordCopyWithImpl(this._value, this._then);
 
-  final Word _value;
   // ignore: unused_field
-  final $Res Function(Word) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -78,51 +82,51 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
     Object? passed = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      frontName: frontName == freezed
+      frontName: freezed == frontName
           ? _value.frontName
           : frontName // ignore: cast_nullable_to_non_nullable
               as String?,
-      backName: backName == freezed
+      backName: freezed == backName
           ? _value.backName
           : backName // ignore: cast_nullable_to_non_nullable
               as String?,
-      folderNameId: folderNameId == freezed
+      folderNameId: freezed == folderNameId
           ? _value.folderNameId
           : folderNameId // ignore: cast_nullable_to_non_nullable
               as String?,
-      yesCount: yesCount == freezed
+      yesCount: freezed == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      noCount: noCount == freezed
+      noCount: freezed == noCount
           ? _value.noCount
           : noCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      play: play == freezed
+      play: freezed == play
           ? _value.play
           : play // ignore: cast_nullable_to_non_nullable
               as int?,
-      time: time == freezed
+      time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as int?,
-      percent: percent == freezed
+      percent: freezed == percent
           ? _value.percent
           : percent // ignore: cast_nullable_to_non_nullable
               as int?,
-      average: average == freezed
+      average: freezed == average
           ? _value.average
           : average // ignore: cast_nullable_to_non_nullable
               as int?,
-      passed: passed == freezed
+      passed: freezed == passed
           ? _value.passed
           : passed // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -131,6 +135,7 @@ abstract class _$$_WordCopyWith<$Res> implements $WordCopyWith<$Res> {
   factory _$$_WordCopyWith(_$_Word value, $Res Function(_$_Word) then) =
       __$$_WordCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? id,
       String? frontName,
@@ -146,14 +151,12 @@ abstract class _$$_WordCopyWith<$Res> implements $WordCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
+class __$$_WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res, _$_Word>
     implements _$$_WordCopyWith<$Res> {
   __$$_WordCopyWithImpl(_$_Word _value, $Res Function(_$_Word) _then)
-      : super(_value, (v) => _then(v as _$_Word));
+      : super(_value, _then);
 
-  @override
-  _$_Word get _value => super._value as _$_Word;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -169,47 +172,47 @@ class __$$_WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
     Object? passed = freezed,
   }) {
     return _then(_$_Word(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      frontName: frontName == freezed
+      frontName: freezed == frontName
           ? _value.frontName
           : frontName // ignore: cast_nullable_to_non_nullable
               as String?,
-      backName: backName == freezed
+      backName: freezed == backName
           ? _value.backName
           : backName // ignore: cast_nullable_to_non_nullable
               as String?,
-      folderNameId: folderNameId == freezed
+      folderNameId: freezed == folderNameId
           ? _value.folderNameId
           : folderNameId // ignore: cast_nullable_to_non_nullable
               as String?,
-      yesCount: yesCount == freezed
+      yesCount: freezed == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      noCount: noCount == freezed
+      noCount: freezed == noCount
           ? _value.noCount
           : noCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      play: play == freezed
+      play: freezed == play
           ? _value.play
           : play // ignore: cast_nullable_to_non_nullable
               as int?,
-      time: time == freezed
+      time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as int?,
-      percent: percent == freezed
+      percent: freezed == percent
           ? _value.percent
           : percent // ignore: cast_nullable_to_non_nullable
               as int?,
-      average: average == freezed
+      average: freezed == average
           ? _value.average
           : average // ignore: cast_nullable_to_non_nullable
               as int?,
-      passed: passed == freezed
+      passed: freezed == passed
           ? _value.passed
           : passed // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -268,38 +271,31 @@ class _$_Word implements _Word {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Word &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.frontName, frontName) &&
-            const DeepCollectionEquality().equals(other.backName, backName) &&
-            const DeepCollectionEquality()
-                .equals(other.folderNameId, folderNameId) &&
-            const DeepCollectionEquality().equals(other.yesCount, yesCount) &&
-            const DeepCollectionEquality().equals(other.noCount, noCount) &&
-            const DeepCollectionEquality().equals(other.play, play) &&
-            const DeepCollectionEquality().equals(other.time, time) &&
-            const DeepCollectionEquality().equals(other.percent, percent) &&
-            const DeepCollectionEquality().equals(other.average, average) &&
-            const DeepCollectionEquality().equals(other.passed, passed));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.frontName, frontName) ||
+                other.frontName == frontName) &&
+            (identical(other.backName, backName) ||
+                other.backName == backName) &&
+            (identical(other.folderNameId, folderNameId) ||
+                other.folderNameId == folderNameId) &&
+            (identical(other.yesCount, yesCount) ||
+                other.yesCount == yesCount) &&
+            (identical(other.noCount, noCount) || other.noCount == noCount) &&
+            (identical(other.play, play) || other.play == play) &&
+            (identical(other.time, time) || other.time == time) &&
+            (identical(other.percent, percent) || other.percent == percent) &&
+            (identical(other.average, average) || other.average == average) &&
+            (identical(other.passed, passed) || other.passed == passed));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(frontName),
-      const DeepCollectionEquality().hash(backName),
-      const DeepCollectionEquality().hash(folderNameId),
-      const DeepCollectionEquality().hash(yesCount),
-      const DeepCollectionEquality().hash(noCount),
-      const DeepCollectionEquality().hash(play),
-      const DeepCollectionEquality().hash(time),
-      const DeepCollectionEquality().hash(percent),
-      const DeepCollectionEquality().hash(average),
-      const DeepCollectionEquality().hash(passed));
+  int get hashCode => Object.hash(runtimeType, id, frontName, backName,
+      folderNameId, yesCount, noCount, play, time, percent, average, passed);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_WordCopyWith<_$_Word> get copyWith =>
       __$$_WordCopyWithImpl<_$_Word>(this, _$identity);
 

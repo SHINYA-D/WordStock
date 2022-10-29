@@ -9,15 +9,33 @@ import 'package:wordstock/presentation/pages/login/user_registration_controller.
 class UserRegistration extends ConsumerWidget {
   const UserRegistration({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context, WidgetRef ref) => StreamBuilder<User?>(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userState = ref.watch(userRegistrationProvider);
+
+    return userState.when(
+      data: (userState) => StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const FolderPage();
+            return FolderPage(snapshot.data!.uid);
           }
           return const RegistrationPage();
         },
-      );
+      ),
+      error: (error, _) => AlertDialog(
+        title: const Text('フォルダ名表示中に発生しました。'),
+        actions: <Widget>[
+          GestureDetector(
+            child: const Text('閉じる'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+      loading: () => const CircularProgressIndicator(),
+    );
+  }
 }
 
 /*==============================================================================

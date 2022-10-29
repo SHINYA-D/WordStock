@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordstock/domain/folder/folder.dart';
+import 'package:wordstock/repository/auth_repository.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final allFoldersProvider =
@@ -9,15 +10,18 @@ final folderProvider =
     StateNotifierProvider<FolderController, AsyncValue<List<Folder>>>((ref) {
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
   final allFolders = ref.watch(allFoldersProvider);
+  final authRepo = ref.watch(authRepoProvider);
 
-  return FolderController(sqliteRepo, allFolders);
+  return FolderController(sqliteRepo, allFolders, authRepo);
 });
 
 class FolderController extends StateNotifier<AsyncValue<List<Folder>>> {
-  FolderController(this.sqliteRepo, this.allFolders) : super(allFolders);
+  FolderController(this.sqliteRepo, this.allFolders, this.auths)
+      : super(allFolders);
 
   final SqliteRepository sqliteRepo;
   final AsyncValue<List<Folder>> allFolders;
+  final AuthRepository auths;
 
   Future<void> registerData(Folder register) async {
     await sqliteRepo.registerFolder(register);

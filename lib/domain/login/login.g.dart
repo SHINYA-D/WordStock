@@ -10,10 +10,14 @@ _$_Login _$$_LoginFromJson(Map<String, dynamic> json) => _$_Login(
       mail: json['mail'] as String?,
       passWord: json['passWord'] as String?,
       errorMessage: json['errorMessage'] as String?,
+      userImage: json['userImage'] as String?,
+      uid: json['uid'] as String?,
     );
 
 Map<String, dynamic> _$$_LoginToJson(_$_Login instance) => <String, dynamic>{
       'mail': instance.mail,
       'passWord': instance.passWord,
       'errorMessage': instance.errorMessage,
+      'userImage': instance.userImage,
+      'uid': instance.uid,
     };

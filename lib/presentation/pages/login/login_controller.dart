@@ -2,11 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordstock/domain/login/login.dart';
 import 'package:wordstock/repository/auth_repository.dart';
 
-final loginFirstProvider =
-    FutureProvider((ref) => ref.read(authRepoProvider).getNothing());
+final loginFirstProvider = FutureProvider.autoDispose(
+    (ref) => ref.read(authRepoProvider).getNothing());
 
 final loginProvider =
-    StateNotifierProvider<LoginController, AsyncValue<Login>>((ref) {
+    StateNotifierProvider.autoDispose<LoginController, AsyncValue<Login>>(
+        (ref) {
   final authProvider = ref.read(authRepoProvider);
   final firstProvider = ref.watch(loginFirstProvider);
 

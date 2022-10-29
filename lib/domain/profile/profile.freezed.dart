@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'folder.dart';
+part of 'profile.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,44 +14,42 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Folder _$FolderFromJson(Map<String, dynamic> json) {
-  return _Folder.fromJson(json);
+Profile _$ProfileFromJson(Map<String, dynamic> json) {
+  return _Profile.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Folder {
-  String? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
+mixin _$Profile {
   String? get userId => throw _privateConstructorUsedError;
   String? get userImage => throw _privateConstructorUsedError;
   String? get backImage => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
-  List<Word>? get words => throw _privateConstructorUsedError;
+  String? get mail => throw _privateConstructorUsedError;
+  String? get pass => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $FolderCopyWith<Folder> get copyWith => throw _privateConstructorUsedError;
+  $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FolderCopyWith<$Res> {
-  factory $FolderCopyWith(Folder value, $Res Function(Folder) then) =
-      _$FolderCopyWithImpl<$Res, Folder>;
+abstract class $ProfileCopyWith<$Res> {
+  factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
+      _$ProfileCopyWithImpl<$Res, Profile>;
   @useResult
   $Res call(
-      {String? id,
-      String? name,
-      String? userId,
+      {String? userId,
       String? userImage,
       String? backImage,
       String? userName,
-      List<Word>? words});
+      String? mail,
+      String? pass});
 }
 
 /// @nodoc
-class _$FolderCopyWithImpl<$Res, $Val extends Folder>
-    implements $FolderCopyWith<$Res> {
-  _$FolderCopyWithImpl(this._value, this._then);
+class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
+    implements $ProfileCopyWith<$Res> {
+  _$ProfileCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -61,23 +59,14 @@ class _$FolderCopyWithImpl<$Res, $Val extends Folder>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
     Object? userId = freezed,
     Object? userImage = freezed,
     Object? backImage = freezed,
     Object? userName = freezed,
-    Object? words = freezed,
+    Object? mail = freezed,
+    Object? pass = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -94,57 +83,52 @@ class _$FolderCopyWithImpl<$Res, $Val extends Folder>
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String?,
-      words: freezed == words
-          ? _value.words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<Word>?,
+      mail: freezed == mail
+          ? _value.mail
+          : mail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pass: freezed == pass
+          ? _value.pass
+          : pass // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_FolderCopyWith<$Res> implements $FolderCopyWith<$Res> {
-  factory _$$_FolderCopyWith(_$_Folder value, $Res Function(_$_Folder) then) =
-      __$$_FolderCopyWithImpl<$Res>;
+abstract class _$$_ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
+  factory _$$_ProfileCopyWith(
+          _$_Profile value, $Res Function(_$_Profile) then) =
+      __$$_ProfileCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String? id,
-      String? name,
-      String? userId,
+      {String? userId,
       String? userImage,
       String? backImage,
       String? userName,
-      List<Word>? words});
+      String? mail,
+      String? pass});
 }
 
 /// @nodoc
-class __$$_FolderCopyWithImpl<$Res>
-    extends _$FolderCopyWithImpl<$Res, _$_Folder>
-    implements _$$_FolderCopyWith<$Res> {
-  __$$_FolderCopyWithImpl(_$_Folder _value, $Res Function(_$_Folder) _then)
+class __$$_ProfileCopyWithImpl<$Res>
+    extends _$ProfileCopyWithImpl<$Res, _$_Profile>
+    implements _$$_ProfileCopyWith<$Res> {
+  __$$_ProfileCopyWithImpl(_$_Profile _value, $Res Function(_$_Profile) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
     Object? userId = freezed,
     Object? userImage = freezed,
     Object? backImage = freezed,
     Object? userName = freezed,
-    Object? words = freezed,
+    Object? mail = freezed,
+    Object? pass = freezed,
   }) {
-    return _then(_$_Folder(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+    return _then(_$_Profile(
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -161,34 +145,32 @@ class __$$_FolderCopyWithImpl<$Res>
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String?,
-      words: freezed == words
-          ? _value._words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<Word>?,
+      mail: freezed == mail
+          ? _value.mail
+          : mail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pass: freezed == pass
+          ? _value.pass
+          : pass // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Folder implements _Folder {
-  _$_Folder(
-      {this.id,
-      this.name,
-      this.userId,
+class _$_Profile implements _Profile {
+  _$_Profile(
+      {this.userId,
       this.userImage,
       this.backImage,
       this.userName,
-      final List<Word>? words = const []})
-      : _words = words;
+      this.mail,
+      this.pass});
 
-  factory _$_Folder.fromJson(Map<String, dynamic> json) =>
-      _$$_FolderFromJson(json);
+  factory _$_Profile.fromJson(Map<String, dynamic> json) =>
+      _$$_ProfileFromJson(json);
 
-  @override
-  final String? id;
-  @override
-  final String? name;
   @override
   final String? userId;
   @override
@@ -197,28 +179,21 @@ class _$_Folder implements _Folder {
   final String? backImage;
   @override
   final String? userName;
-  final List<Word>? _words;
   @override
-  @JsonKey()
-  List<Word>? get words {
-    final value = _words;
-    if (value == null) return null;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
+  final String? mail;
+  @override
+  final String? pass;
 
   @override
   String toString() {
-    return 'Folder(id: $id, name: $name, userId: $userId, userImage: $userImage, backImage: $backImage, userName: $userName, words: $words)';
+    return 'Profile(userId: $userId, userImage: $userImage, backImage: $backImage, userName: $userName, mail: $mail, pass: $pass)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Folder &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
+            other is _$_Profile &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.userImage, userImage) ||
                 other.userImage == userImage) &&
@@ -226,44 +201,40 @@ class _$_Folder implements _Folder {
                 other.backImage == backImage) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
-            const DeepCollectionEquality().equals(other._words, _words));
+            (identical(other.mail, mail) || other.mail == mail) &&
+            (identical(other.pass, pass) || other.pass == pass));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, userId, userImage,
-      backImage, userName, const DeepCollectionEquality().hash(_words));
+  int get hashCode => Object.hash(
+      runtimeType, userId, userImage, backImage, userName, mail, pass);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FolderCopyWith<_$_Folder> get copyWith =>
-      __$$_FolderCopyWithImpl<_$_Folder>(this, _$identity);
+  _$$_ProfileCopyWith<_$_Profile> get copyWith =>
+      __$$_ProfileCopyWithImpl<_$_Profile>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FolderToJson(
+    return _$$_ProfileToJson(
       this,
     );
   }
 }
 
-abstract class _Folder implements Folder {
-  factory _Folder(
-      {final String? id,
-      final String? name,
-      final String? userId,
+abstract class _Profile implements Profile {
+  factory _Profile(
+      {final String? userId,
       final String? userImage,
       final String? backImage,
       final String? userName,
-      final List<Word>? words}) = _$_Folder;
+      final String? mail,
+      final String? pass}) = _$_Profile;
 
-  factory _Folder.fromJson(Map<String, dynamic> json) = _$_Folder.fromJson;
+  factory _Profile.fromJson(Map<String, dynamic> json) = _$_Profile.fromJson;
 
-  @override
-  String? get id;
-  @override
-  String? get name;
   @override
   String? get userId;
   @override
@@ -273,9 +244,11 @@ abstract class _Folder implements Folder {
   @override
   String? get userName;
   @override
-  List<Word>? get words;
+  String? get mail;
+  @override
+  String? get pass;
   @override
   @JsonKey(ignore: true)
-  _$$_FolderCopyWith<_$_Folder> get copyWith =>
+  _$$_ProfileCopyWith<_$_Profile> get copyWith =>
       throw _privateConstructorUsedError;
 }

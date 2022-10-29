@@ -23,6 +23,8 @@ mixin _$Login {
   String? get mail => throw _privateConstructorUsedError;
   String? get passWord => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
+  String? get userImage => throw _privateConstructorUsedError;
+  String? get uid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -32,38 +34,57 @@ mixin _$Login {
 /// @nodoc
 abstract class $LoginCopyWith<$Res> {
   factory $LoginCopyWith(Login value, $Res Function(Login) then) =
-      _$LoginCopyWithImpl<$Res>;
-  $Res call({String? mail, String? passWord, String? errorMessage});
+      _$LoginCopyWithImpl<$Res, Login>;
+  @useResult
+  $Res call(
+      {String? mail,
+      String? passWord,
+      String? errorMessage,
+      String? userImage,
+      String? uid});
 }
 
 /// @nodoc
-class _$LoginCopyWithImpl<$Res> implements $LoginCopyWith<$Res> {
+class _$LoginCopyWithImpl<$Res, $Val extends Login>
+    implements $LoginCopyWith<$Res> {
   _$LoginCopyWithImpl(this._value, this._then);
 
-  final Login _value;
   // ignore: unused_field
-  final $Res Function(Login) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? mail = freezed,
     Object? passWord = freezed,
     Object? errorMessage = freezed,
+    Object? userImage = freezed,
+    Object? uid = freezed,
   }) {
     return _then(_value.copyWith(
-      mail: mail == freezed
+      mail: freezed == mail
           ? _value.mail
           : mail // ignore: cast_nullable_to_non_nullable
               as String?,
-      passWord: passWord == freezed
+      passWord: freezed == passWord
           ? _value.passWord
           : passWord // ignore: cast_nullable_to_non_nullable
               as String?,
-      errorMessage: errorMessage == freezed
+      errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+      userImage: freezed == userImage
+          ? _value.userImage
+          : userImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uid: freezed == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
   }
 }
 
@@ -72,36 +93,50 @@ abstract class _$$_LoginCopyWith<$Res> implements $LoginCopyWith<$Res> {
   factory _$$_LoginCopyWith(_$_Login value, $Res Function(_$_Login) then) =
       __$$_LoginCopyWithImpl<$Res>;
   @override
-  $Res call({String? mail, String? passWord, String? errorMessage});
+  @useResult
+  $Res call(
+      {String? mail,
+      String? passWord,
+      String? errorMessage,
+      String? userImage,
+      String? uid});
 }
 
 /// @nodoc
-class __$$_LoginCopyWithImpl<$Res> extends _$LoginCopyWithImpl<$Res>
+class __$$_LoginCopyWithImpl<$Res> extends _$LoginCopyWithImpl<$Res, _$_Login>
     implements _$$_LoginCopyWith<$Res> {
   __$$_LoginCopyWithImpl(_$_Login _value, $Res Function(_$_Login) _then)
-      : super(_value, (v) => _then(v as _$_Login));
+      : super(_value, _then);
 
-  @override
-  _$_Login get _value => super._value as _$_Login;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? mail = freezed,
     Object? passWord = freezed,
     Object? errorMessage = freezed,
+    Object? userImage = freezed,
+    Object? uid = freezed,
   }) {
     return _then(_$_Login(
-      mail: mail == freezed
+      mail: freezed == mail
           ? _value.mail
           : mail // ignore: cast_nullable_to_non_nullable
               as String?,
-      passWord: passWord == freezed
+      passWord: freezed == passWord
           ? _value.passWord
           : passWord // ignore: cast_nullable_to_non_nullable
               as String?,
-      errorMessage: errorMessage == freezed
+      errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userImage: freezed == userImage
+          ? _value.userImage
+          : userImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uid: freezed == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -110,7 +145,8 @@ class __$$_LoginCopyWithImpl<$Res> extends _$LoginCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Login implements _Login {
-  _$_Login({this.mail, this.passWord, this.errorMessage});
+  _$_Login(
+      {this.mail, this.passWord, this.errorMessage, this.userImage, this.uid});
 
   factory _$_Login.fromJson(Map<String, dynamic> json) =>
       _$$_LoginFromJson(json);
@@ -121,10 +157,14 @@ class _$_Login implements _Login {
   final String? passWord;
   @override
   final String? errorMessage;
+  @override
+  final String? userImage;
+  @override
+  final String? uid;
 
   @override
   String toString() {
-    return 'Login(mail: $mail, passWord: $passWord, errorMessage: $errorMessage)';
+    return 'Login(mail: $mail, passWord: $passWord, errorMessage: $errorMessage, userImage: $userImage, uid: $uid)';
   }
 
   @override
@@ -132,22 +172,24 @@ class _$_Login implements _Login {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Login &&
-            const DeepCollectionEquality().equals(other.mail, mail) &&
-            const DeepCollectionEquality().equals(other.passWord, passWord) &&
-            const DeepCollectionEquality()
-                .equals(other.errorMessage, errorMessage));
+            (identical(other.mail, mail) || other.mail == mail) &&
+            (identical(other.passWord, passWord) ||
+                other.passWord == passWord) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            (identical(other.userImage, userImage) ||
+                other.userImage == userImage) &&
+            (identical(other.uid, uid) || other.uid == uid));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(mail),
-      const DeepCollectionEquality().hash(passWord),
-      const DeepCollectionEquality().hash(errorMessage));
+  int get hashCode =>
+      Object.hash(runtimeType, mail, passWord, errorMessage, userImage, uid);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoginCopyWith<_$_Login> get copyWith =>
       __$$_LoginCopyWithImpl<_$_Login>(this, _$identity);
 
@@ -163,7 +205,9 @@ abstract class _Login implements Login {
   factory _Login(
       {final String? mail,
       final String? passWord,
-      final String? errorMessage}) = _$_Login;
+      final String? errorMessage,
+      final String? userImage,
+      final String? uid}) = _$_Login;
 
   factory _Login.fromJson(Map<String, dynamic> json) = _$_Login.fromJson;
 
@@ -173,6 +217,10 @@ abstract class _Login implements Login {
   String? get passWord;
   @override
   String? get errorMessage;
+  @override
+  String? get userImage;
+  @override
+  String? get uid;
   @override
   @JsonKey(ignore: true)
   _$$_LoginCopyWith<_$_Login> get copyWith =>

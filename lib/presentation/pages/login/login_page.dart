@@ -6,18 +6,36 @@ import 'package:wordstock/domain/login/login.dart';
 import 'package:wordstock/presentation/pages/folder/folder_page.dart';
 import 'package:wordstock/presentation/pages/login/login_controller.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) => StreamBuilder<User?>(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final inputState = ref.watch(loginProvider);
+
+    return inputState.when(
+      data: (inputState) => StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const FolderPage();
+            return FolderPage(snapshot.data!.uid);
           }
           return const SignInPage();
         },
-      );
+      ),
+      error: (error, _) => AlertDialog(
+        title: const Text('フォルダ名表示中に発生しました。'),
+        actions: <Widget>[
+          GestureDetector(
+            child: const Text('閉じる'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+      loading: () => const CircularProgressIndicator(),
+    );
+  }
 }
 
 /*==============================================================================

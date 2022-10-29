@@ -1,30 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'folder.dart';
+part of 'profile.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Folder _$$_FolderFromJson(Map<String, dynamic> json) => _$_Folder(
-      id: json['id'] as String?,
-      name: json['name'] as String?,
+_$_Profile _$$_ProfileFromJson(Map<String, dynamic> json) => _$_Profile(
       userId: json['userId'] as String?,
       userImage: json['userImage'] as String?,
       backImage: json['backImage'] as String?,
       userName: json['userName'] as String?,
-      words: (json['words'] as List<dynamic>?)
-              ?.map((e) => Word.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
+      mail: json['mail'] as String?,
+      pass: json['pass'] as String?,
     );
 
-Map<String, dynamic> _$$_FolderToJson(_$_Folder instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
+Map<String, dynamic> _$$_ProfileToJson(_$_Profile instance) =>
+    <String, dynamic>{
       'userId': instance.userId,
       'userImage': instance.userImage,
       'backImage': instance.backImage,
       'userName': instance.userName,
-      'words': instance.words,
+      'mail': instance.mail,
+      'pass': instance.pass,
     };

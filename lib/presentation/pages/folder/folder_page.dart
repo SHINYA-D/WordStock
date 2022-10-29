@@ -7,9 +7,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordstock/domain/folder/folder.dart';
 import 'package:wordstock/presentation/pages/folder/folder_controller.dart';
+import 'package:wordstock/presentation/pages/folder/user_page.dart';
 
 class FolderPage extends ConsumerWidget {
-  const FolderPage({Key? key}) : super(key: key);
+  const FolderPage(this.uid, {Key? key}) : super(key: key);
+  final String uid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,23 +25,32 @@ class FolderPage extends ConsumerWidget {
     final dateEditTextCtr = TextEditingController(text: '');
 
     final animationListKey = GlobalKey<AnimatedListState>();
+    final scaffoldKey = GlobalKey<ScaffoldState>();
     const animationDuration = Duration(milliseconds: 500);
 
 /*==============================================================================
 【フォルダ画面】
 ==============================================================================*/
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
+        leading: IconButton(
+            icon: const Icon(Icons.account_circle),
+            onPressed: () async {
+              //アカウント情報
+              scaffoldKey.currentState!.openDrawer();
+            }),
         title: const Text('フォルダ一覧'),
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          onPressed: () async {
-            //ログアウト
-            await FirebaseAuth.instance.signOut();
-          },
-          icon: const Icon(Icons.logout),
-        ),
+        actions: <Widget>[
+          IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () async {
+                //ログアウト
+                await FirebaseAuth.instance.signOut();
+              }),
+        ],
       ),
       body: SlidableAutoCloseBehavior(
         child: Padding(
@@ -127,6 +138,7 @@ class FolderPage extends ConsumerWidget {
           ),
         ),
       ),
+      drawer: DrawerPage(uid),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _buildRegistration(context, dateRegistrationTextCtr, foldersCtl);
