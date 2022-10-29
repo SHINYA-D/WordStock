@@ -9,6 +9,7 @@ class Login with _$Login {
       {String? mail,
       String? passWord,
       String? errorMessage,
+      String? userImage,
       String? uid}) = _Login;
 
   factory Login.fromJson(Map<String, dynamic> json) => _$LoginFromJson(json);

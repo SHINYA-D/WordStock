@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wordstock/domain/word/word.dart';
 
@@ -10,6 +9,10 @@ class Folder with _$Folder {
   factory Folder({
     String? id,
     String? name,
+    String? userId,
+    String? userImage,
+    String? backImage,
+    String? userName,
     @Default([]) List<Word>? words,
   }) = _Folder;
 

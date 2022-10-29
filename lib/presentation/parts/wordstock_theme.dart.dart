@@ -7,7 +7,8 @@ class WordStockTheme {
       textTheme: GoogleFonts.sawarabiGothicTextTheme(),
       primarySwatch: Colors.blue,
       scaffoldBackgroundColor: const Color.fromARGB(255, 151, 181, 238),
-      //iconTheme: const IconThemeData(color: Colors.pink),
+      drawerTheme: const DrawerThemeData()
+          .copyWith(backgroundColor: const Color.fromARGB(255, 0, 0, 0)),
     );
   }
 }
