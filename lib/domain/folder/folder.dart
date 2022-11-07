@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:wordstock/domain/word/word.dart';
 
 part 'folder.freezed.dart';
 part 'folder.g.dart';
