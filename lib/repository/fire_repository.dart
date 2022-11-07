@@ -3,13 +3,20 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wordstock/domain/folder/folder.dart';
 import 'package:wordstock/domain/profile/profile.dart';
 
-final fireRepoProvider = Provider((ref) => FireRepository());
+final fireRepoProvider =
+    Provider.family<dynamic, String>((ref, uid) => FireRepository(uid));
 
 class FireRepository {
-  //プロフィール全データ取得
-  Future<Profile> getProfileDate(String userId) async {
+  FireRepository(this.userId);
+  String userId;
+
+/*==============================================================================
+【プロフィールデータ取得】
+==============================================================================*/
+  Future<Profile> getProfileDate() async {
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
         await FirebaseFirestore.instance.collection('user').doc(userId).get();
 
@@ -24,8 +31,10 @@ class FireRepository {
     return userProfile;
   }
 
-  //ユーザ画像アップデート
-  Future<String> updateUserImg(String userId, File file) async {
+/*==============================================================================
+【プロフィール画像アップデート】
+==============================================================================*/
+  Future<String> updateUserImg(File file) async {
     //画像アップロード
     final ref = FirebaseStorage.instance.ref().child('images/profileImage.jpg');
     //アップロード実行
@@ -45,8 +54,10 @@ class FireRepository {
     return imgURL;
   }
 
-  //ユーザバック画像アップデート
-  Future<String> updateUserBackImg(String userId, File file) async {
+/*==============================================================================
+【プロフィールバック画像アップデート】
+==============================================================================*/
+  Future<String> updateUserBackImg(File file) async {
     //画像アップロード
     final ref = FirebaseStorage.instance.ref().child('images/backImage.jpg');
     //アップロード実行
@@ -66,12 +77,48 @@ class FireRepository {
     return imgURL;
   }
 
-  //ユーザーネームアップロード
-  Future<void> updateUserName(String userId, String newName) async {
+/*==============================================================================
+【プロフィールネームアップデート】
+==============================================================================*/
+  Future<void> updateUserName(String newName) async {
     final doc = FirebaseFirestore.instance.collection('user').doc(userId);
     //名前アップロード
     await doc.update({
       'userName': newName,
     });
+  }
+
+/*==============================================================================
+【フォルダデータ登録】
+==============================================================================*/
+  Future<void> registerFolder() async {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(userId)
+        .collection('Folder')
+        .doc('folderCreateId')
+        .set(
+      {
+        'id': 'folderCreateIdを挿入する',
+        'name': '作成した名前を挿入する',
+      },
+    );
+  }
+
+/*==============================================================================
+【フォルダデータ取得】
+==============================================================================*/
+  Future<Folder> getFolders(String userId) async {
+    final DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance
+            .collection('user')
+            .doc(userId)
+            .collection('Folder')
+            .doc('folderCreateId') //TODO//本来は自動生成で作成したIDを入れる！！
+            .get();
+
+    final Folder getFolder = Folder(id: snapshot['id'], name: snapshot['name']);
+
+    return getFolder;
   }
 }
