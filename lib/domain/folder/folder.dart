@@ -9,11 +9,6 @@ class Folder with _$Folder {
   factory Folder({
     String? id,
     String? name,
-    String? userId,
-    String? userImage,
-    String? backImage,
-    String? userName,
-    @Default([]) List<Word>? words,
   }) = _Folder;
 
   factory Folder.fromJson(Map<String, dynamic> json) => _$FolderFromJson(json);
