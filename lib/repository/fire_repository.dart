@@ -12,13 +12,18 @@ final fireRepoProvider =
 class FireRepository {
   FireRepository(this.userId);
   String userId;
+  final collectionName = 'user';
+  final subCollectionFolder = 'Folder';
 
 /*==============================================================================
 【プロフィールデータ取得】
 ==============================================================================*/
   Future<Profile> getProfileDate() async {
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await FirebaseFirestore.instance.collection('user').doc(userId).get();
+        await FirebaseFirestore.instance
+            .collection(collectionName)
+            .doc(userId)
+            .get();
 
     final Profile userProfile = Profile(
         userId: snapshot['userId'],
@@ -46,7 +51,8 @@ class FireRepository {
     //URL格納
     String imgURL = await ref.getDownloadURL();
     //クラウドDB パス作成
-    final doc = FirebaseFirestore.instance.collection('user').doc(userId);
+    final doc =
+        FirebaseFirestore.instance.collection(collectionName).doc(userId);
     //URLアップロード
     await doc.update({
       'userImage': imgURL,
@@ -69,7 +75,8 @@ class FireRepository {
     //URL格納
     String imgURL = await ref.getDownloadURL();
     //クラウドDB パス作成
-    final doc = FirebaseFirestore.instance.collection('user').doc(userId);
+    final doc =
+        FirebaseFirestore.instance.collection(collectionName).doc(userId);
     //URLアップロード
     await doc.update({
       'backImage': imgURL,
@@ -81,7 +88,8 @@ class FireRepository {
 【プロフィールネームアップデート】
 ==============================================================================*/
   Future<void> updateUserName(String newName) async {
-    final doc = FirebaseFirestore.instance.collection('user').doc(userId);
+    final doc =
+        FirebaseFirestore.instance.collection(collectionName).doc(userId);
     //名前アップロード
     await doc.update({
       'userName': newName,
@@ -91,16 +99,16 @@ class FireRepository {
 /*==============================================================================
 【フォルダデータ登録】
 ==============================================================================*/
-  Future<void> registerFolder() async {
-    FirebaseFirestore.instance
-        .collection('user')
+  Future<void> registerFolder(Folder folder) async {
+    await FirebaseFirestore.instance
+        .collection(collectionName)
         .doc(userId)
-        .collection('Folder')
-        .doc('folderCreateId')
+        .collection(subCollectionFolder)
+        .doc(folder.id)
         .set(
       {
-        'id': 'folderCreateIdを挿入する',
-        'name': '作成した名前を挿入する',
+        'id': folder.id,
+        'name': folder.name,
       },
     );
   }
@@ -108,17 +116,45 @@ class FireRepository {
 /*==============================================================================
 【フォルダデータ取得】
 ==============================================================================*/
-  Future<Folder> getFolders(String userId) async {
+  Future<Folder> getFolders(String folderId) async {
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
         await FirebaseFirestore.instance
-            .collection('user')
+            .collection(collectionName)
             .doc(userId)
-            .collection('Folder')
-            .doc('folderCreateId') //TODO//本来は自動生成で作成したIDを入れる！！
+            .collection(subCollectionFolder)
+            .doc(folderId)
             .get();
 
     final Folder getFolder = Folder(id: snapshot['id'], name: snapshot['name']);
 
     return getFolder;
+  }
+
+/*==============================================================================
+【フォルダデータ削除】
+==============================================================================*/
+  Future<void> deleteFolder(Folder folder) async {
+    await FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(userId)
+        .collection(subCollectionFolder)
+        .doc(folder.id)
+        .delete();
+  }
+
+/*==============================================================================
+【フォルダデータ編集】
+==============================================================================*/
+  Future<void> updateFolder(Folder folder) async {
+    // firestoreに追加
+    await FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(userId)
+        .collection(subCollectionFolder)
+        .doc(folder.id)
+        .update({
+      'id': folder.id,
+      'name': folder.name,
+    });
   }
 }
