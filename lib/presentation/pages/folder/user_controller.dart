@@ -6,7 +6,7 @@ import 'package:wordstock/domain/profile/profile.dart';
 import 'package:wordstock/repository/fire_repository.dart';
 
 final profileProvider = FutureProvider.family<Profile, String>(
-    (ref, uid) => ref.read(fireRepoProvider(uid)).getProfileDate(uid));
+    (ref, uid) => ref.read(fireRepoProvider(uid)).getProfileDate());
 
 final drawerProvider =
     StateNotifierProvider.family<UserController, AsyncValue<Profile>, String>(
