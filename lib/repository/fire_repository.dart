@@ -11,6 +11,7 @@ final fireRepoProvider =
 
 class FireRepository {
   FireRepository(this.userId);
+  //final db =  FirebaseFirestore.instance;
   String userId;
   final collectionName = 'user';
   final subCollectionFolder = 'Folder';
@@ -116,16 +117,16 @@ class FireRepository {
 /*==============================================================================
 【フォルダデータ取得】
 ==============================================================================*/
-  Future<Folder> getFolders(String folderId) async {
-    final DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await FirebaseFirestore.instance
-            .collection(collectionName)
-            .doc(userId)
-            .collection(subCollectionFolder)
-            .doc(folderId)
-            .get();
+  Future<List<Folder>> getFolders() async {
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(userId)
+        .collection(subCollectionFolder)
+        .get();
 
-    final Folder getFolder = Folder(id: snapshot['id'], name: snapshot['name']);
+    final List<Folder> getFolder = snapshot.docs
+        .map((doc) => Folder(id: doc['id'], name: doc['name']))
+        .toList();
 
     return getFolder;
   }
@@ -146,7 +147,6 @@ class FireRepository {
 【フォルダデータ編集】
 ==============================================================================*/
   Future<void> updateFolder(Folder folder) async {
-    // firestoreに追加
     await FirebaseFirestore.instance
         .collection(collectionName)
         .doc(userId)
