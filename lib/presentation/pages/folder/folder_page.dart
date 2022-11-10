@@ -15,9 +15,9 @@ class FolderPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final foldersState = ref.watch(folderProvider);
+    final foldersState = ref.watch(folderProvider(uid));
 
-    final foldersCtl = ref.read(folderProvider.notifier);
+    final foldersCtl = ref.read(folderProvider(uid).notifier);
 
     //登録処理テキスト
     final dateRegistrationTextCtr = TextEditingController(text: '');

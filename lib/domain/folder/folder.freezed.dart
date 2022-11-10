@@ -22,11 +22,6 @@ Folder _$FolderFromJson(Map<String, dynamic> json) {
 mixin _$Folder {
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  String? get userId => throw _privateConstructorUsedError;
-  String? get userImage => throw _privateConstructorUsedError;
-  String? get backImage => throw _privateConstructorUsedError;
-  String? get userName => throw _privateConstructorUsedError;
-  List<Word>? get words => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,14 +33,7 @@ abstract class $FolderCopyWith<$Res> {
   factory $FolderCopyWith(Folder value, $Res Function(Folder) then) =
       _$FolderCopyWithImpl<$Res, Folder>;
   @useResult
-  $Res call(
-      {String? id,
-      String? name,
-      String? userId,
-      String? userImage,
-      String? backImage,
-      String? userName,
-      List<Word>? words});
+  $Res call({String? id, String? name});
 }
 
 /// @nodoc
@@ -63,11 +51,6 @@ class _$FolderCopyWithImpl<$Res, $Val extends Folder>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? userId = freezed,
-    Object? userImage = freezed,
-    Object? backImage = freezed,
-    Object? userName = freezed,
-    Object? words = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -78,26 +61,6 @@ class _$FolderCopyWithImpl<$Res, $Val extends Folder>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userImage: freezed == userImage
-          ? _value.userImage
-          : userImage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      backImage: freezed == backImage
-          ? _value.backImage
-          : backImage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userName: freezed == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      words: freezed == words
-          ? _value.words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<Word>?,
     ) as $Val);
   }
 }
@@ -108,14 +71,7 @@ abstract class _$$_FolderCopyWith<$Res> implements $FolderCopyWith<$Res> {
       __$$_FolderCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String? id,
-      String? name,
-      String? userId,
-      String? userImage,
-      String? backImage,
-      String? userName,
-      List<Word>? words});
+  $Res call({String? id, String? name});
 }
 
 /// @nodoc
@@ -130,11 +86,6 @@ class __$$_FolderCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? userId = freezed,
-    Object? userImage = freezed,
-    Object? backImage = freezed,
-    Object? userName = freezed,
-    Object? words = freezed,
   }) {
     return _then(_$_Folder(
       id: freezed == id
@@ -145,26 +96,6 @@ class __$$_FolderCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userImage: freezed == userImage
-          ? _value.userImage
-          : userImage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      backImage: freezed == backImage
-          ? _value.backImage
-          : backImage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userName: freezed == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      words: freezed == words
-          ? _value._words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<Word>?,
     ));
   }
 }
@@ -172,15 +103,7 @@ class __$$_FolderCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Folder implements _Folder {
-  _$_Folder(
-      {this.id,
-      this.name,
-      this.userId,
-      this.userImage,
-      this.backImage,
-      this.userName,
-      final List<Word>? words = const []})
-      : _words = words;
+  _$_Folder({this.id, this.name});
 
   factory _$_Folder.fromJson(Map<String, dynamic> json) =>
       _$$_FolderFromJson(json);
@@ -189,27 +112,10 @@ class _$_Folder implements _Folder {
   final String? id;
   @override
   final String? name;
-  @override
-  final String? userId;
-  @override
-  final String? userImage;
-  @override
-  final String? backImage;
-  @override
-  final String? userName;
-  final List<Word>? _words;
-  @override
-  @JsonKey()
-  List<Word>? get words {
-    final value = _words;
-    if (value == null) return null;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
 
   @override
   String toString() {
-    return 'Folder(id: $id, name: $name, userId: $userId, userImage: $userImage, backImage: $backImage, userName: $userName, words: $words)';
+    return 'Folder(id: $id, name: $name)';
   }
 
   @override
@@ -218,21 +124,12 @@ class _$_Folder implements _Folder {
         (other.runtimeType == runtimeType &&
             other is _$_Folder &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.userImage, userImage) ||
-                other.userImage == userImage) &&
-            (identical(other.backImage, backImage) ||
-                other.backImage == backImage) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            const DeepCollectionEquality().equals(other._words, _words));
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, userId, userImage,
-      backImage, userName, const DeepCollectionEquality().hash(_words));
+  int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
@@ -249,14 +146,7 @@ class _$_Folder implements _Folder {
 }
 
 abstract class _Folder implements Folder {
-  factory _Folder(
-      {final String? id,
-      final String? name,
-      final String? userId,
-      final String? userImage,
-      final String? backImage,
-      final String? userName,
-      final List<Word>? words}) = _$_Folder;
+  factory _Folder({final String? id, final String? name}) = _$_Folder;
 
   factory _Folder.fromJson(Map<String, dynamic> json) = _$_Folder.fromJson;
 
@@ -264,16 +154,6 @@ abstract class _Folder implements Folder {
   String? get id;
   @override
   String? get name;
-  @override
-  String? get userId;
-  @override
-  String? get userImage;
-  @override
-  String? get backImage;
-  @override
-  String? get userName;
-  @override
-  List<Word>? get words;
   @override
   @JsonKey(ignore: true)
   _$$_FolderCopyWith<_$_Folder> get copyWith =>
