@@ -32,7 +32,7 @@ dependencies:
   swipeable_stack: ^0.4.3
   swipable_stack: ^1.2.0
   google_fonts: ^3.0.1
-
+  file: ^6.1.4
 
 
 flutter_native_splash:
