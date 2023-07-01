@@ -209,7 +209,7 @@ Widget _buildLoginForm(
           ),
         ),
         SizedBox(
-          width: 100.w,
+          width: 110.w,
           child: ElevatedButton(
             style: _buildButtonDecoration(),
             child: const Text('ログイン'),

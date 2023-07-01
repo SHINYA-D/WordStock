@@ -29,6 +29,13 @@
             {
               "client_id": "905427117842-lb0lq1fs1d577jq6v0qo4g1aecm4pi7j.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "905427117842-gad5dvjdr3n5mpnk4ssoqelbd095h6mf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.wordstock"
+              }
             }
           ]
         }
