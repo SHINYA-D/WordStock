@@ -18,7 +18,7 @@ dependencies:
   sqflite: ^2.0.2+1
   path_provider: ^2.0.11
   io: ^1.0.3
-  flutter_screenutil: ^5.5.3+2
+  flutter_screenutil: ^5.8.4
   flutter_riverpod: ^1.0.4
   freezed_annotation: ^2.0.3
   json_serializable: ^6.2.0
@@ -31,7 +31,8 @@ dependencies:
   path: ^1.8.1
   swipeable_stack: ^0.4.3
   swipable_stack: ^1.2.0
-  google_fonts: ^3.0.1
+  google_fonts: ^5.1.0
+  file: ^7.0.0
 
 
 
