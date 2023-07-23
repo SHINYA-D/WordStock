@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wordstock/presentation/pages/analysis_page/analysis_page.dart';
 import 'package:wordstock/presentation/pages/folder_page/folder_edit_page.dart';
 import 'package:wordstock/presentation/pages/folder_page/folder_page.dart';
 import 'package:wordstock/presentation/pages/play_page/play_page.dart';
@@ -33,6 +34,7 @@ class App extends StatelessWidget {
               '/play_page': (BuildContext context) => const PlayPage(),
               '/play_result_page': (BuildContext context) =>
                   const PlayResultPage(),
+              '/analysis_screen': (BuildContext context) => const AnalysisPage(),
             },
             theme: WordStockTheme.light(),
           );
