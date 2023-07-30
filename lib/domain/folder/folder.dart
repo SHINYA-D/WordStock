@@ -11,6 +11,7 @@ class Folder with _$Folder {
   factory Folder({
     @JsonKey(name: 'id') String? id,
     @JsonKey(name: 'name') String? name,
+    @Default(0)@JsonKey(name: 'folderPercent') int folderPercent,
     @JsonKey(ignore: true) @Default([]) List<Word>? words,
   }) = _Folder;
 

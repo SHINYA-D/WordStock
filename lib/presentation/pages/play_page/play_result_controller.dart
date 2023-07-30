@@ -48,6 +48,19 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
     }
   }
 
+  Future<void> scoreRegistration() async {
+    if (state.value == null) return;
+    for (var word in state.value!) {
+     final yes = word.yesCount ?? 0;
+     final no = word.noCount ?? 0;
+     final total = yes + no;
+     final average = (yes/total) * 100;
+     word = word.copyWith(play: total);
+     word = word.copyWith(average: average.truncate());
+     await sqliteRepo.registerWord(word);
+    }
+  }
+
   int _goodCounts() {
     int count = 0;
     if (state.value == null) return 0;

@@ -20,7 +20,7 @@ dependencies:
   io: ^1.0.3
   flutter_screenutil: ^5.8.4
   flutter_riverpod: ^1.0.4
-  freezed_annotation: ^2.0.3
+  freezed_annotation: ^2.4.1
   json_serializable: ^6.2.0
   json_annotation: ^4.6.0
   flutter_slidable: ^2.0.0
@@ -33,7 +33,10 @@ dependencies:
   swipable_stack: ^1.2.0
   google_fonts: ^5.1.0
   file: ^7.0.0
-
+  carousel_slider: ^4.2.1
+  percent_indicator: ^4.0.1
+  gap: ^3.0.1
+  analyzer: ^5.12.0
 
 
 flutter_native_splash:
@@ -49,8 +52,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  build_runner: ^2.1.11
-  freezed: ^2.0.3+1
+  build_runner: ^2.4.6
+  freezed: ^2.4.1
 
 
 
