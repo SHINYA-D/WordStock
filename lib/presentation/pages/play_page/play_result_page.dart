@@ -42,13 +42,15 @@ class PlayResultPage extends ConsumerWidget {
                           SizedBox(
                             width: 200.w,
                             child: ElevatedButton(
+                              child: const Text("終了"),
                               onPressed: () async {
+                                resultCtr.playFlat();
+                                resultCtr.scoreRegistration();
                                 await Navigator.of(context)
                                     .pushNamedAndRemoveUntil(
                                         "/word_page", ModalRoute.withName("/"),
                                         arguments: folderIdNum);
                               },
-                              child: const Text("終了"),
                             ),
                           ),
                           Visibility(

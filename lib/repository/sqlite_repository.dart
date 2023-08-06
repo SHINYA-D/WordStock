@@ -23,13 +23,13 @@ class SqliteRepository {
   _initDatabase() async {
     final Directory documentsDirectory =
         await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, 'WordStock03.db');
+    final path = join(documentsDirectory.path, 'WordStock04.db');
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE folders (id TEXT PRIMARY KEY, name TEXT)''');
+      CREATE TABLE folders (id TEXT PRIMARY KEY, name TEXT, folderPercent INTEGER)''');
     await db.execute('''
       CREATE TABLE words(
                 id TEXT PRIMARY KEY,
@@ -56,8 +56,12 @@ class SqliteRepository {
       throw const ErrorPage('DB:Folder取得中にエラーが発生しました');
     }
     final List<Map<String, dynamic>> maps = await db.query('folders');
+    if(maps.isEmpty) return [];
     return List.generate(maps.length, (i) {
-      return Folder(id: maps[i]['id'], name: maps[i]['name']);
+      return Folder(
+          id: maps[i]['id'],
+          name: maps[i]['name'],
+          folderPercent: maps[i]['folderPercent']);
     });
   }
 
@@ -68,6 +72,7 @@ class SqliteRepository {
       throw const ErrorPage('DB:Word取得中にエラーが発生しました');
     }
     final List<Map<String, dynamic>> maps = await db.query('words');
+    if(maps.isEmpty) return [];
     return List.generate(maps.length, (i) {
       return Word(
         id: maps[i]['id'],

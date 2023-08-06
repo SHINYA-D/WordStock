@@ -10,13 +10,13 @@ class Word with _$Word {
     String? frontName,
     String? backName,
     String? folderNameId,
-    int? yesCount,
-    int? noCount,
-    int? play,
+    int? yesCount,//変動
+    int? noCount,//変動
+    int? play,//変動
     int? time,
-    int? percent,
-    int? average,
-    String? passed,
+    int? percent,//変動・正解率(使用していないです)
+    int? average,//変動・正解率
+    String? passed,//変動
   }) = _Word;
 
   factory Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);

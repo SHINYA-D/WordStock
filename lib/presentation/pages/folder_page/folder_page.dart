@@ -26,6 +26,14 @@ class FolderPage extends ConsumerWidget {
         centerTitle: true,
         title: const Text('WordStock'),
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.insights),
+            onPressed: () {
+              Navigator.pushNamed(context, "/analysis_screen",);
+            },
+          ),
+        ],
       ),
       body: SlidableAutoCloseBehavior(
         child: Padding(

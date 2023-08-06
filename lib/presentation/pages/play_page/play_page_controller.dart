@@ -42,8 +42,10 @@ class PlayPageController extends StateNotifier<List<SwipeItem>> {
     matchEngine.currentItem?.nope();
     for (int i = 0; i < state.length; i++) {
       if (matchEngine.currentItem?.hashCode == state[i].hashCode) {
-        state[i].content[i] =
-            state[i].content[i].copyWith(passed: passedJudgement(Passed.bad));
+        // フラグをステイト側に付与
+        state[i].content[i] = state[i].content[i].copyWith(passed: passedJudgement(Passed.bad));
+        // バッドポイントをステイト側に付与
+        state[i].content[i] = state[i].content[i].copyWith(noCount: state[i].content[i].noCount + 1);
         sqliteRepo.upWord(state[i].content[i]);
       }
     }
@@ -53,8 +55,11 @@ class PlayPageController extends StateNotifier<List<SwipeItem>> {
     matchEngine.currentItem?.like();
     for (int i = 0; i < state.length; i++) {
       if (matchEngine.currentItem?.hashCode == state[i].hashCode) {
+        // フラグをステイト側に付与
         state[i].content[i] =
             state[i].content[i].copyWith(passed: passedJudgement(Passed.good));
+        // グットポイントをステイト側に付与
+        state[i].content[i] = state[i].content[i].copyWith(yesCount: state[i].content[i].yesCount + 1);
         sqliteRepo.upWord(state[i].content[i]);
       }
     }
