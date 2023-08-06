@@ -44,8 +44,9 @@ class AnalysisPage extends ConsumerWidget {
                               width: MediaQuery.of(context).size.width,
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 5.0),
-                              decoration: const BoxDecoration(
+                              decoration:BoxDecoration(
                                 color: Colors.blue,
+                                borderRadius: BorderRadius.circular(10),
                               ),
                               child: Align(
                                 alignment: Alignment.center, // テキストを中央に配置
