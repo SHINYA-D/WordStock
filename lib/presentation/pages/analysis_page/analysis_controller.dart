@@ -3,33 +3,36 @@ import 'package:wordstock/domain/folder/folder.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
 final allFoldersProvider =
-    FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getFolders());
+    FutureProvider.autoDispose((ref) => ref.read(sqliteRepositoryProvider).getFolders());
 
 final allWordsProvider =
-    FutureProvider((ref) => ref.read(sqliteRepositoryProvider).getWords());
+    FutureProvider.autoDispose((ref) => ref.read(sqliteRepositoryProvider).getWords());
 
 final analysisProvider =
-    StateNotifierProvider<AnalysisController,List<Folder>?>((ref) {
+    StateNotifierProvider.autoDispose<AnalysisController,AsyncValue<List<Folder>?>>((ref) {
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
   final allFolders = ref.watch(allFoldersProvider);
   final allWords = ref.watch(allWordsProvider);
   //フォルダとワードがからの場合にNULLの場合[]を設定する処理が必要
+  //2つ以上の要素があり、１つ以上がからの時にエラーになる
   final getAllFolders = allFolders.value ?? [];
   final getAllWords = allWords.value ?? [];
   final folders = getAllFolders.map((folder) {
      final dividedFolderTheWords = getAllWords.where((word) => word.folderNameId == folder.id).toList();
+     if(dividedFolderTheWords.isEmpty) return folder = folder.copyWith(folderPercent: 0);
      final List<int?> averages = dividedFolderTheWords.map((oneAverage) => oneAverage.average).toList();
      final int? averagesTotal = averages.reduce((value, element) => value! + element!);
      final average = (averagesTotal! / averages.length).round();
      return folder = folder.copyWith(folderPercent: average);
   }).toList();
-  return AnalysisController(sqliteRepo, folders);
+  final foldersAsyncValue = AsyncValue<List<Folder>>.data(folders);
+  return AnalysisController(sqliteRepo, foldersAsyncValue);
 });
 
-class AnalysisController extends StateNotifier<List<Folder>?> {
+class AnalysisController extends StateNotifier<AsyncValue<List<Folder>?>> {
   AnalysisController(this.sqliteRepo, this.allFolders) : super(allFolders);
 
   final SqliteRepository sqliteRepo;
-  final List<Folder> allFolders;
+  final AsyncValue<List<Folder>> allFolders;
 
 }

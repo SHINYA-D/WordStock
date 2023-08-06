@@ -12,7 +12,7 @@ class AnalysisPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final folders = ref.watch(analysisProvider) ?? [];
+    final folders = ref.watch(analysisProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -21,58 +21,64 @@ class AnalysisPage extends ConsumerWidget {
         automaticallyImplyLeading: true,
       ),
       body: SlidableAutoCloseBehavior(
-        child: folders.isEmpty
+        child: folders.value!.isEmpty
             ? const Center(
                 child: Text(
-                '現在分析ができない情報量です\nまたは「フォルダ」「ワード」\nが作成されていません。',
+                'フォルダ登録がされておりません',
                 style: TextStyle(color: Colors.white),
-              ))
-            : Padding(
-                padding: EdgeInsets.only(top: 30.h),
-                child: CarouselSlider(
-                  options: CarouselOptions(height: 500.0.h),
-                  items: folders.map((folder) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Column(children: [
-                          Container(
-                            height: 150.h,
-                            width: MediaQuery.of(context).size.width,
-                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                            decoration: const BoxDecoration(
-                              color: Colors.blue,
+              ),)
+            : folders.when(
+                error: (error, stackTrace) =>
+                    Text('エラーが発生しました。\n ${error.toString()}'),
+                loading: () => const CircularProgressIndicator(),
+                data: (folder) => Padding(
+                  padding: EdgeInsets.only(top: 30.h),
+                  child: CarouselSlider(
+                    options: CarouselOptions(height: 500.0.h),
+                    items: folder!.map((folder) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Column(children: [
+                            Container(
+                              height: 150.h,
+                              width: MediaQuery.of(context).size.width,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              decoration: const BoxDecoration(
+                                color: Colors.blue,
+                              ),
+                              child: Align(
+                                alignment: Alignment.center, // テキストを中央に配置
+                                child: Text(
+                                  folder.name ?? '表示中にエラーが発生しました',
+                                  style: const TextStyle(
+                                    fontSize: 32.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
-                            child: Align(
-                              alignment: Alignment.center, // テキストを中央に配置
-                              child: Text(
-                                folder.name ?? '表示中にエラーが発生しました',
+                            const Gap(100),
+                            CircularPercentIndicator(
+                              animation: true,
+                              animationDuration: 3000,
+                              radius: 100.0,
+                              lineWidth: 50.0,
+                              percent: folder.folderPercent * 0.01,
+                              center: Text(
+                                '${folder.folderPercent}%',
                                 style: const TextStyle(
                                   fontSize: 32.0,
                                   color: Colors.white,
                                 ),
                               ),
+                              progressColor: Colors.blue,
                             ),
-                          ),
-                          const Gap(100),
-                          CircularPercentIndicator(
-                            animation: true,
-                            animationDuration: 3000,
-                            radius: 100.0,
-                            lineWidth: 50.0,
-                            percent: folder.folderPercent * 0.01,
-                            center: Text(
-                              '${folder.folderPercent}%',
-                              style: const TextStyle(
-                                fontSize: 32.0,
-                                color: Colors.white,
-                              ),
-                            ),
-                            progressColor: Colors.blue,
-                          ),
-                        ]);
-                      },
-                    );
-                  }).toList(),
+                          ]);
+                        },
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
       ),
