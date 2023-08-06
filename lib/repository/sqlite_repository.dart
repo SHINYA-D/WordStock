@@ -56,6 +56,7 @@ class SqliteRepository {
       throw const ErrorPage('DB:Folder取得中にエラーが発生しました');
     }
     final List<Map<String, dynamic>> maps = await db.query('folders');
+    if(maps.isEmpty) return [];
     return List.generate(maps.length, (i) {
       return Folder(
           id: maps[i]['id'],
@@ -71,6 +72,7 @@ class SqliteRepository {
       throw const ErrorPage('DB:Word取得中にエラーが発生しました');
     }
     final List<Map<String, dynamic>> maps = await db.query('words');
+    if(maps.isEmpty) return [];
     return List.generate(maps.length, (i) {
       return Word(
         id: maps[i]['id'],

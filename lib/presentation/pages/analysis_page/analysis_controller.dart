@@ -13,23 +13,14 @@ final analysisProvider =
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
   final allFolders = ref.watch(allFoldersProvider);
   final allWords = ref.watch(allWordsProvider);
-
-  //allFolders = allFolders == null ?
-
-
-
+  //フォルダとワードがからの場合に[]を設定する処理が必要
   final folders =allFolders.value!.map((folder) {
-     final dividedTheWords = allWords.value!.where((word) => word.folderNameId == folder.id).toList();
-     final List<int?> averages = dividedTheWords.map((oneAverage) => oneAverage.average).toList();
+     final dividedFolderTheWords = allWords.value!.where((word) => word.folderNameId == folder.id).toList();
+     final List<int?> averages = dividedFolderTheWords.map((oneAverage) => oneAverage.average).toList();
      final int? averagesTotal = averages.reduce((value, element) => value! + element!);
      final average = (averagesTotal! / averages.length).round();
-    print(average); // 平均点を表示
-     final totalAverages = averagesTotal ?? 0;
      return folder = folder.copyWith(folderPercent: average);
   }).toList();
-
-
-
   return AnalysisController(sqliteRepo, folders);
 });
 

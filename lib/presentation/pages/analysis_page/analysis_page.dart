@@ -21,53 +21,56 @@ class AnalysisPage extends ConsumerWidget {
         automaticallyImplyLeading: true,
       ),
       body: SlidableAutoCloseBehavior(
-        child: Padding(
-          padding: EdgeInsets.only(top: 30.h),
-          child: CarouselSlider(
-            options: CarouselOptions(height: 500.0.h),
-            items: folders.map((folder) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Column(children: [
-                    Container(
-                      height: 150.h,
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                      ),
-                      child: Align(
-                        alignment: Alignment.center, // テキストを中央に配置
-                        child: Text(
-                          folder.name ?? '表示中にエラーが発生しました',
-                          style: const TextStyle(
-                            fontSize: 32.0,
-                            color: Colors.white,
+        child: folders.isEmpty
+            ? const Center(child: Text('現在分析ができない情報量です'))
+            : Padding(
+                padding: EdgeInsets.only(top: 30.h),
+                child: CarouselSlider(
+                  options: CarouselOptions(height: 500.0.h),
+                  items: folders.map((folder) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Column(children: [
+                          Container(
+                            height: 150.h,
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: const BoxDecoration(
+                              color: Colors.blue,
+                            ),
+                            child: Align(
+                              alignment: Alignment.center, // テキストを中央に配置
+                              child: Text(
+                                folder.name ?? '表示中にエラーが発生しました',
+                                style: const TextStyle(
+                                  fontSize: 32.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    const Gap(100),
-                    CircularPercentIndicator(
-                      animation: true,
-                      animationDuration: 2000,
-                      radius: 100.0,
-                      lineWidth: 50.0,
-                      percent: folder.folderPercent * 0.01,
-                      center:  Text('${folder.folderPercent}%',
-                        style: const TextStyle(
-                          fontSize: 32.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      progressColor: Colors.blue,
-                    ),
-                  ]);
-                },
-              );
-            }).toList(),
-          ),
-        ),
+                          const Gap(100),
+                          CircularPercentIndicator(
+                            animation: true,
+                            animationDuration: 2000,
+                            radius: 100.0,
+                            lineWidth: 50.0,
+                            percent: folder.folderPercent * 0.01,
+                            center: Text(
+                              '${folder.folderPercent}%',
+                              style: const TextStyle(
+                                fontSize: 32.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                            progressColor: Colors.blue,
+                          ),
+                        ]);
+                      },
+                    );
+                  }).toList(),
+                ),
+              ),
       ),
     );
   }
