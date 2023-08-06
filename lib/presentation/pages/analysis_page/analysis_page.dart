@@ -12,7 +12,7 @@ class AnalysisPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final folders = ref.watch(analysisProvider);
+    final folders = ref.watch(analysisProvider) ?? [];
 
     return Scaffold(
       appBar: AppBar(
@@ -22,7 +22,11 @@ class AnalysisPage extends ConsumerWidget {
       ),
       body: SlidableAutoCloseBehavior(
         child: folders.isEmpty
-            ? const Center(child: Text('現在分析ができない情報量です'))
+            ? const Center(
+                child: Text(
+                '現在分析ができない情報量です\nまたは「フォルダ」「ワード」\nが作成されていません。',
+                style: TextStyle(color: Colors.white),
+              ))
             : Padding(
                 padding: EdgeInsets.only(top: 30.h),
                 child: CarouselSlider(
@@ -52,7 +56,7 @@ class AnalysisPage extends ConsumerWidget {
                           const Gap(100),
                           CircularPercentIndicator(
                             animation: true,
-                            animationDuration: 2000,
+                            animationDuration: 3000,
                             radius: 100.0,
                             lineWidth: 50.0,
                             percent: folder.folderPercent * 0.01,
