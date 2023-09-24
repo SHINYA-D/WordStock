@@ -86,7 +86,7 @@ class AnalysisPage extends ConsumerWidget {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  progressColor: Colors.blue,
+                                  progressColor: Colors.cyanAccent,
                                 ),
                               ]);
                             },
