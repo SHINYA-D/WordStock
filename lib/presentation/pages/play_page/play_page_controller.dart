@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:wordstock/domain/enum/passed.dart';
 import 'package:wordstock/domain/word/word.dart';
@@ -64,4 +65,9 @@ class PlayPageController extends StateNotifier<List<SwipeItem>> {
       }
     }
   }
+
+  void notCardMove() {
+    matchEngine.currentItem!.slideUpdateAction(SlideRegion.inNopeRegion);
+  }
+
 }
