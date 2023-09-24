@@ -74,28 +74,40 @@ Widget _buildFlipCard(int index, List<Word> words) {
   return Consumer(builder: (context, ref, _) {
     ref.watch(playsProvider(words));
     final playCtr = ref.read(playsProvider(words).notifier);
+    Key uniqueKey = UniqueKey();
 
-    return FlipCard(
-      direction: FlipDirection.VERTICAL,
-      speed: 500,
-      front: Card(
-        margin: EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
-        child: SizedBox(
-          width: 380.w,
-          child: Center(
-              child: Text(
-                  playCtr.matchEngine.currentItem?.content[index].frontName ??
-                      '表示中にエラーが発生しました')),
+    return Dismissible(
+      key: uniqueKey,
+      onDismissed: (direction) {
+// TODO(SHINYA)スライドされた時の処理(現在スライド後の処理を書くと二重でスライドするのでスライドを止めている)
+        direction == DismissDirection.endToStart
+            ? playCtr.notCardMove()
+            : playCtr.notCardMove();
+      },
+      child: FlipCard(
+        direction: FlipDirection.VERTICAL,
+        speed: 500,
+        front: Card(
+          margin:
+              EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
+          child: SizedBox(
+            width: 380.w,
+            child: Center(
+                child: Text(
+                    playCtr.matchEngine.currentItem?.content[index].frontName ??
+                        '表示中にエラーが発生しました')),
+          ),
         ),
-      ),
-      back: Card(
-        margin: EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
-        child: SizedBox(
-          width: 380.w,
-          child: Center(
-            child: Text(
-                playCtr.matchEngine.currentItem?.content[index].backName ??
-                    '表示中にエラーが発生しました'),
+        back: Card(
+          margin:
+              EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
+          child: SizedBox(
+            width: 380.w,
+            child: Center(
+              child: Text(
+                  playCtr.matchEngine.currentItem?.content[index].backName ??
+                      '表示中にエラーが発生しました'),
+            ),
           ),
         ),
       ),
