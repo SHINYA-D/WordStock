@@ -1,0 +1,26 @@
+# ワークフローの名前（任意）
+name: front-github-actions
+# mainブランチに対してPRが作成されたタイミングをトリガーとする
+on:
+  push:
+    branches:- develop
+  pull_request:
+    branches:- develop
+# ワークフローで実行されるジョブをグループ化
+jobs:
+  # jobの名前を定義(適当に名前をつけてもいいやつ)
+  test:
+    runs-on: ubuntu-latest
+    # testジョブで実行されるステップをグループ化
+    steps:
+      - name: set up repository
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.3.10'
+      - name: Install packages
+          run: flutter pub get
+                 - name: Linter
+                 run: flutter analyze
+                 - name: Test
+                   run: flutter test
