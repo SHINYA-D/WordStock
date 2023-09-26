@@ -8,7 +8,7 @@ on:
     branches:- develop
 # ワークフローで実行されるジョブをグループ化
 jobs:
-  # jobの名前を定義(適当に名前をつけてもいいやつ)
+  # jobの名前を定義(適当に名前をつけてもいい)
   test:
     runs-on: ubuntu-latest
     # testジョブで実行されるステップをグループ化
