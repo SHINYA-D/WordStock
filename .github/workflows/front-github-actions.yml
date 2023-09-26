@@ -1,6 +1,6 @@
 # ワークフローの名前（任意）
 name: front-github-actions
-# mainブランチに対してPRが作成されたタイミングをトリガーとする
+# developブランチに対してPRが作成されたタイミングをトリガーとする
 on:
   push:
     branches:- develop
