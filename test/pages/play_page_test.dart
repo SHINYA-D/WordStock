@@ -6,15 +6,26 @@ import 'package:wordstock/repository/sqlite_repository.dart';
 
 import '../repository/dummy_repository.dart';
 
-final _testApp = ProviderScope(
-  overrides: [sqliteRepositoryProvider.overrideWithValue(DummyRepository())],
-  child: const App(),
-);
-
 void playPageTest() {
+  final testApp = ProviderScope(
+    overrides: [
+      sqliteRepositoryProvider
+          .overrideWithValue(DummyRepository(playResultScreen: false)),
+    ],
+    child: const App(),
+  );
+
+  final testBadApp = ProviderScope(
+    overrides: [
+      sqliteRepositoryProvider
+          .overrideWithValue(DummyRepository(playResultScreen: true)),
+    ],
+    child: const App(),
+  );
+
   group('PLAY画面', () {
     testWidgets('PLAY画面の表示（BADボタン押下）', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // フォルダ作成
       await tester.pump();
@@ -57,7 +68,7 @@ void playPageTest() {
     });
 
     testWidgets('PLAY画面の表示（GOODボタン押下）', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // フォルダ作成
       await tester.pump();
@@ -99,8 +110,8 @@ void playPageTest() {
       expect(find.byIcon(Icons.thumb_up_alt), findsNothing);
     });
 
-    testWidgets('PLAY画面の表示（成績表表示 BAD押下）', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+    testWidgets('成績表の表示（GOOD押下後の画面遷移先の表示）', (WidgetTester tester) async {
+      await tester.pumpWidget(testApp);
 
       // フォルダ作成
       await tester.pump();
@@ -123,12 +134,69 @@ void playPageTest() {
       await tester.tap(find.text('TEST開始'));
       await tester.pumpAndSettle();
 
+      int percent = 100;
+      int total = 1;
+
       // 1フレーム目
       expect(find.byIcon(Icons.highlight_off), findsOneWidget);
       expect(find.text('終了'), findsNothing);
       expect(find.text('間違えた箇所をもう一度'), findsNothing);
-      expect(find.text('正解率：0%'), findsNothing);
-      expect(find.text('問題数：1'), findsNothing);
+      expect(find.text('正解率：$percent' '%'), findsNothing);
+      expect(find.text('問題数：' '$total'), findsNothing);
+      expect(find.text('正：1'), findsNothing);
+      expect(find.text('誤：0'), findsNothing);
+
+      // GOODボタン押下
+      await tester.tap(find.byIcon(Icons.thumb_up_alt));
+      await tester.pumpAndSettle();
+
+      // 成績表表示画面 2フレーム目
+      expect(find.byIcon(Icons.highlight_off), findsNothing);
+      expect(find.text('終了'), findsOneWidget);
+      expect(find.text('成績表'), findsOneWidget);
+      await tester.pumpAndSettle();
+      expect(find.text('間違えた箇所をもう一度'), findsNothing);
+      expect(find.text('正解率：$percent' '%'), findsOneWidget);
+      await tester.pumpAndSettle();
+      expect(find.text('問題数：' '$total'), findsOneWidget);
+      expect(find.text('正：1'), findsOneWidget);
+      expect(find.text('誤：0'), findsOneWidget);
+    });
+
+    testWidgets('成績表の表示（BAD押下後の画面遷移先の表示）', (WidgetTester tester) async {
+      await tester.pumpWidget(testBadApp);
+
+      // フォルダ作成
+      await tester.pump();
+      expect(find.byIcon(Icons.folder), findsNothing);
+      await tester.tap(find.byIcon(Icons.create_new_folder));
+      await tester.pump();
+      await tester.tap(find.text('OK'));
+      await tester.pump();
+      await tester.pump();
+      expect(find.byIcon(Icons.folder), findsOneWidget);
+
+      // word画面遷移
+      await tester.tap(find.byIcon(Icons.folder));
+
+      // 再描画
+      await tester.pump();
+      await tester.pump();
+
+      // TEST画面遷移
+      await tester.tap(find.text('TEST開始'));
+      await tester.pumpAndSettle();
+
+      int percent = 0;
+      int total = 1;
+
+      // 1フレーム目
+      expect(find.byIcon(Icons.highlight_off), findsOneWidget);
+      expect(find.text('終了'), findsNothing);
+      expect(find.text('成績表'), findsNothing);
+      expect(find.text('間違えた箇所をもう一度'), findsNothing);
+      expect(find.text('正解率：$percent' '%'), findsNothing);
+      expect(find.text('問題数：' '$total'), findsNothing);
       expect(find.text('正：0'), findsNothing);
       expect(find.text('誤：1'), findsNothing);
 
@@ -139,62 +207,18 @@ void playPageTest() {
       // 成績表表示画面 2フレーム目
       expect(find.byIcon(Icons.highlight_off), findsNothing);
       expect(find.text('終了'), findsOneWidget);
+      expect(find.text('成績表'), findsOneWidget);
+      await tester.pumpAndSettle();
       expect(find.text('間違えた箇所をもう一度'), findsOneWidget);
-      expect(find.text('正解率：0%'), findsOneWidget);
-      expect(find.text('問題数：1'), findsOneWidget);
+      expect(find.text('正解率：$percent' '%'), findsOneWidget);
+      await tester.pumpAndSettle();
+      expect(find.text('問題数：' '$total'), findsOneWidget);
       expect(find.text('正：0'), findsOneWidget);
       expect(find.text('誤：1'), findsOneWidget);
     });
 
-    testWidgets('PLAY画面の表示（成績表表示 GOOD押下）', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
-
-      // フォルダ作成
-      await tester.pump();
-      expect(find.byIcon(Icons.folder), findsNothing);
-      await tester.tap(find.byIcon(Icons.create_new_folder));
-      await tester.pump();
-      await tester.tap(find.text('OK'));
-      await tester.pump();
-      await tester.pump();
-      expect(find.byIcon(Icons.folder), findsOneWidget);
-
-      // word画面遷移
-      await tester.tap(find.byIcon(Icons.folder));
-
-      // 再描画
-      await tester.pump();
-      await tester.pump();
-
-      // TEST画面遷移
-      await tester.tap(find.text('TEST開始'));
-      await tester.pumpAndSettle();
-
-      // 1フレーム目
-      expect(find.byIcon(Icons.highlight_off), findsOneWidget);
-      expect(find.text('終了'), findsNothing);
-      expect(find.text('間違えた箇所をもう一度'), findsNothing);
-      expect(find.text('正解率：0%'), findsNothing);
-      expect(find.text('問題数：1'), findsNothing);
-      expect(find.text('正：0'), findsNothing);
-      expect(find.text('誤：1'), findsNothing);
-
-      // GOODボタン押下
-      await tester.tap(find.byIcon(Icons.thumb_up_alt));
-      await tester.pumpAndSettle();
-
-      // 成績表表示画面 2フレーム目
-      expect(find.byIcon(Icons.highlight_off), findsNothing);
-      expect(find.text('終了'), findsOneWidget);
-      expect(find.text('間違えた箇所をもう一度'), findsNothing);
-      expect(find.text('正解率：100%'), findsOneWidget);
-      expect(find.text('問題数：1'), findsOneWidget);
-      expect(find.text('正：1'), findsOneWidget);
-      expect(find.text('誤：0'), findsOneWidget);
-    });
-
     testWidgets('単語削除画面', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // フォルダ作成
       await tester.pump();

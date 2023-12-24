@@ -23,7 +23,23 @@ class DummyFolder {
       time: 1111,
       percent: 20,
       average: 30,
-      passed: 'FLAT',
+      passed: 'OK',
+    )
+  ];
+
+  static List<Word> initialWordBad = [
+    Word(
+      id: 'id',
+      frontName: 'frontName',
+      backName: 'backName',
+      folderNameId: 'folderNameIdBad',
+      yesCount: 1,
+      noCount: 1,
+      play: 1,
+      time: 1111,
+      percent: 20,
+      average: 30,
+      passed: 'NG',
     )
   ];
 }

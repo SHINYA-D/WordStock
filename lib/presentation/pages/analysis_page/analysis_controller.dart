@@ -13,8 +13,8 @@ final analysisProvider = StateNotifierProvider.autoDispose<AnalysisController,
   final sqliteRepo = ref.read(sqliteRepositoryProvider);
   final allFolders = ref.watch(allFoldersProvider);
   final allWords = ref.watch(allWordsProvider);
-  //フォルダとワードが空の場合に「NULLの場合[]」を設定する処理が必要
-  //2つ以上の要素があり、１つ以上がからの時にエラーになる
+  // フォルダとワードが空の場合に「NULLの場合[]」を設定する処理が必要
+  // 2つ以上の要素があり、１つ以上が空の時にエラーになる
   final getAllFolders = allFolders.value ?? [];
   final getAllWords = allWords.value ?? [];
   final folders = getAllFolders.map((folder) {
@@ -26,6 +26,7 @@ final analysisProvider = StateNotifierProvider.autoDispose<AnalysisController,
     final List<int?> averages = matchingWordsByFolderId
         .map((oneAverage) => oneAverage.average)
         .toList();
+   // アベレージ計算
     final int? averagesTotal =
         averages.reduce((value, element) => value! + element!);
     final average = (averagesTotal! / averages.length).round();
