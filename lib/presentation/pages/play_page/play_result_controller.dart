@@ -27,7 +27,15 @@ class PlayResultController extends StateNotifier<AsyncValue<List<Word>>> {
 
   int get bad => _badCounts();
   int get good => _goodCounts();
-  int get accuracyRate => ((good / (good + bad)) * 100).floor();
+  int get accuracyRate {
+    int goodCount = good;
+    int badCount = bad;
+    if (goodCount + badCount == 0) {
+      // 分母が0の場合は0とするなど、適切なデフォルト値を設定
+      return 0;
+    }
+    return ((goodCount / (goodCount + badCount)) * 100).floor();
+  }
   int get total => bad + good;
   bool get visibleCheck => bad != 0 ? true : false;
   Future<List<Word>> get badReTest => sqliteRepo.getPointBad(folderId);

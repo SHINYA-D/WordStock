@@ -8,7 +8,7 @@ import '../repository/dummy_not_repository.dart';
 import '../repository/dummy_repository.dart';
 
 final _testApp = ProviderScope(
-  overrides: [sqliteRepositoryProvider.overrideWithValue(DummyRepository())],
+  overrides: [sqliteRepositoryProvider.overrideWithValue(DummyRepository(playResultScreen:false))],
   child: const App(),
 );
 
