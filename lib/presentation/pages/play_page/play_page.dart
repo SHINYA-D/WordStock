@@ -14,9 +14,7 @@ class PlayPage extends ConsumerWidget {
     final word = ModalRoute.of(context)?.settings.arguments;
     final words = word as List<Word>;
 
-    ref.watch(playsProvider(words));
-
-    final playCtr = ref.read(playsProvider(words).notifier);
+    final state = ref.watch(playPageControllerProvider(words));
 
 /*==============================================================================
 【プレイ画面】
@@ -43,7 +41,7 @@ class PlayPage extends ConsumerWidget {
           SizedBox(
             height: 350.h,
             child: SwipeCards(
-                matchEngine: playCtr.matchEngine,
+                matchEngine: state.matchEngine!,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.only(
@@ -53,6 +51,7 @@ class PlayPage extends ConsumerWidget {
                     child: _buildFlipCard(index, words),
                   );
                 },
+
                 //全カードスワイプ後の処理
                 onStackFinished: () async {
                   await Navigator.of(context).pushNamedAndRemoveUntil(
@@ -72,42 +71,28 @@ class PlayPage extends ConsumerWidget {
 ==============================================================================*/
 Widget _buildFlipCard(int index, List<Word> words) {
   return Consumer(builder: (context, ref, _) {
-    ref.watch(playsProvider(words));
-    final playCtr = ref.read(playsProvider(words).notifier);
-    Key uniqueKey = UniqueKey();
-
-    return Dismissible(
-      key: uniqueKey,
-      onDismissed: (direction) {
-// TODO(SHINYA)スライドされた時の処理(現在スライド後の処理を書くと二重でスライドするのでスライドを止めている)
-        direction == DismissDirection.endToStart
-            ? playCtr.notCardMove()
-            : playCtr.notCardMove();
-      },
-      child: FlipCard(
-        direction: FlipDirection.VERTICAL,
-        speed: 500,
-        front: Card(
-          margin:
-              EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
-          child: SizedBox(
-            width: 380.w,
-            child: Center(
-                child: Text(
-                    playCtr.matchEngine.currentItem?.content[index].frontName ??
-                        '表示中にエラーが発生しました')),
-          ),
-        ),
-        back: Card(
-          margin:
-              EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
-          child: SizedBox(
-            width: 380.w,
-            child: Center(
+    final state = ref.watch(playPageControllerProvider(words));
+    return FlipCard(
+      direction: FlipDirection.VERTICAL,
+      speed: 500,
+      front: Card(
+        margin: EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
+        child: SizedBox(
+          width: 380.w,
+          child: Center(
               child: Text(
-                  playCtr.matchEngine.currentItem?.content[index].backName ??
-                      '表示中にエラーが発生しました'),
-            ),
+                  state.matchEngine!.currentItem!.content[index].frontName ??
+                      '表示中にエラーが発生しました')),
+        ),
+      ),
+      back: Card(
+        margin: EdgeInsets.only(top: 10.h, right: 0.w, bottom: 0.h, left: 15.w),
+        child: SizedBox(
+          width: 380.w,
+          child: Center(
+            child: Text(
+                state.matchEngine!.currentItem!.content[index].backName ??
+                    '表示中にエラーが発生しました'),
           ),
         ),
       ),
@@ -120,9 +105,7 @@ Widget _buildFlipCard(int index, List<Word> words) {
 ==============================================================================*/
 Widget _buildButton(List<Word> words) {
   return Consumer(builder: (context, ref, _) {
-    ref.watch(playsProvider(words));
-
-    final playCtr = ref.read(playsProvider(words).notifier);
+    final ctr = ref.watch(playPageControllerProvider(words).notifier);
 
     return Padding(
       padding: EdgeInsets.only(top: 40.h),
@@ -140,7 +123,7 @@ Widget _buildButton(List<Word> words) {
                 side: const BorderSide(color: Colors.blue),
               ),
               onPressed: () {
-                playCtr.nope();
+                ctr.nope();
               },
               child: const Icon(
                 Icons.thumb_down_alt,
@@ -158,7 +141,7 @@ Widget _buildButton(List<Word> words) {
                 side: const BorderSide(color: Colors.blue),
               ),
               onPressed: () {
-                playCtr.like();
+                ctr.like();
               },
               child: const Icon(
                 Icons.thumb_up_alt,
