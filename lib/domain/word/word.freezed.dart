@@ -24,12 +24,12 @@ mixin _$Word {
   String? get frontName => throw _privateConstructorUsedError;
   String? get backName => throw _privateConstructorUsedError;
   String? get folderNameId => throw _privateConstructorUsedError;
-  int? get yesCount => throw _privateConstructorUsedError;
-  int? get noCount => throw _privateConstructorUsedError;
-  int? get play => throw _privateConstructorUsedError;
+  int? get yesCount => throw _privateConstructorUsedError; //変動
+  int? get noCount => throw _privateConstructorUsedError; //変動
+  int? get play => throw _privateConstructorUsedError; //変動
   int? get time => throw _privateConstructorUsedError;
-  int? get percent => throw _privateConstructorUsedError;
-  int? get average => throw _privateConstructorUsedError;
+  int? get percent => throw _privateConstructorUsedError; //変動・正解率(使用していないです)
+  int? get average => throw _privateConstructorUsedError; //変動・正解率
   String? get passed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -248,16 +248,21 @@ class _$_Word implements _Word {
   final String? folderNameId;
   @override
   final int? yesCount;
+//変動
   @override
   final int? noCount;
+//変動
   @override
   final int? play;
+//変動
   @override
   final int? time;
   @override
   final int? percent;
+//変動・正解率(使用していないです)
   @override
   final int? average;
+//変動・正解率
   @override
   final String? passed;
 
@@ -333,17 +338,17 @@ abstract class _Word implements Word {
   String? get folderNameId;
   @override
   int? get yesCount;
-  @override
+  @override //変動
   int? get noCount;
-  @override
+  @override //変動
   int? get play;
-  @override
+  @override //変動
   int? get time;
   @override
   int? get percent;
-  @override
+  @override //変動・正解率(使用していないです)
   int? get average;
-  @override
+  @override //変動・正解率
   String? get passed;
   @override
   @JsonKey(ignore: true)
