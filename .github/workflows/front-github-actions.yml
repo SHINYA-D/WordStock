@@ -13,14 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     # testジョブで実行されるステップをグループ化
     steps:
+      #Ubuntuサーバが準備できたら、現在のソースコードをダウンロードします。
+      - uses: actions/checkout@v3
+     #Flutterの開発環境を構築する必要があります。
+      - uses: subosito/flutter-action@v2.3.0
       - name: set up repository
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.3.10'
+     #構築された環境で現在Flutterで使っている全てのパッケージをインストールして、Linterとテストコードを実行します。
       - name: Install packages
-          run: flutter pub get
-                 - name: Linter
-                 run: flutter analyze
-                 - name: Test
-                   run: flutter test
+        run: flutter pub get
+      - name: Linter
+        run: flutter analyze
+      - name: Test
+        run: flutter test
