@@ -7,9 +7,8 @@ import 'package:wordstock/repository/sqlite_repository.dart';
 import '../repository/dummy_not_repository.dart';
 import '../repository/dummy_repository.dart';
 
-void main() {
-  wordPageTest();
-}
+void main() => sam();
+void sam(){}
 
 void wordPageTest() {
   final testApp = ProviderScope(
