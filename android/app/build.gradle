@@ -63,7 +63,7 @@ android {
         //targetSdkVersion flutter.targetSdkVersion //20230510
         applicationId "jp.co.daigenshinya.wordstock"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         //targetSdkVersion localProperties.getProperty('flutter.targetSdkVersion').toInteger()
