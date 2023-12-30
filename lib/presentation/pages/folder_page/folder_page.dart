@@ -28,7 +28,7 @@ class FolderPage extends ConsumerWidget {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.insights),
+            icon: const Icon(Icons.insights),
             onPressed: () {
               Navigator.pushNamed(context, "/analysis_screen",);
             },
