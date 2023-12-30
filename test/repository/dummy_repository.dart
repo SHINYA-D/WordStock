@@ -7,6 +7,8 @@ import '../domain/folder/dummy_folder.dart';
 import '../domain/word/dummy_word.dart';
 
 class DummyRepository implements SqliteRepository {
+  DummyRepository({required this.playResultScreen});
+  final bool playResultScreen;
   @override
   // TODO: implement database
   Future<Database?> get database => throw UnimplementedError();
@@ -36,8 +38,14 @@ class DummyRepository implements SqliteRepository {
   }
 
   @override
-  Future<List<Word>> getPointWords(String folderIdNum) =>
-      Future.value(DummyFolder.initialWordValue);
+  Future<List<Word>> getPointWords(String folderIdNum) {
+    if(playResultScreen){
+        return Future.value(DummyFolder.initialWordBad);
+    }else{
+      return  Future.value(DummyFolder.initialWordValue);
+    }
+  }
+
 
   @override
   Future<List<Word>> getWords() {

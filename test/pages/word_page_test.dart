@@ -7,20 +7,28 @@ import 'package:wordstock/repository/sqlite_repository.dart';
 import '../repository/dummy_not_repository.dart';
 import '../repository/dummy_repository.dart';
 
-final _testApp = ProviderScope(
-  overrides: [sqliteRepositoryProvider.overrideWithValue(DummyRepository())],
-  child: const App(),
-);
-
-final _notApp = ProviderScope(
-  overrides: [sqliteRepositoryProvider.overrideWithValue(DummyNotRepository())],
-  child: const App(),
-);
+void main() => sam();
+void sam(){}
 
 void wordPageTest() {
+  final testApp = ProviderScope(
+    overrides: [
+      sqliteRepositoryProvider
+          .overrideWithValue(DummyRepository(playResultScreen: false))
+    ],
+    child: const App(),
+  );
+
+  final notApp = ProviderScope(
+    overrides: [
+      sqliteRepositoryProvider.overrideWithValue(DummyNotRepository())
+    ],
+    child: const App(),
+  );
+
   group('単語一覧画面', () {
     testWidgets('単語一覧画面の表示（１つ以上ある場合)', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // フォルダ作成
       await tester.pump();
@@ -53,7 +61,7 @@ void wordPageTest() {
     });
 
     testWidgets('単語一覧画面の表示（何もない場合)', (WidgetTester tester) async {
-      await tester.pumpWidget(_notApp);
+      await tester.pumpWidget(notApp);
 
       // フォルダ作成
       await tester.pump();
@@ -86,7 +94,7 @@ void wordPageTest() {
     });
 
     testWidgets('単語登録画面（1つ以上ある場合)', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // フォルダ作成
       await tester.pump();
@@ -138,7 +146,7 @@ void wordPageTest() {
     });
 
     testWidgets('単語登録画面（何もない場合)', (WidgetTester tester) async {
-      await tester.pumpWidget(_notApp);
+      await tester.pumpWidget(notApp);
 
       // フォルダ作成
       await tester.pump();
@@ -190,7 +198,7 @@ void wordPageTest() {
     });
 
     testWidgets('単語編集画面', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // フォルダ作成
       await tester.pump();
@@ -232,7 +240,7 @@ void wordPageTest() {
     });
 
     testWidgets('単語編集画面（スライド）', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // フォルダ作成
       await tester.pump();

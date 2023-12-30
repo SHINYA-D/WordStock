@@ -163,14 +163,14 @@ class SqliteRepository {
 【登録】
 ==============================================================================*/
   //Folder登録
-  Future<void> registerFolder(Folder indata) async {
+  Future<void> registerFolder(Folder inData) async {
     final Database? db = await database;
     if (db == null) {
       throw const ErrorPage('DB:Folder登録にエラーが発生しました');
     }
     await db.insert(
       'folders',
-      indata.toJson(),
+      inData.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }

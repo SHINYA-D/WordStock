@@ -28,7 +28,7 @@ mixin _$Word {
   int? get noCount => throw _privateConstructorUsedError;
   int? get play => throw _privateConstructorUsedError;
   int? get time => throw _privateConstructorUsedError;
-  int? get percent => throw _privateConstructorUsedError;
+  int? get percent => throw _privateConstructorUsedError; //(使用していないです_削除予定)
   int? get average => throw _privateConstructorUsedError;
   String? get passed => throw _privateConstructorUsedError;
 
@@ -256,6 +256,7 @@ class _$_Word implements _Word {
   final int? time;
   @override
   final int? percent;
+//(使用していないです_削除予定)
   @override
   final int? average;
   @override
@@ -341,7 +342,7 @@ abstract class _Word implements Word {
   int? get time;
   @override
   int? get percent;
-  @override
+  @override //(使用していないです_削除予定)
   int? get average;
   @override
   String? get passed;

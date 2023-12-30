@@ -1,73 +1,122 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swipe_cards/draggable_card.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:wordstock/domain/enum/passed.dart';
+import 'package:wordstock/domain/play/play.dart';
 import 'package:wordstock/domain/word/word.dart';
 import 'package:wordstock/repository/sqlite_repository.dart';
 
-final pointWordsProvider = FutureProvider.autoDispose
-    .family<List<Word>, String>((ref, folderId) =>
-        ref.read(sqliteRepositoryProvider).getPointWords(folderId));
+part 'play_page_controller.g.dart';
 
-final playsProvider = StateNotifierProvider.autoDispose
-    .family<PlayPageController, List<SwipeItem>, List<Word>>((ref, words) {
-  final sqliteRepo = ref.read(sqliteRepositoryProvider);
+@riverpod
+class PlayPageController extends _$PlayPageController {
+  @override
+  Play build(List<Word> words) {
+    final sqliteRepo = ref.read(sqliteRepositoryProvider);
+    List<SwipeItem> swipeItems = [];
+    List.generate(
+      words.length,
+      (index) => swipeItems.add(
+        SwipeItem(
+          content: words,
+          likeAction: () {
+            final words = state.words.map((word) {
+              if (word.id != state.words[index].id) {
+                return word;
+              } else {
+                return state.words[index].copyWith(
+                  yesCount: state.words[index].yesCount! + 1,
+                  play: state.words[index].play! + 1,
+                  passed: passedJudgement(Passed.good),
+                );
+              }
+            }).toList();
+            state = state.copyWith(words: words);
+            sqliteRepo.upWord(state.words[index]);
+          },
+          nopeAction: () {
+            final words = state.words.map((word) {
+              if (word.id != state.words[index].id) {
+                return word;
+              } else {
+                return state.words[index].copyWith(
+                  noCount: state.words[index].noCount! + 1,
+                  play: state.words[index].play! + 1,
+                  passed: passedJudgement(Passed.bad),
+                );
+              }
+            }).toList();
+            state = state.copyWith(words: words);
+            sqliteRepo.upWord(state.words[index]);
+          },
+          superlikeAction: () {
+            final words = state.words.map((word) {
+              if (word.id != state.words[index].id) {
+                return word;
+              } else {
+                return state.words[index].copyWith(
+                  yesCount: state.words[index].yesCount! + 1,
+                  play: state.words[index].play! + 1,
+                  passed: passedJudgement(Passed.good),
+                );
+              }
+            }).toList();
+            state = state.copyWith(words: words);
+            sqliteRepo.upWord(state.words[index]);
+          },
+        ),
+      ),
+    );
 
-  final swipeItems = List.generate(
-    words.length,
-    (index) => SwipeItem(
-      content: words,
-    ),
-  );
+    final MatchEngine matchEngine = MatchEngine(swipeItems: swipeItems);
 
-  final matchEngine = MatchEngine(swipeItems: swipeItems);
-  final pointWordProvider =
-      ref.watch(pointWordsProvider(words[0].folderNameId ?? '引数が空です'));
-
-  return PlayPageController(
-      swipeItems, matchEngine, sqliteRepo, pointWordProvider);
-});
-
-class PlayPageController extends StateNotifier<List<SwipeItem>> {
-  PlayPageController(
-      List<SwipeItem> swipeItems, this.matchEngine, this.sqliteRepo, this.words)
-      : super(swipeItems);
-
-  final SqliteRepository sqliteRepo;
-
-  final MatchEngine matchEngine;
-
-  final AsyncValue<List<Word>> words;
+    return Play(
+      swipeItems: swipeItems,
+      matchEngine: matchEngine,
+      words: words,
+    );
+  }
 
   void nope() {
-    matchEngine.currentItem?.nope();
-    for (int i = 0; i < state.length; i++) {
-      if (matchEngine.currentItem?.hashCode == state[i].hashCode) {
+    if (state.matchEngine == null) return;
+    final sqliteRepo = ref.read(sqliteRepositoryProvider);
+    final matchEngine = state.matchEngine;
+    matchEngine!.currentItem?.nope();
+
+    for (int i = 0; i < state.words.length; i++) {
+      if (matchEngine.currentItem?.hashCode == state.words[i].hashCode) {
         // フラグをステイト側に付与
-        state[i].content[i] = state[i].content[i].copyWith(passed: passedJudgement(Passed.bad));
+        state.words[i] =
+            state.words[i].copyWith(passed: passedJudgement(Passed.bad));
         // バッドポイントをステイト側に付与
-        state[i].content[i] = state[i].content[i].copyWith(noCount: state[i].content[i].noCount + 1);
-        sqliteRepo.upWord(state[i].content[i]);
+        state.words[i] =
+            state.words[i].copyWith(noCount: state.words[i].noCount ?? 0 + 1);
+        // プレイ回数を付与
+        state.words[i] =
+            state.words[i].copyWith(play: state.words[i].play ?? 0 + 1);
+        sqliteRepo.upWord(state.words[i]);
       }
     }
   }
 
   void like() {
-    matchEngine.currentItem?.like();
-    for (int i = 0; i < state.length; i++) {
-      if (matchEngine.currentItem?.hashCode == state[i].hashCode) {
+    if (state.matchEngine == null) return;
+    final sqliteRepo = ref.read(sqliteRepositoryProvider);
+    final matchEngine = state.matchEngine;
+    matchEngine!.currentItem?.like();
+
+    for (int i = 0; i < state.words.length; i++) {
+      if (matchEngine.currentItem?.hashCode == state.words[i].hashCode) {
         // フラグをステイト側に付与
-        state[i].content[i] =
-            state[i].content[i].copyWith(passed: passedJudgement(Passed.good));
+        state.words[i] =
+            state.words[i].copyWith(passed: passedJudgement(Passed.good));
         // グットポイントをステイト側に付与
-        state[i].content[i] = state[i].content[i].copyWith(yesCount: state[i].content[i].yesCount + 1);
-        sqliteRepo.upWord(state[i].content[i]);
+        state.words[i] =
+            state.words[i].copyWith(yesCount: state.words[i].yesCount ?? 0 + 1);
+        // プレイ回数を付与
+        state.words[i] =
+            state.words[i].copyWith(play: state.words[i].play ?? 0 + 1);
+        sqliteRepo.upWord(state.words[i]);
       }
     }
   }
-
-  void notCardMove() {
-    matchEngine.currentItem!.slideUpdateAction(SlideRegion.inNopeRegion);
-  }
-
 }
