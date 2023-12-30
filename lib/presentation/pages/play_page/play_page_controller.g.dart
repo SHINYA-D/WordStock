@@ -7,7 +7,7 @@ part of 'play_page_controller.dart';
 // **************************************************************************
 
 String _$playPageControllerHash() =>
-    r'c53de09ff66a1d86bcc49adf86a88f8381ce9370';
+    r'bc0b7ea8813e3d3de5cb4e7c3476708cec76c99d';
 
 /// Copied from Dart SDK
 class _SystemHash {
