@@ -23,7 +23,6 @@ mixin _$Folder {
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   int get folderPercent => throw _privateConstructorUsedError;
-  List<Word>? get words => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +34,7 @@ abstract class $FolderCopyWith<$Res> {
   factory $FolderCopyWith(Folder value, $Res Function(Folder) then) =
       _$FolderCopyWithImpl<$Res, Folder>;
   @useResult
-  $Res call({String? id, String? name, int folderPercent, List<Word>? words});
+  $Res call({String? id, String? name, int folderPercent});
 }
 
 /// @nodoc
@@ -54,7 +53,6 @@ class _$FolderCopyWithImpl<$Res, $Val extends Folder>
     Object? id = freezed,
     Object? name = freezed,
     Object? folderPercent = null,
-    Object? words = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -69,10 +67,6 @@ class _$FolderCopyWithImpl<$Res, $Val extends Folder>
           ? _value.folderPercent
           : folderPercent // ignore: cast_nullable_to_non_nullable
               as int,
-      words: freezed == words
-          ? _value.words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<Word>?,
     ) as $Val);
   }
 }
@@ -83,7 +77,7 @@ abstract class _$$_FolderCopyWith<$Res> implements $FolderCopyWith<$Res> {
       __$$_FolderCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String? name, int folderPercent, List<Word>? words});
+  $Res call({String? id, String? name, int folderPercent});
 }
 
 /// @nodoc
@@ -99,7 +93,6 @@ class __$$_FolderCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? folderPercent = null,
-    Object? words = freezed,
   }) {
     return _then(_$_Folder(
       id: freezed == id
@@ -114,10 +107,6 @@ class __$$_FolderCopyWithImpl<$Res>
           ? _value.folderPercent
           : folderPercent // ignore: cast_nullable_to_non_nullable
               as int,
-      words: freezed == words
-          ? _value._words
-          : words // ignore: cast_nullable_to_non_nullable
-              as List<Word>?,
     ));
   }
 }
@@ -125,12 +114,7 @@ class __$$_FolderCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Folder with DiagnosticableTreeMixin implements _Folder {
-  _$_Folder(
-      {this.id,
-      this.name,
-      this.folderPercent = 0,
-      final List<Word>? words = const []})
-      : _words = words;
+  _$_Folder({this.id, this.name, this.folderPercent = 0});
 
   factory _$_Folder.fromJson(Map<String, dynamic> json) =>
       _$$_FolderFromJson(json);
@@ -142,20 +126,10 @@ class _$_Folder with DiagnosticableTreeMixin implements _Folder {
   @override
   @JsonKey()
   final int folderPercent;
-  final List<Word>? _words;
-  @override
-  @JsonKey()
-  List<Word>? get words {
-    final value = _words;
-    if (value == null) return null;
-    if (_words is EqualUnmodifiableListView) return _words;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Folder(id: $id, name: $name, folderPercent: $folderPercent, words: $words)';
+    return 'Folder(id: $id, name: $name, folderPercent: $folderPercent)';
   }
 
   @override
@@ -165,8 +139,7 @@ class _$_Folder with DiagnosticableTreeMixin implements _Folder {
       ..add(DiagnosticsProperty('type', 'Folder'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('folderPercent', folderPercent))
-      ..add(DiagnosticsProperty('words', words));
+      ..add(DiagnosticsProperty('folderPercent', folderPercent));
   }
 
   @override
@@ -177,14 +150,12 @@ class _$_Folder with DiagnosticableTreeMixin implements _Folder {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.folderPercent, folderPercent) ||
-                other.folderPercent == folderPercent) &&
-            const DeepCollectionEquality().equals(other._words, _words));
+                other.folderPercent == folderPercent));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, folderPercent,
-      const DeepCollectionEquality().hash(_words));
+  int get hashCode => Object.hash(runtimeType, id, name, folderPercent);
 
   @JsonKey(ignore: true)
   @override
@@ -204,8 +175,7 @@ abstract class _Folder implements Folder {
   factory _Folder(
       {final String? id,
       final String? name,
-      final int folderPercent,
-      final List<Word>? words}) = _$_Folder;
+      final int folderPercent}) = _$_Folder;
 
   factory _Folder.fromJson(Map<String, dynamic> json) = _$_Folder.fromJson;
 
@@ -215,8 +185,6 @@ abstract class _Folder implements Folder {
   String? get name;
   @override
   int get folderPercent;
-  @override
-  List<Word>? get words;
   @override
   @JsonKey(ignore: true)
   _$$_FolderCopyWith<_$_Folder> get copyWith =>
