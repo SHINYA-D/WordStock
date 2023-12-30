@@ -7,18 +7,25 @@ import 'package:wordstock/repository/sqlite_repository.dart';
 import '../repository/dummy_not_repository.dart';
 import '../repository/dummy_repository.dart';
 
-void wordPageTest() {
+void main() {
+  wordPageTest();
+}
 
+void wordPageTest() {
   final testApp = ProviderScope(
-    overrides: [sqliteRepositoryProvider.overrideWithValue(DummyRepository(playResultScreen:false))],
+    overrides: [
+      sqliteRepositoryProvider
+          .overrideWithValue(DummyRepository(playResultScreen: false))
+    ],
     child: const App(),
   );
 
   final notApp = ProviderScope(
-    overrides: [sqliteRepositoryProvider.overrideWithValue(DummyNotRepository())],
+    overrides: [
+      sqliteRepositoryProvider.overrideWithValue(DummyNotRepository())
+    ],
     child: const App(),
   );
-
 
   group('単語一覧画面', () {
     testWidgets('単語一覧画面の表示（１つ以上ある場合)', (WidgetTester tester) async {

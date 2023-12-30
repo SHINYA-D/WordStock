@@ -6,6 +6,10 @@ import 'package:wordstock/repository/sqlite_repository.dart';
 
 import '../repository/dummy_repository.dart';
 
+void main() {
+  playPageTest();
+}
+
 void playPageTest() {
   final testApp = ProviderScope(
     overrides: [
