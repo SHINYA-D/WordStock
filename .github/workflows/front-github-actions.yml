@@ -1,29 +1,26 @@
 # ワークフローの名前（任意）
 name: front-github-actions
 # mainブランチに対してPRが作成されたタイミングをトリガーとする
+# つまり、どのタイミングでこのワークフローが走るかが「on:」では定義されています
 on:
-  push:
-    branches:- develop
+  push: #pushはトリガー
+    branches: [develop] #ここで具体的なトリガーのタイミングを指示
   pull_request:
-    branches:- develop
-# ワークフローで実行されるジョブをグループ化
+    branches: [develop]
+    types: [opened, synchronize]
+
 jobs:
-  # jobの名前を定義(適当に名前をつけてもいい)
-  test:
+  test_create_name:
+    name: widget test for wordstock
     runs-on: ubuntu-latest
-    # testジョブで実行されるステップをグループ化
     steps:
-      #Ubuntuサーバが準備できたら、現在のソースコードをダウンロードします。
-      - uses: actions/checkout@v3
-     #Flutterの開発環境を構築する必要があります。
+      - name: check out
+        uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2.3.0
-      - name: set up repository
         with:
-          flutter-version: '3.3.10'
-     #構築された環境で現在Flutterで使っている全てのパッケージをインストールして、Linterとテストコードを実行します。
+          flutter-version: ' 3.13.4'
       - name: Install packages
         run: flutter pub get
-      - name: Linter
-        run: flutter analyze
-      - name: Test
-        run: flutter test
+      - run: flutter analyze
+        name: Test
+      - run: flutter test
