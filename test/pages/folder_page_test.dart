@@ -7,20 +7,25 @@ import 'package:wordstock/repository/sqlite_repository.dart';
 import '../repository/dummy_not_repository.dart';
 import '../repository/dummy_repository.dart';
 
-final _testApp = ProviderScope(
-  overrides: [sqliteRepositoryProvider.overrideWithValue(DummyRepository(playResultScreen:false))],
-  child: const App(),
-);
-
-final _notApp = ProviderScope(
-  overrides: [sqliteRepositoryProvider.overrideWithValue(DummyNotRepository())],
-  child: const App(),
-);
-
 void folderPageTest() {
+  final testApp = ProviderScope(
+    overrides: [
+      sqliteRepositoryProvider
+          .overrideWithValue(DummyRepository(playResultScreen: false))
+    ],
+    child: const App(),
+  );
+
+  final notApp = ProviderScope(
+    overrides: [
+      sqliteRepositoryProvider.overrideWithValue(DummyNotRepository())
+    ],
+    child: const App(),
+  );
+
   group('フォルダ一覧画面', () {
     testWidgets('フォルダ一覧画面の表示（1つ以上ある場合)', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // 1フレーム目
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -35,7 +40,7 @@ void folderPageTest() {
     });
 
     testWidgets('フォルダ一覧画面の表示（何もない時)', (WidgetTester tester) async {
-      await tester.pumpWidget(_notApp);
+      await tester.pumpWidget(notApp);
 
       // 1フレーム目
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -50,7 +55,7 @@ void folderPageTest() {
     });
 
     testWidgets('フォルダの登録画面（1つ以上ある場合）', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // 再描画
       await tester.pump();
@@ -71,7 +76,7 @@ void folderPageTest() {
     });
 
     testWidgets('フォルダの登録画面（何もない時）', (WidgetTester tester) async {
-      await tester.pumpWidget(_notApp);
+      await tester.pumpWidget(notApp);
 
       // 再描画
       await tester.pump();
@@ -92,7 +97,7 @@ void folderPageTest() {
     });
 
     testWidgets('フォルダの編集画面', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // 再描画
       await tester.pump();
@@ -118,7 +123,7 @@ void folderPageTest() {
     });
 
     testWidgets('フォルダの削除画面', (WidgetTester tester) async {
-      await tester.pumpWidget(_testApp);
+      await tester.pumpWidget(testApp);
 
       // 再描画
       await tester.pump();
