@@ -12,16 +12,19 @@ on:
 jobs:
   test_create_name:
     name: widget test for wordstock
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: check out
         uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          #ref: ${{ github.event.pull_request.head.sha }}
           flutter-version: '3.13.4'
           channel: "stable"
           cache: true
+      - name: Run flutter version
+        run: flutter --version
       - name: Install packages
         run: flutter pub get
       - run: flutter analyze
