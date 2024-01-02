@@ -1,12 +1,12 @@
 # ワークフローの名前（任意）
-name: front-github-actions
+name: front-github-actions_CI
 # mainブランチに対してPRが作成されたタイミングをトリガーとする
 # つまり、どのタイミングでこのワークフローが走るかが「on:」では定義されています
 on:
   push: #pushはトリガー
-    branches: [develop] #ここで具体的なトリガーのタイミングを指示
+    branches: [master,develop] #ここで具体的なトリガーのタイミングを指示
   pull_request:
-    branches: [develop]
+    branches: [master,develop]
     types: [opened, synchronize]
 
 jobs:
@@ -19,7 +19,6 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
           flutter-version: '3.13.4'
           channel: "stable"
           cache: true
