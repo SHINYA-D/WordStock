@@ -1,0 +1,77 @@
+name: Prepare release
+
+# 下記全体では、envが使用されているが、envには変数を設定して値を入れることができるが、
+# それはワークフローが実行中のみ限定で、実行完了後には変数の値はリッセットされる。
+
+on:
+  # ワークフローのトリガー定義(githubのページで以下の項目を入力することができる)
+  workflow_dispatch:
+    inputs:
+      release:
+        # ユーザーが選択できるリリースの種類を指定します。(日本語とかでもOK)
+        # 下記でユーザーが選択した項目は、そのワークフロー内のステップやジョブで利用することができます。
+        # 具体的には、env キーを使用して変数にセットされ、後続のステップやジョブでこれらの変数を利用することができます
+        # (変数の使用方法の例)下記
+        # env:
+        #  RELEASE_TYPE: ${{ github.event.inputs.release }}
+        description: 'Chose release type. (major, minor, revision)'
+        required: true
+        default: 'revision'
+        type: choice
+        options:
+          - revision
+          - minor
+          - major
+      ios:
+        description: 'include ios'
+        type: boolean
+        default: true
+      android:
+        description: 'include android'
+        type: boolean
+        default: true
+
+# jobsの設定
+jobs:
+  prepare-release:
+    runs-on: macos-latest
+    outputs:
+      pr_url: ${{ steps.create_pr.outputs.PR_URL }}
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      # Gitの設定
+      - uses: actions/checkout@v3
+      - name: Setting Git User
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+      # 環境変数の設定
+      - name: Set Value
+        run: |
+          now=$(TZ=UTC-9 date '+%Y%m%d_%H%M%S')
+          branch_name="release/${now}"
+
+          echo BRANCH_TITLE=$branch_name >> $GITHUB_ENV
+          echo PR_TITLE=$branch_name >> $GITHUB_ENV
+      # ブランチの作成と移動
+      - name: Git checkout
+        run: git checkout -b ${{ env.BRANCH_TITLE }}
+      # ファイルの編集
+      - name: Update version
+        # ここでバージョン番号の更新が行われます。バージョンの更新は、JS のスクリプトを用います。実行するスクリプトは以下になります。
+        env:
+          RELEASE_TYPE: ${{ github.event.inputs.release }}
+          ENABLE_IOS: ${{ fromJson(github.event.inputs.ios )}}
+          ENABLE_ANDROID: ${{ fromJson(github.event.inputs.android )}}
+        run: |
+          npx zx ./scripts/zx/replace_new_version.mjs
+          git add -u
+          git commit -m "update version text"
+          git push --set-upstream origin ${{ env.BRANCH_TITLE }}
+      # PRの作成
+      - name: Create release pr
+        run: |
+          version=$(jq -r ".ios.version | tostring" ./version.json)
+          BODY=v${version}のリリース
+          gh pr create -B "master" -t ${{ env.PR_TITLE }} -b ${BODY} --label release --label release:ios --label release:android
