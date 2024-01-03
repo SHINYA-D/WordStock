@@ -1,0 +1,11 @@
+{
+  "android": {
+    "version": "2.0.1+2",
+    "code": "2.0"
+  },
+  "ios": {
+    "version": "2.0.1+1",
+    "buildNumber": "2.0"
+  },
+  "inherit": true
+}
