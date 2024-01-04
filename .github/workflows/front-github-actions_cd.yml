@@ -1,77 +1,55 @@
-name: Prepare release
-
-# 下記全体では、envが使用されているが、envには変数を設定して値を入れることができるが、
-# それはワークフローが実行中のみ限定で、実行完了後には変数の値はリッセットされる。
+name: front-github-actions_CD
 
 on:
-  # ワークフローのトリガー定義(githubのページで以下の項目を入力することができる)
-  workflow_dispatch:
-    inputs:
-      release:
-        # ユーザーが選択できるリリースの種類を指定します。(日本語とかでもOK)
-        # 下記でユーザーが選択した項目は、そのワークフロー内のステップやジョブで利用することができます。
-        # 具体的には、env キーを使用して変数にセットされ、後続のステップやジョブでこれらの変数を利用することができます
-        # (変数の使用方法の例)下記
-        # env:
-        #  RELEASE_TYPE: ${{ github.event.inputs.release }}
-        description: 'Chose release type. (major, minor, revision)'
-        required: true
-        default: 'revision'
-        type: choice
-        options:
-          - revision
-          - minor
-          - major
-      ios:
-        description: 'include ios'
-        type: boolean
-        default: true
-      android:
-        description: 'include android'
-        type: boolean
-        default: true
+  main branch
+push:
+  branches: [ master ]
 
-# jobsの設定
 jobs:
-  prepare-release:
-    runs-on: macos-latest
-    outputs:
-      pr_url: ${{ steps.create_pr.outputs.PR_URL }}
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      # Gitの設定
-      - uses: actions/checkout@v3
-      - name: Setting Git User
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-      # 環境変数の設定
-      - name: Set Value
-        run: |
-          now=$(TZ=UTC-9 date '+%Y%m%d_%H%M%S')
-          branch_name="release/${now}"
+  #
+  # Build for iOS
+  #
+  build_iOS: # jobに名前をつけられる
 
-          echo BRANCH_TITLE=$branch_name >> $GITHUB_ENV
-          echo PR_TITLE=$branch_name >> $GITHUB_ENV
-      # ブランチの作成と移動
-      - name: Git checkout
-        run: git checkout -b ${{ env.BRANCH_TITLE }}
-      # ファイルの編集
-      - name: Update version
-        # ここでバージョン番号の更新が行われます。バージョンの更新は、JS のスクリプトを用います。実行するスクリプトは以下になります。
-        env:
-          RELEASE_TYPE: ${{ github.event.inputs.release }}
-          ENABLE_IOS: ${{ fromJson(github.event.inputs.ios )}}
-          ENABLE_ANDROID: ${{ fromJson(github.event.inputs.android )}}
-        run: |
-          npx zx ./scripts/zx/replace_new_version.mjs
-          git add -u
-          git commit -m "update version text"
-          git push --set-upstream origin ${{ env.BRANCH_TITLE }}
-      # PRの作成
-      - name: Create release pr
-        run: |
-          version=$(jq -r ".ios.version | tostring" ./version.json)
-          BODY=v${version}のリリース
-          gh pr create -B "master" -t ${{ env.PR_TITLE }} -b ${BODY} --label release --label release:ios --label release:android
+    name: Build for iOS # GitHubに表示されるジョブの名前
+    runs-on: macos-latest # ジョブを実行するマシーンの種類
+
+    steps: #一連のタスク
+
+      # チェックアウト
+      - name: Checks-out my repository # step に名前をつけられる なくてもいい
+        uses: actions/checkout@v3
+
+      # Flutter のインストール
+      - name: Install Flutter
+        run: git clone https://github.com/flutter/flutter.git # ターミナルでこれが実行されるイメージ
+
+      # PATH を通す
+      - name: Add path
+        run: echo "$(pwd)/flutter/bin" >> $GITHUB_PATH # GITHUB_PATH にどんどんぶちこめばいいらしい
+
+      # パッケージのダウンロード
+      - name: Download Flutter packages
+        run: flutter pub get
+
+      # 証明書の生成
+      - name: Import Provisioning Profile
+        run: | # 複数行の run を書きたい場合はこうする 以下、Provisioning Profilesを置くべきディレクトリにデコードしている
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo -n ${{ secrets.PROVISIONING_PROFILE }} | base64 -d > ~/Library/MobileDevice/Provisioning\ Profiles/distribution.mobileprovision
+
+      # 署名をする
+      - name: Import Code-Signing Certificates
+        uses: Apple-Actions/import-codesign-certs@v1 # 外部パッケージを使っている
+        with:
+          p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
+          p12-password: ${{ secrets.CERTIFICATE_PASSWORD }}
+
+      # ipa ファイルの出力
+      - name: Create ipa file
+        # GITHUB_RUN_NUMBER をビルドナンバーに指定することで被りがないようにしている。
+        run: flutter build ipa --export-options-plist=ExportOptions.plist --build-number ${GITHUB_RUN_NUMBER}
+
+      # AppStoreConnect にアップロードする
+      - name: Upload to AppStoreConnect
+        run: xcrun altool --upload-app -f "./build/ios/ipa/github_actios_sample.ipa" -u "${{ secrets.APPLE_ID }}" -p "${{ secrets.APPLE_APP_PASS }}"
