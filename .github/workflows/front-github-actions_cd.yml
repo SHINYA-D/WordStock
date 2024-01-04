@@ -1,7 +1,7 @@
 name: front-github-actions_CD
 
 on:
-  main branch
+  master branch
 push:
   branches: [ master ]
 
@@ -22,7 +22,11 @@ jobs:
 
       # Flutter のインストール
       - name: Install Flutter
-        run: git clone https://github.com/flutter/flutter.git # ターミナルでこれが実行されるイメージ
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.4'
+          channel: "stable"
+          cache: true
 
       # PATH を通す
       - name: Add path
