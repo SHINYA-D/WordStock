@@ -1,9 +1,11 @@
 name: front-github-actions_CD
 
 on:
-  master branch
-push:
+ push:
   branches: [ master ]
+ pull_request:
+  branches:
+     - master
 
 jobs:
   #
