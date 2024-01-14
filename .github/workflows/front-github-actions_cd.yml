@@ -39,10 +39,11 @@ jobs:
         run: flutter pub get
 
       # 証明書の生成
-        #- name: Import Provisioning Profile
-          #run: | # 複数行の run を書きたい場合はこうする 以下、Provisioning Profilesを置くべきディレクトリにデコードしている
-          #mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-        #echo -n ${{ secrets.PROVISIONING_PROFILE }} | base64 -d > ~/Library/MobileDevice/Provisioning\ Profiles/distribution.mobileprovision
+      - name: Import Provisioning Profile
+        run: | # 複数行の run を書きたい場合はこうする 以下、Provisioning Profilesを置くべきディレクトリにデコードしている
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo -n ${{ secrets.PROVISIONING_PROFILE }} | base64 -d > ~/Library/MobileDevice/Provisioning\ Profiles/distribution.mobileprovision
+      
 
       # 署名をする
       - name: Import Code-Signing Certificates
