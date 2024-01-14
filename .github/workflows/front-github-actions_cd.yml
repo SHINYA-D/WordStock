@@ -48,6 +48,10 @@ jobs:
       - name: Import Code-Signing Certificates
         uses: Apple-Actions/import-codesign-certs@v1 # 外部パッケージを使っている
         with:
+          #secrets.CERTIFICATES_P12 は、GitHub Actionsのシークレット（Secrets）を参照しているもので、
+          #おそらくiOSアプリケーションをコードサインするために使用される証明書ファイル（.p12形式）を
+          #Base64エンコードしたものです。
+          #(shinya)追記：secrets.CERTIFICATES_P12など接頭にsecretsが使用されているものはweb上のgithubのSettingで変数として設定しないと使用できません
           p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
           p12-password: ${{ secrets.CERTIFICATE_PASSWORD }}
 
